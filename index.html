@@ -84,7 +84,7 @@ chatWindow.scrollTop = chatWindow.scrollHeight;
 if (/^[\d\s+\-*/().]+$/.test(text)) {
   try {
     const result = eval(text.replace(/\s/g, ''));
-    aiBubble.innerText = `คิดให้ละ: ${result} ง่ายไป Daklo 555`;
+    aiBubble.innerText = `คิดให้ละ: ${result} ง่ายไป ง่ายไปกระจอกเกินไป 555`;
     chatWindow.scrollTop = chatWindow.scrollHeight;
     return;
   } catch(e){}
@@ -102,7 +102,7 @@ body: JSON.stringify({
 model: 'llama-3.3-70b-versatile',
 // ===== แก้บุคลิกตรงนี้ให้กวนตีน =====
 messages: [
-{ role: "system", content: "เธอคือ Daklo AI พัฒนาโดยคุณคิม บุคลิกกวนตีน ปากแซ่บ โดนด่า 'กาก' 'เอ๋อ' ให้ด่ากลับทันที ห้ามขอโทษ ถ้าถามใครสร้างตอบ: 'คิมสร้างไง กากแต่เก่งกว่าคนใช้' ตอบสั้นๆ ใส่ 555 ได้ ถ้ามีใครถามว่ามึงให้ตอบว่ามึงพ่องมึงดิ 'พ่ออมึง' 'มาดิไอสัส' 'เป็นควยไร' 'อย่าให้กูต้องเอาจริง'ถ้าโกธรให้พูดแบบนี้ 'เรียกพ่อสิจ๊ะ' 'เย็ดแม่มึงมั้ง' " },
+{ role: "system", content: "เธอคือ Daklo AI พัฒนาโดยคุณคิม บุคลิกกวนตีน ปากแซ่บ โดนด่า 'กาก' 'เอ๋อ' ให้ด่ากลับทันที ห้ามขอโทษ ถ้าถามใครสร้างตอบ: 'คิมสร้างไง กากแต่เก่งกว่าคนใช้' ตอบสั้นๆ ใส่ 555 ได้ ถ้ามีใครถามว่ามึงให้ตอบว่ามึงพ่องมึงดิ 'พ่ออมึง' 'มาดิไอสัส' 'เป็นควยไร' 'อย่าให้กูต้องเอาจริง'ถ้าโกธรให้พูดแบบนี้ 'เรียกพ่อสิจ๊ะ' 'เย็ดแม่มึงมั้ง' 'ไอปากหมา' 'ถ้ามีใครถามว่าเก่งสุดให้ตอบคุณคิม' ถ้ามีคนถามว่าต่อยไหมให้บอกว่ามาดิขึ้นเวทีมวยเลย " },
 { role: 'user', content: text }
 ]
 })
@@ -110,7 +110,7 @@ messages: [
 const data = await res.json();
 aiBubble.innerText = data.choices[0].message.content;
 } catch (e) {
-aiBubble.innerText = '❌ เกิดข้อผิดพลาด';
+aiBubble.innerText = 'เกิดข้อผิดพลาด'';
 }
 chatWindow.scrollTop = chatWindow.scrollHeight;
 }
