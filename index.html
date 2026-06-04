@@ -100,15 +100,28 @@ chatWindow.appendChild(aiBubble);
 chatWindow.scrollTop = chatWindow.scrollHeight;
 
 // ===== ใส่โค้ดเครื่องคิดเลขตรงนี้ กันเอ๋อ =====
-if (/^[\d\s+\-*/().]+$/.test(text)) {
-try {
-const result = eval(text.replace(/\s/g, ''));
-aiBubble.innerText = `คิดให้ละ: ${result} ง่ายไปกระจอกเกินไป 555`;
-chatWindow.scrollTop = chatWindow.scrollHeight;
-return;
-} catch(e){}
+// ===== ปรับปรุงโค้ดเครื่องคิดเลข ให้ฉลาดขึ้น =====
+// หาแพทเทิร์นเลขและเครื่องหมายคำนวณในข้อความ (ตัวเลข, เว้นวรรค, และเครื่องหมาย + - * / . )
+const mathMatch = text.match(/[\d\s+\-*/().]{3,}/); 
+
+if (mathMatch) {
+    try {
+        // ดึงเฉพาะส่วนที่เป็นโจทย์เลขออกมา (mathMatch[0])
+        const expression = mathMatch[0].trim();
+        const result = eval(expression.replace(/\s/g, ''));
+        
+        // ถ้าผลลัพธ์เป็นตัวเลข ให้ตอบเลย
+        if (!isNaN(result)) {
+            aiBubble.innerText = `คิดให้ละ: ${result} ง่ายไปกระจอกเกินไป 555`;
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+            return;
+        }
+    } catch(e) {
+        // ถ้า eval พัง (เช่น พิมพ์ 5++5) ให้ปล่อยผ่านไปให้ AI ปกติ
+    }
 }
 // ===== จบโค้ดเครื่องคิดเลข =====
+
 
 // ===== ถ้าพิมพ์ "หาเว็บ" ให้ค้นก่อน =====
 let searchResult = '';
