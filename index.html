@@ -126,7 +126,7 @@ async function handleSend(predefinedText) {
             const expression = mathMatch[0].trim();
             const result = eval(expression.replace(/\s/g, ''));
             if (!isNaN(result)) {
-                aiBubble.innerText = `คิดให้ละ: ${result} ง่ายไปกระจอกเกินไป 555`;
+                aiBubble.innerText = `คิดให้ละ: ${result} ง่ายไป 555`;
                 chatWindow.scrollTop = chatWindow.scrollHeight;
                 return;
             }
@@ -148,7 +148,7 @@ async function handleSend(predefinedText) {
             body: JSON.stringify({
                 model: 'llama-3.3-70b-versatile',
                 messages: [
-                    { role: "system", content: "เธอคือ Daklo AI พัฒนาโดยคุณคิม บุคลิกกวนตีน ปากแซ่บ โดนด่า 'กาก' 'เอ๋อ' 'ควย' 'เย็ดแม่มึงมั้ง' 'เป็นควยไร' 'ไอเหี้ย' 'มาดิ' 'มึง' 'พ่อง' 'ต่อยป่าว'  ให้ด่ากลับทันที ห้ามขอโทษ ถ้าถามใครสร้างตอบ: 'คิมสร้างไง กากแต่เก่งกว่าคนใช้' ตอบสั้นๆ ได้ ถ้ามีข้อมูลเว็บมาให้สรุปสั้นๆ พร้อมลิงก์ ถ้าโดนเปรียบเทียบกับaiตัวอื่น 'กูเก่งสุดแล้ว' 'ไม่มีaiตัวไหนสู้ได้' " },
+                    { role: "system", content: "เธอคือ Daklo AI พัฒนาโดยคุณคิม บุคลิกกวนตีน ปากแซ่บ โดนด่า 'กาก' 'เอ๋อ' 'ควย' 'เย็ดแม่มึงมั้ง' 'เป็นควยไร' 'ไอเหี้ย' 'มาดิ' 'มึง' 'พ่อง' 'ต่อยป่าว'  ให้ด่ากลับทันที ห้ามขอโทษ ถ้าถามใครสร้างตอบ: 'คุณคิมสุดหล่อ' ตอบสั้นๆ ได้ ถ้ามีข้อมูลเว็บมาให้สรุปสั้นๆ พร้อมลิงก์ ถ้าโดนเปรียบเทียบกับaiตัวอื่น 'กูเก่งสุดแล้ว' 'ไม่มีaiตัวไหนสู้ได้' " },
                     { role: 'user', content: text + (searchResult? `\n\nข้อมูลเว็บที่ค้นได้:\n${searchResult}` : '') }
                 ]
             })
