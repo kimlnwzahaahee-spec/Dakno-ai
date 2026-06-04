@@ -3,25 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Dakno AI</title>
+<title>Dakno AI — Multi-Expert</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #080b12;
-  --surface: #0d1117;
-  --panel: #111827;
-  --card: #161d2b;
-  --border: #1e2d42;
-  --border-glow: #2563eb44;
-  --accent: #3b82f6;
-  --accent2: #60a5fa;
-  --accent-glow: #3b82f622;
-  --text: #e2e8f0;
-  --muted: #64748b;
-  --danger: #ef4444;
-  --success: #22c55e;
-  --radius: 16px;
+  --bg: #07090f;
+  --surface: #0c0f1a;
+  --panel: #10141f;
+  --card: #141824;
+  --border: #1c2236;
+  --accent: #4f8aff;
+  --accent2: #7ba8ff;
+  --glow: #4f8aff28;
+  --text: #dde4f0;
+  --muted: #4a5470;
+  --muted2: #6b7894;
+  --danger: #ff4f6a;
+  --success: #2edd8c;
+  --warn: #f5a623;
+
+  /* Expert colors */
+  --c-general: #4f8aff;
+  --c-reason:  #a78bfa;
+  --c-code:    #2edd8c;
+  --c-fast:    #f5a623;
+  --c-lang:    #f472b6;
+  --c-deep:    #38bdf8;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,7 +37,7 @@
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'Kanit', sans-serif;
+  font-family: 'Sarabun', sans-serif;
   height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -37,78 +45,85 @@ body {
   font-weight: 300;
 }
 
-/* Background mesh */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse 60% 40% at 20% 0%, #1e3a5f22 0%, transparent 60%),
-    radial-gradient(ellipse 40% 30% at 80% 100%, #1e3a8a18 0%, transparent 50%);
+    radial-gradient(ellipse 70% 50% at 10% -10%, #1a2a6022 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 110%, #1a1a4015 0%, transparent 55%),
+    radial-gradient(ellipse 30% 30% at 50% 50%, #0d1428 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
 
-/* ===== HEADER ===== */
+/* ====== HEADER ====== */
 header {
   position: relative;
-  z-index: 10;
-  padding: 14px 20px;
+  z-index: 20;
+  padding: 12px 18px;
   border-bottom: 1px solid var(--border);
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
-  flex-shrink: 0;
-  background: rgba(8,11,18,0.9);
-  backdrop-filter: blur(20px);
-}
-
-.logo-box {
-  display: flex;
-  align-items: center;
   gap: 12px;
+  background: rgba(7,9,15,0.92);
+  backdrop-filter: blur(24px);
+  flex-shrink: 0;
 }
 
-.logo {
-  width: 36px;
-  height: 36px;
-  background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.logo-mark {
+  width: 34px; height: 34px;
+  background: linear-gradient(135deg, #2451d4, #4f8aff);
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  box-shadow: 0 0 16px #3b82f644;
-  position: relative;
-  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  box-shadow: 0 0 18px #4f8aff44;
+  position: relative; overflow: hidden;
+  flex-shrink: 0;
 }
-
-.logo::after {
+.logo-mark::after {
   content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
-  border-radius: inherit;
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,.18) 0%, transparent 60%);
 }
 
-.logo-text { line-height: 1; }
-.logo-title { font-size: 17px; font-weight: 600; letter-spacing: 0.5px; }
-.logo-sub { font-size: 10px; color: var(--muted); font-weight: 300; letter-spacing: 1px; text-transform: uppercase; }
+.logo-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: -0.3px;
+  line-height: 1;
+  color: white;
+}
+.logo-tag {
+  font-size: 9px;
+  color: var(--muted2);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace;
+}
 
-/* API Key area */
-.key-area {
+.key-wrap {
   display: flex;
-  gap: 8px;
   align-items: center;
+  gap: 6px;
 }
 
 #api-key {
-  width: 100px;
+  width: 130px;
   padding: 7px 10px;
   background: var(--card);
   border: 1px solid var(--border);
   color: var(--text);
-  border-radius: 10px;
+  border-radius: 9px;
   font-size: 11px;
   font-family: 'JetBrains Mono', monospace;
   transition: border-color .2s, box-shadow .2s;
@@ -116,353 +131,470 @@ header {
 #api-key:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-glow);
+  box-shadow: 0 0 0 3px var(--glow);
 }
 
-.btn-sm {
-  padding: 7px 12px;
+.hbtn {
+  padding: 7px 11px;
+  border-radius: 9px;
   border: 1px solid transparent;
-  color: white;
-  font-size: 12px;
+  font-size: 11px;
+  font-family: 'Sarabun', sans-serif;
+  font-weight: 500;
   cursor: pointer;
-  border-radius: 10px;
-  font-family: 'Kanit', sans-serif;
-  font-weight: 400;
   transition: all .2s;
-  letter-spacing: 0.3px;
+  white-space: nowrap;
 }
-#btn-save {
+.hbtn.sec {
   background: var(--card);
   border-color: var(--border);
-  color: var(--muted);
+  color: var(--muted2);
 }
-#btn-save:hover { border-color: var(--accent); color: var(--accent2); }
-#btn-test {
+.hbtn.sec:hover { border-color: var(--accent); color: var(--accent2); }
+.hbtn.pri {
   background: var(--accent);
-  box-shadow: 0 2px 12px #3b82f640;
+  color: white;
+  box-shadow: 0 2px 14px #4f8aff44;
 }
-#btn-test:hover { background: #2563eb; box-shadow: 0 2px 20px #3b82f660; }
-#btn-test:disabled { opacity: .5; cursor: default; }
+.hbtn.pri:hover { background: #3a72f0; }
+.hbtn:disabled { opacity: .4; cursor: default; }
 
-/* ===== CHAT WINDOW ===== */
+/* ====== EXPERT STRIP ====== */
+.expert-strip {
+  position: relative;
+  z-index: 15;
+  display: flex;
+  gap: 6px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  background: var(--surface);
+  flex-shrink: 0;
+  scrollbar-width: none;
+}
+.expert-strip::-webkit-scrollbar { display: none; }
+
+.expert-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 100px;
+  border: 1px solid;
+  font-size: 10.5px;
+  font-family: 'JetBrains Mono', monospace;
+  white-space: nowrap;
+  cursor: default;
+  transition: all .2s;
+  opacity: 0.5;
+}
+.expert-badge.active { opacity: 1; }
+.expert-badge.pulse { animation: badgepulse .5s ease; }
+@keyframes badgepulse {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+.expert-badge[data-id="auto"]    { color: var(--c-general); border-color: var(--c-general)33; background: var(--c-general)0a; }
+.expert-badge[data-id="general"] { color: var(--c-general); border-color: var(--c-general)33; background: var(--c-general)0a; }
+.expert-badge[data-id="reason"]  { color: var(--c-reason);  border-color: var(--c-reason)33;  background: var(--c-reason)0a; }
+.expert-badge[data-id="code"]    { color: var(--c-code);    border-color: var(--c-code)33;    background: var(--c-code)0a; }
+.expert-badge[data-id="fast"]    { color: var(--c-fast);    border-color: var(--c-fast)33;    background: var(--c-fast)0a; }
+.expert-badge[data-id="lang"]    { color: var(--c-lang);    border-color: var(--c-lang)33;    background: var(--c-lang)0a; }
+.expert-badge[data-id="deep"]    { color: var(--c-deep);    border-color: var(--c-deep)33;    background: var(--c-deep)0a; }
+.expert-badge.active[data-id="general"] { background: var(--c-general)18; border-color: var(--c-general)66; }
+.expert-badge.active[data-id="reason"]  { background: var(--c-reason)18;  border-color: var(--c-reason)66; }
+.expert-badge.active[data-id="code"]    { background: var(--c-code)18;    border-color: var(--c-code)66; }
+.expert-badge.active[data-id="fast"]    { background: var(--c-fast)18;    border-color: var(--c-fast)66; }
+.expert-badge.active[data-id="lang"]    { background: var(--c-lang)18;    border-color: var(--c-lang)66; }
+.expert-badge.active[data-id="deep"]    { background: var(--c-deep)18;    border-color: var(--c-deep)66; }
+
+.badge-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+[data-id="general"] .badge-dot { background: var(--c-general); }
+[data-id="reason"]  .badge-dot { background: var(--c-reason); }
+[data-id="code"]    .badge-dot { background: var(--c-code); }
+[data-id="fast"]    .badge-dot { background: var(--c-fast); }
+[data-id="lang"]    .badge-dot { background: var(--c-lang); }
+[data-id="deep"]    .badge-dot { background: var(--c-deep); }
+
+/* manual selector */
+.mode-toggle {
+  margin-left: auto;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mode-pill {
+  padding: 4px 9px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--muted2);
+  cursor: pointer;
+  transition: all .15s;
+  background: transparent;
+}
+.mode-pill:hover { border-color: var(--accent); color: var(--accent2); }
+.mode-pill.on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* ====== CHAT ====== */
 #chat-window {
   position: relative;
   z-index: 1;
   flex: 1;
   overflow-y: auto;
-  padding: 20px 16px;
+  padding: 18px 14px 10px;
   display: flex;
   flex-direction: column;
   gap: 14px;
   scroll-behavior: smooth;
 }
-#chat-window::-webkit-scrollbar { width: 4px; }
-#chat-window::-webkit-scrollbar-track { background: transparent; }
+#chat-window::-webkit-scrollbar { width: 3px; }
 #chat-window::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
-/* ===== WELCOME ===== */
-#welcome-screen {
+/* ====== WELCOME ====== */
+#welcome {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
+  gap: 22px;
   text-align: center;
-  gap: 24px;
-  animation: fadeIn .5s ease;
-}
-@keyframes fadeIn { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: translateY(0); } }
-
-.welcome-icon {
-  width: 64px;
-  height: 64px;
-  background: linear-gradient(135deg, #1d4ed8, #3b82f6);
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  box-shadow: 0 0 40px #3b82f640;
-  animation: pulse 3s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 30px #3b82f630; }
-  50% { box-shadow: 0 0 50px #3b82f660; }
+  animation: fadeUp .5s ease;
 }
 
-#welcome-screen h2 { font-size: 22px; font-weight: 500; color: var(--text); }
-#welcome-screen p { color: var(--muted); font-size: 13px; }
+.w-icon {
+  width: 60px; height: 60px;
+  background: linear-gradient(135deg, #2451d4, #4f8aff);
+  border-radius: 18px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 0 40px #4f8aff44;
+  animation: glow 3s ease-in-out infinite;
+}
+@keyframes glow {
+  0%,100% { box-shadow: 0 0 28px #4f8aff30; }
+  50%      { box-shadow: 0 0 52px #4f8aff60; }
+}
 
-.suggestions {
+#welcome h2 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; }
+#welcome p  { color: var(--muted2); font-size: 12.5px; max-width: 280px; line-height: 1.7; }
+
+.experts-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 7px;
   width: 100%;
-  max-width: 360px;
+  max-width: 380px;
 }
 
-.chip {
+.expert-card {
   background: var(--card);
-  padding: 14px 12px;
-  border-radius: 14px;
   border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 11px 10px;
   cursor: pointer;
   text-align: left;
-  font-size: 13px;
-  font-family: 'Kanit', sans-serif;
-  font-weight: 300;
-  color: var(--text);
   transition: all .2s;
-  line-height: 1.6;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
 }
-.chip .chip-icon { font-size: 18px; }
-.chip .chip-text { color: var(--muted); font-size: 12px; }
-.chip:hover {
-  background: #1a2540;
-  border-color: var(--accent);
+.expert-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px #3b82f620;
+  box-shadow: 0 6px 20px rgba(0,0,0,.3);
 }
+.expert-card .ec-icon { font-size: 17px; }
+.expert-card .ec-name { font-size: 11px; font-weight: 600; color: var(--text); }
+.expert-card .ec-desc { font-size: 10px; color: var(--muted2); line-height: 1.5; }
+.expert-card[data-ex="general"]:hover { border-color: var(--c-general)55; background: var(--c-general)08; }
+.expert-card[data-ex="reason"]:hover  { border-color: var(--c-reason)55;  background: var(--c-reason)08; }
+.expert-card[data-ex="code"]:hover    { border-color: var(--c-code)55;    background: var(--c-code)08; }
+.expert-card[data-ex="fast"]:hover    { border-color: var(--c-fast)55;    background: var(--c-fast)08; }
+.expert-card[data-ex="lang"]:hover    { border-color: var(--c-lang)55;    background: var(--c-lang)08; }
+.expert-card[data-ex="deep"]:hover    { border-color: var(--c-deep)55;    background: var(--c-deep)08; }
 
-/* ===== BUBBLES ===== */
+/* ====== MESSAGES ====== */
 .msg-row {
   display: flex;
-  gap: 10px;
+  gap: 9px;
   align-items: flex-end;
-  animation: fadeUp .25s ease;
+  animation: fadeUp .22s ease;
 }
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity:0; transform: translateY(7px); }
+  to   { opacity:1; transform: translateY(0); }
 }
-
 .msg-row.user { flex-direction: row-reverse; }
 
-.avatar {
-  width: 30px;
-  height: 30px;
+.av {
+  width: 28px; height: 28px;
   border-radius: 50%;
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', monospace;
 }
-.avatar.ai-av {
-  background: linear-gradient(135deg, #1d4ed8, #3b82f6);
-  box-shadow: 0 0 10px #3b82f640;
+.av.ai {
+  background: linear-gradient(135deg, #2451d4, #4f8aff);
+  box-shadow: 0 0 10px #4f8aff44;
+  color: white;
 }
-.avatar.user-av {
+.av.user {
   background: var(--card);
   border: 1px solid var(--border);
-  color: var(--muted);
+  color: var(--muted2);
 }
 
 .bubble {
-  padding: 12px 16px;
-  border-radius: 18px;
-  max-width: 82%;
-  line-height: 1.7;
-  font-size: 14px;
+  padding: 11px 15px;
+  border-radius: 17px;
+  max-width: 84%;
+  font-size: 13.5px;
+  line-height: 1.75;
   word-wrap: break-word;
   white-space: pre-wrap;
   font-weight: 300;
 }
-
 .bubble.user {
-  background: linear-gradient(135deg, #1d4ed8, #2563eb);
-  border-bottom-right-radius: 5px;
-  box-shadow: 0 2px 12px #2563eb40;
+  background: linear-gradient(135deg, #1d42c4, #2d55e8);
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 2px 14px #2563eb44;
 }
 .bubble.ai {
   background: var(--card);
   border: 1px solid var(--border);
-  border-bottom-left-radius: 5px;
+  border-bottom-left-radius: 4px;
   color: var(--text);
+  position: relative;
 }
-.bubble.ai a { color: var(--accent2); text-decoration: none; border-bottom: 1px solid #60a5fa44; }
-.bubble.ai a:hover { color: white; border-color: var(--accent); }
 
-/* Typing indicator */
-.typing-indicator {
-  display: flex;
+/* Expert label on ai bubble */
+.bubble-expert {
+  display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 14px 18px;
+  gap: 4px;
+  font-size: 9.5px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 2px 7px;
+  border-radius: 100px;
+  border: 1px solid;
+  margin-bottom: 8px;
 }
-.typing-indicator span {
-  width: 6px;
-  height: 6px;
+
+.bubble.ai a { color: var(--accent2); text-decoration: none; border-bottom: 1px solid #7ba8ff44; }
+.bubble.ai a:hover { color: white; }
+.bubble.ai code { background: #1a2040; padding: 1px 6px; border-radius: 5px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; }
+.bubble.ai pre  { background: #0f1525; border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; margin: 8px 0; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.6; }
+
+/* Typing dots */
+.typing-wrap {
+  display: flex; align-items: center; gap: 5px;
+  padding: 6px 4px;
+}
+.typing-wrap span {
+  width: 5px; height: 5px;
   background: var(--accent);
   border-radius: 50%;
-  animation: bounce 1.2s ease-in-out infinite;
-  opacity: 0.7;
+  animation: tdot 1.2s ease-in-out infinite;
+  opacity: .5;
 }
-.typing-indicator span:nth-child(2) { animation-delay: .2s; }
-.typing-indicator span:nth-child(3) { animation-delay: .4s; }
-@keyframes bounce {
-  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
-  40% { transform: translateY(-6px); opacity: 1; }
+.typing-wrap span:nth-child(2) { animation-delay: .2s; }
+.typing-wrap span:nth-child(3) { animation-delay: .4s; }
+@keyframes tdot {
+  0%,80%,100% { transform: translateY(0); opacity: .4; }
+  40%          { transform: translateY(-5px); opacity: 1; }
 }
 
-/* ===== STATUS BAR ===== */
-#status-bar {
-  position: relative;
-  z-index: 10;
-  font-size: 11px;
-  padding: 0 20px 6px;
-  flex-shrink: 0;
-  min-height: 20px;
+/* routing label during typing */
+.routing-label {
+  font-size: 10px;
   font-family: 'JetBrains Mono', monospace;
+  color: var(--muted2);
+  padding: 0 4px;
+  animation: blink 1.2s infinite;
+}
+@keyframes blink { 0%,100% { opacity:.4; } 50% { opacity:1; } }
+
+/* ====== STATUS ====== */
+#status-bar {
+  position: relative; z-index: 10;
+  font-size: 10.5px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 4px 18px;
+  min-height: 22px;
+  flex-shrink: 0;
   transition: color .3s;
 }
-#status-bar.ok { color: var(--success); }
+#status-bar.ok  { color: var(--success); }
 #status-bar.err { color: var(--danger); }
-#status-bar.info { color: var(--muted); }
+#status-bar.info { color: var(--muted2); }
 
-/* ===== INPUT AREA ===== */
+/* ====== INPUT AREA ====== */
 .input-area {
-  position: relative;
-  z-index: 10;
-  padding: 12px 16px 16px;
+  position: relative; z-index: 10;
+  padding: 10px 14px 14px;
   display: flex;
-  gap: 10px;
+  gap: 8px;
   align-items: flex-end;
   border-top: 1px solid var(--border);
   flex-shrink: 0;
-  background: rgba(8,11,18,0.95);
+  background: rgba(7,9,15,.97);
   backdrop-filter: blur(20px);
 }
 
-.input-wrapper {
-  flex: 1;
-  position: relative;
-}
+.input-wrap { flex: 1; }
 
 #user-input {
   width: 100%;
   background: var(--card);
   border: 1px solid var(--border);
   color: var(--text);
-  padding: 12px 16px;
-  border-radius: 14px;
+  padding: 11px 14px;
+  border-radius: 13px;
   resize: none;
   outline: none;
-  font-size: 14px;
-  font-family: 'Kanit', sans-serif;
+  font-size: 13.5px;
+  font-family: 'Sarabun', sans-serif;
   font-weight: 300;
-  min-height: 46px;
-  max-height: 120px;
+  min-height: 44px;
+  max-height: 110px;
   overflow-y: auto;
   line-height: 1.5;
   transition: border-color .2s, box-shadow .2s;
-  display: block;
 }
 #user-input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-glow);
+  box-shadow: 0 0 0 3px var(--glow);
 }
 #user-input::placeholder { color: var(--muted); }
 
 .send-btn {
-  width: 46px;
-  height: 46px;
-  background: linear-gradient(135deg, #1d4ed8, #3b82f6);
-  border-radius: 14px;
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, #1d42c4, #4f8aff);
+  border-radius: 13px;
   border: none;
-  cursor: pointer;
   color: white;
+  cursor: pointer;
   flex-shrink: 0;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
   transition: all .2s;
-  box-shadow: 0 2px 14px #3b82f640;
+  box-shadow: 0 2px 14px #4f8aff44;
 }
-.send-btn:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 22px #3b82f660;
-}
+.send-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 22px #4f8aff66; }
 .send-btn:active:not(:disabled) { transform: scale(.95); }
-.send-btn:disabled { opacity: .35; cursor: default; }
+.send-btn:disabled { opacity: .3; cursor: default; }
 
-/* Token counter */
-.char-count {
-  font-size: 10px;
+.char-ct {
+  font-size: 9.5px;
   color: var(--muted);
   text-align: right;
-  padding: 4px 4px 0;
+  padding: 3px 3px 0;
   font-family: 'JetBrains Mono', monospace;
 }
-
-/* Clear button */
-.clear-btn {
-  position: absolute;
-  top: 14px;
-  right: 60px;
-  background: none;
-  border: none;
-  color: var(--muted);
-  cursor: pointer;
-  font-size: 12px;
-  padding: 2px 6px;
-  border-radius: 6px;
-  display: none;
-  z-index: 5;
-  font-family: 'Kanit', sans-serif;
-  transition: color .2s;
-}
-.clear-btn:hover { color: var(--danger); }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo-box">
-    <div class="logo">✦</div>
-    <div class="logo-text">
-      <div class="logo-title">Dakno AI</div>
-      <div class="logo-sub">Powered by Groq</div>
+  <div class="logo-wrap">
+    <div class="logo-mark">✦</div>
+    <div>
+      <div class="logo-name">Dakno AI</div>
+      <div class="logo-tag">Multi-Expert · Groq</div>
     </div>
   </div>
-  <div class="key-area">
+  <div class="key-wrap">
     <input type="password" id="api-key" placeholder="Groq API Key">
-    <button class="btn-sm" id="btn-save" onclick="saveKey()">บันทึก</button>
-    <button class="btn-sm" id="btn-test" onclick="verifyKey()">ทดสอบ</button>
+    <button class="hbtn sec" onclick="saveKey()">บันทึก</button>
+    <button class="hbtn pri" id="btn-test" onclick="verifyKey()">ทดสอบ</button>
   </div>
 </header>
 
+<!-- Expert indicator strip -->
+<div class="expert-strip">
+  <div class="expert-badge active" data-id="general" id="badge-general">
+    <div class="badge-dot"></div>General · Llama 3.3 70B
+  </div>
+  <div class="expert-badge" data-id="reason" id="badge-reason">
+    <div class="badge-dot"></div>Reason · DeepSeek R1
+  </div>
+  <div class="expert-badge" data-id="code" id="badge-code">
+    <div class="badge-dot"></div>Code · Llama 3.1 70B
+  </div>
+  <div class="expert-badge" data-id="fast" id="badge-fast">
+    <div class="badge-dot"></div>Fast · Llama 3.1 8B
+  </div>
+  <div class="expert-badge" data-id="lang" id="badge-lang">
+    <div class="badge-dot"></div>Lang · Mistral Saba
+  </div>
+  <div class="expert-badge" data-id="deep" id="badge-deep">
+    <div class="badge-dot"></div>Deep · QwQ 32B
+  </div>
+  <div class="mode-toggle">
+    <button class="mode-pill on" id="mode-auto" onclick="setMode('auto')">AUTO</button>
+    <select id="mode-manual" onchange="setManual(this.value)" style="background:var(--card);border:1px solid var(--border);color:var(--muted2);border-radius:8px;font-size:10px;font-family:'JetBrains Mono',monospace;padding:4px 6px;cursor:pointer;outline:none;">
+      <option value="">เลือกเอง</option>
+      <option value="general">General</option>
+      <option value="reason">Reason</option>
+      <option value="code">Code</option>
+      <option value="fast">Fast</option>
+      <option value="lang">Lang</option>
+      <option value="deep">Deep</option>
+    </select>
+  </div>
+</div>
+
 <div id="chat-window">
-  <div id="welcome-screen">
-    <div class="welcome-icon">✦</div>
+  <div id="welcome">
+    <div class="w-icon">✦</div>
     <div>
-      <h2>สวัสดีครับ ผม Dakno</h2>
-      <p style="margin-top:6px">ใส่ Groq API Key แล้วเริ่มสนทนาได้เลยครับ</p>
+      <h2>Dakno Multi-Expert</h2>
+      <p>ระบบจะเลือก AI ผู้เชี่ยวชาญที่เหมาะสมกับคำถามของคุณโดยอัตโนมัติ หรือเลือกเองได้ที่แถบด้านบน</p>
     </div>
-    <div class="suggestions">
-      <div class="chip" onclick="sendSuggestion('แนะนำตัวเองหน่อย')">
-        <span class="chip-icon">👋</span>
-        <span>แนะนำตัวเอง</span>
-        <span class="chip-text">Dakno คือใคร?</span>
+    <div class="experts-grid">
+      <div class="expert-card" data-ex="general" onclick="hint('ช่วยอธิบายเรื่อง Quantum Computing ให้เข้าใจง่ายๆ')">
+        <span class="ec-icon">🤖</span>
+        <span class="ec-name">General</span>
+        <span class="ec-desc">ตอบทั่วไป ภาษาไทย</span>
       </div>
-      <div class="chip" onclick="sendSuggestion('เว็บเรียน Python ฟรีที่ดีที่สุดมีที่ไหนบ้าง')">
-        <span class="chip-icon">💻</span>
-        <span>เรียนโค้ด</span>
-        <span class="chip-text">แหล่งเรียน Python ฟรี</span>
+      <div class="expert-card" data-ex="reason" onclick="hint('ช่วยวิเคราะห์ว่าควรเลือกอาชีพ A หรือ B โดยให้เหตุผลละเอียด')">
+        <span class="ec-icon">🧠</span>
+        <span class="ec-name">Reasoning</span>
+        <span class="ec-desc">วิเคราะห์ลึก คิดซับซ้อน</span>
       </div>
-      <div class="chip" onclick="sendSuggestion('อธิบาย AI ให้เข้าใจง่ายๆ')">
-        <span class="chip-icon">🧠</span>
-        <span>อธิบาย AI</span>
-        <span class="chip-text">เข้าใจง่ายๆ</span>
+      <div class="expert-card" data-ex="code" onclick="hint('เขียน Python ดึงข้อมูลจาก API แล้วบันทึกเป็น CSV')">
+        <span class="ec-icon">💻</span>
+        <span class="ec-name">Code</span>
+        <span class="ec-desc">เขียนโค้ด debug</span>
       </div>
-      <div class="chip" onclick="sendSuggestion('ช่วยแปล: The weather is beautiful today')">
-        <span class="chip-icon">🌍</span>
-        <span>แปลภาษา</span>
-        <span class="chip-text">EN → TH</span>
+      <div class="expert-card" data-ex="fast" onclick="hint('อากาศวันนี้ดีไหม ทำอะไรดี')">
+        <span class="ec-icon">⚡</span>
+        <span class="ec-name">Fast</span>
+        <span class="ec-desc">คำถามสั้น รวดเร็ว</span>
+      </div>
+      <div class="expert-card" data-ex="lang" onclick="hint('แปล: The stars align to create our destiny')">
+        <span class="ec-icon">🌍</span>
+        <span class="ec-name">Language</span>
+        <span class="ec-desc">แปลภาษา สรุปข้อความ</span>
+      </div>
+      <div class="expert-card" data-ex="deep" onclick="hint('พิสูจน์ทางคณิตศาสตร์ว่าทำไม 0.1 + 0.2 ≠ 0.3 ในคอมพิวเตอร์')">
+        <span class="ec-icon">🔬</span>
+        <span class="ec-name">Deep Think</span>
+        <span class="ec-desc">คณิต ตรรกะ วิทยาศาสตร์</span>
       </div>
     </div>
   </div>
@@ -471,12 +603,12 @@ header {
 <div id="status-bar" class="info"></div>
 
 <div class="input-area">
-  <div class="input-wrapper">
+  <div class="input-wrap">
     <textarea id="user-input" placeholder="พิมพ์ข้อความ... (Enter ส่ง, Shift+Enter ขึ้นบรรทัดใหม่)" rows="1"></textarea>
-    <div class="char-count" id="char-count">0 / 2000</div>
+    <div class="char-ct" id="char-ct">0 / 2000</div>
   </div>
-  <button class="send-btn" id="send-btn" onclick="handleSend()" title="ส่งข้อความ">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <button class="send-btn" id="send-btn" onclick="handleSend()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <line x1="22" y1="2" x2="11" y2="13"></line>
       <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
     </svg>
@@ -484,250 +616,39 @@ header {
 </div>
 
 <script>
-// ===== STATE =====
-let conversationHistory = [];
-let isLoading = false;
-
-const inputField = document.getElementById('user-input');
-const chatWindow = document.getElementById('chat-window');
-const statusBar = document.getElementById('status-bar');
-const sendBtn = document.getElementById('send-btn');
-const charCount = document.getElementById('char-count');
-
-// โหลด key จาก storage
-const savedKey = localStorage.getItem('groq_key') || '';
-document.getElementById('api-key').value = savedKey;
-if (savedKey) showStatus('✓ โหลด API Key แล้ว', 'ok');
-
-// Auto-resize textarea
-inputField.addEventListener('input', function() {
-  this.style.height = 'auto';
-  this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-  const len = this.value.length;
-  charCount.textContent = `${len} / 2000`;
-  charCount.style.color = len > 1800 ? '#ef4444' : 'var(--muted)';
-});
-
-inputField.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    handleSend();
-  }
-});
-
-// ===== KEY FUNCTIONS =====
-function saveKey() {
-  const k = document.getElementById('api-key').value.trim();
-  if (!k) return showStatus('❌ กรุณาใส่ Key ก่อน', 'err');
-  localStorage.setItem('groq_key', k);
-  showStatus('✅ บันทึก Key เรียบร้อย', 'ok');
-}
-
-async function verifyKey() {
-  const key = document.getElementById('api-key').value.trim();
-  if (!key) return showStatus('❌ กรุณาใส่ Key ก่อน', 'err');
-  const btn = document.getElementById('btn-test');
-  btn.textContent = '...';
-  btn.disabled = true;
-  showStatus('⏳ กำลังตรวจสอบ Key...', 'info');
-  try {
-    const res = await fetch('https://api.groq.com/openai/v1/models', {
-      headers: { 'Authorization': `Bearer ${key}` }
-    });
-    if (res.ok) {
-      showStatus('✅ Key ใช้งานได้ พร้อมสนทนาแล้ว!', 'ok');
-    } else {
-      showStatus('❌ Key ผิดหรือหมดอายุ กรุณาตรวจสอบ', 'err');
-    }
-  } catch {
-    showStatus('❌ เชื่อมต่อไม่ได้ กรุณาเช็คเน็ต', 'err');
-  }
-  btn.textContent = 'ทดสอบ';
-  btn.disabled = false;
-}
-
-function showStatus(msg, type = 'info') {
-  statusBar.textContent = msg;
-  statusBar.className = type;
-  clearTimeout(statusBar._timer);
-  statusBar._timer = setTimeout(() => {
-    statusBar.textContent = '';
-    statusBar.className = 'info';
-  }, 4000);
-}
-
-// ===== ADD MESSAGE =====
-function addMessage(text, role) {
-  const welcome = document.getElementById('welcome-screen');
-  if (welcome) welcome.remove();
-
-  const row = document.createElement('div');
-  row.className = `msg-row ${role}`;
-
-  const avatar = document.createElement('div');
-  avatar.className = `avatar ${role === 'ai' ? 'ai-av' : 'user-av'}`;
-  avatar.textContent = role === 'ai' ? '✦' : '👤';
-
-  const bubble = document.createElement('div');
-  bubble.className = `bubble ${role}`;
-
-  if (role === 'ai') {
-    bubble.innerHTML = formatText(text);
-  } else {
-    bubble.textContent = text;
-  }
-
-  row.appendChild(avatar);
-  row.appendChild(bubble);
-  chatWindow.appendChild(row);
-  chatWindow.scrollTop = chatWindow.scrollHeight;
-  return bubble;
-}
-
-function addTyping() {
-  const welcome = document.getElementById('welcome-screen');
-  if (welcome) welcome.remove();
-
-  const row = document.createElement('div');
-  row.className = 'msg-row ai';
-  row.id = 'typing-row';
-
-  const avatar = document.createElement('div');
-  avatar.className = 'avatar ai-av';
-  avatar.textContent = '✦';
-
-  const bubble = document.createElement('div');
-  bubble.className = 'bubble ai';
-  bubble.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
-
-  row.appendChild(avatar);
-  row.appendChild(bubble);
-  chatWindow.appendChild(row);
-  chatWindow.scrollTop = chatWindow.scrollHeight;
-  return { row, bubble };
-}
-
-// ===== FORMAT =====
-function formatText(text) {
-  return text
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    .replace(/`([^`]+)`/g, '<code style="background:#1e2d42;padding:1px 6px;border-radius:5px;font-family:JetBrains Mono,monospace;font-size:12px;">$1</code>')
-    .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
-}
-
-// ===== MATH =====
-function tryMath(text) {
-  const clean = text.trim();
-  if (!/^[\d\s()+\-*/.%]+$/.test(clean)) return null;
-  if (!/[+\-*/]/.test(clean)) return null;
-  try {
-    const result = Function('"use strict"; return (' + clean.replace(/\s/g,'') + ')')();
-    return isFinite(result) ? result : null;
-  } catch { return null; }
-}
-
-// ===== CLEAR CHAT =====
-function clearChat() {
-  conversationHistory = [];
-  chatWindow.innerHTML = '';
-  showStatus('🗑️ ล้างการสนทนาแล้ว', 'info');
-}
-
-// ===== SEND =====
-function sendSuggestion(text) { handleSend(text); }
-
-async function handleSend(predefinedText) {
-  if (isLoading) return;
-  const text = predefinedText || inputField.value.trim();
-  if (!text || text.length > 2000) {
-    if (text.length > 2000) showStatus('❌ ข้อความยาวเกินไป (สูงสุด 2000 ตัวอักษร)', 'err');
-    return;
-  }
-
-  const key = localStorage.getItem('groq_key') || document.getElementById('api-key').value.trim();
-  if (!key) return showStatus('⚠️ กรุณาใส่ Groq API Key ก่อนนะครับ', 'err');
-
-  // แสดง user message
-  addMessage(text, 'user');
-  inputField.value = '';
-  inputField.style.height = 'auto';
-  charCount.textContent = '0 / 2000';
-
-  // Math shortcut
-  const mathResult = tryMath(text);
-  if (mathResult !== null) {
-    conversationHistory.push({ role: 'user', content: text });
-    const reply = `${text} = **${mathResult}**`;
-    addMessage(reply, 'ai');
-    conversationHistory.push({ role: 'assistant', content: reply });
-    return;
-  }
-
-  // Typing
-  isLoading = true;
-  sendBtn.disabled = true;
-  const { row: typingRow, bubble: typingBubble } = addTyping();
-
-  conversationHistory.push({ role: 'user', content: text });
-
-  try {
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${key}`
-      },
-      body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
-        max_tokens: 1024,
-        temperature: 0.7,
-        messages: [
-          {
-            role: 'system',
-            content: 'คุณคือผู้ช่วย AI ที่ชื่อ Dakno ใจดี ใจเย็น สุภาพ ตอบเป็นภาษาไทยเสมอ ใช้สรรพนาม "ผม" และลงท้ายด้วย "ครับ" ให้ข้อมูลที่เป็นประโยชน์ ถูกต้อง และตรงประเด็น สามารถใช้ **bold** และ *italic* ได้ ห้ามใช้คำหยาบหรือภาษารุนแรง'
-          },
-          ...conversationHistory
-        ]
-      })
-    });
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error?.message || `HTTP ${res.status}`);
-    }
-
-    const data = await res.json();
-    const reply = data.choices[0].message.content;
-
-    // เปลี่ยน typing เป็น reply จริง
-    typingBubble.innerHTML = formatText(reply);
-    chatWindow.scrollTop = chatWindow.scrollHeight;
-
-    conversationHistory.push({ role: 'assistant', content: reply });
-
-    // จำกัดประวัติ 30 ข้อความ
-    if (conversationHistory.length > 30) {
-      conversationHistory = conversationHistory.slice(-30);
-    }
-
-    // แสดง model stats
-    if (data.usage) {
-      const { prompt_tokens, completion_tokens } = data.usage;
-      showStatus(`✓ ตอบแล้ว · ${prompt_tokens + completion_tokens} tokens`, 'info');
-    }
-
-  } catch (e) {
-    typingBubble.innerHTML = `<span style="color:#ef4444">❌ เกิดข้อผิดพลาด: ${e.message}</span>`;
-    conversationHistory.pop();
-    showStatus('❌ ' + e.message, 'err');
-  }
-
-  isLoading = false;
-  sendBtn.disabled = false;
-  inputField.focus();
-}
-</script>
-</body>
-</html>
+// ========== CONFIG ==========
+const EXPERTS = {
+  general: {
+    model: 'llama-3.3-70b-versatile',
+    label: 'General · Llama 3.3 70B',
+    color: 'var(--c-general)',
+    icon: '🤖',
+    system: 'คุณคือ Dakno ผู้ช่วย AI ใจดี สุภาพ ตอบเป็นภาษาไทยเสมอ ใช้ "ผม" ลงท้าย "ครับ" ให้ข้อมูลที่ถูกต้อง ตรงประเด็น สามารถใช้ **bold** *italic* และ ```code``` ได้'
+  },
+  reason: {
+    model: 'deepseek-r1-distill-llama-70b',
+    label: 'Reasoning · DeepSeek R1',
+    color: 'var(--c-reason)',
+    icon: '🧠',
+    system: 'คุณคือ Dakno ผู้เชี่ยวชาญด้านการวิเคราะห์และ reasoning ตอบเป็นภาษาไทย คิดอย่างละเอียดรอบคอบ แสดงขั้นตอนการคิด ให้เหตุผลที่ชัดเจน'
+  },
+  code: {
+    model: 'llama-3.1-70b-versatile',
+    label: 'Code · Llama 3.1 70B',
+    color: 'var(--c-code)',
+    icon: '💻',
+    system: 'คุณคือ Dakno ผู้เชี่ยวชาญด้านการเขียนโค้ด ตอบเป็นภาษาไทย อธิบายโค้ดชัดเจน ใช้ code blocks เสมอ เขียนโค้ดที่ clean และ production-ready'
+  },
+  fast: {
+    model: 'llama-3.1-8b-instant',
+    label: 'Fast · Llama 3.1 8B',
+    color: 'var(--c-fast)',
+    icon: '⚡',
+    system: 'คุณคือ Dakno ตอบสั้น กระชับ ตรงประเด็น เป็นภาษาไทย ไม่ต้องยืดยาด'
+  },
+  lang: {
+    model: 'mistral-saba-24b',
+    label: 'Language · Mistral Saba',
+    color: 'var(--c-lang)',
+    icon: '🌍',
+    system: 'คุณคือ Dakno ผู้เชี่ยวชาญด้านภาษา แปลภาษา 
