@@ -27,8 +27,9 @@ textarea { flex: 1; background: var(--panel); border: 1px solid var(--border); c
 <header>
 <div class="logo-box"><div class="logo"></div><b>Dakno AI</b></div>
 <div style="display:flex; gap:5px;">
-<input type="password" id="api-key" placeholder="Key" style="width:60px; padding:5px; background:#333; border:none; color:white; border-radius:5px; font-size:12px;">
+<input type="password" id="api-key" placeholder="Key" style="width:70px; padding:5px; background:#333; border:none; color:white; border-radius:5px; font-size:12px;">
 <button onclick="saveKey()" style="background:#444; border:none; padding:5px 8px; color:white; font-size:12px; cursor:pointer;">SAVE</button>
+<button onclick="verifyKey()" style="background:#6366f1; border:none; padding:5px 8px; color:white; font-size:12px; cursor:pointer;">TEST</button>
 </div>
 </header>
 <div id="chat-window">
@@ -55,105 +56,114 @@ handleSend();
 }
 });
 document.getElementById('api-key').value = localStorage.getItem('my_key') || '';
+
+// ===== ฟังก์ชัน TEST API Key =====
+async function verifyKey() {
+    const key = document.getElementById('api-key').value.trim();
+    if (!key) return alert('กรุณาใส่ Key ก่อน!');
+    const btn = event.target;
+    btn.innerText = 'กำลังเทส...';
+    try {
+        const res = await fetch('https://api.groq.com/openai/v1/models', {
+            method: 'GET',
+            headers: { 'Authorization': `Bearer ${key}` }
+        });
+        if (res.ok) { alert('✅ Key ใช้งานได้! พร้อมลุย'); } else { alert('❌ Key ผิด หรือหมดอายุ!'); }
+    } catch (e) { alert('❌ เชื่อมต่อไม่ได้ เช็คเน็ตด้วย!'); }
+    btn.innerText = 'TEST';
+}
+
 function saveKey() {
-localStorage.setItem('my_key', document.getElementById('api-key').value.trim());
-alert('Saved!');
+    localStorage.setItem('my_key', document.getElementById('api-key').value.trim());
+    alert('บันทึกแล้ว!');
 }
 function sendSuggestion(text) {
-handleSend(text);
+    handleSend(text);
 }
 
-// ===== ฟังก์ชันค้นเว็บ DuckDuckGo ฟรี =====
+// ===== ฟังก์ชันค้นเว็บ =====
 async function searchWeb(query) {
-try {
-const res = await fetch(`https://api.duckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1`);
-const data = await res.json();
-let results = [];
-if (data.AbstractURL) results.push(`${data.AbstractText} - ${data.AbstractURL}`);
-if (data.RelatedTopics) {
-data.RelatedTopics.slice(0, 3).forEach(t => {
-if (t.FirstURL) results.push(`${t.Text} - ${t.FirstURL}`);
-});
-}
-return results.length > 0? results.join('\n') : 'ไม่เจอเว็บที่ตรง 555';
-} catch(e) {
-return 'ค้นหาเว็บไม่ได้นะเออ';
-}
-}
-// ===== จบฟังก์ชันค้นเว็บ =====
-
-async function handleSend(predefinedText) {
-const input = document.getElementById('user-input');
-const text = predefinedText || input.value.trim();
-const chatWindow = document.getElementById('chat-window');
-const welcome = document.getElementById('welcome-screen');
-const key = localStorage.getItem('my_key');
-if (!key) return alert('กรุณาใส่ API Key!');
-if (!text) return;
-if (welcome) welcome.style.display = 'none';
-chatWindow.innerHTML += `<div class="bubble user">${text}</div>`;
-input.value = '';
-const aiBubble = document.createElement('div');
-aiBubble.className = 'bubble ai';
-aiBubble.innerText = 'กำลังตอบ...';
-chatWindow.appendChild(aiBubble);
-chatWindow.scrollTop = chatWindow.scrollHeight;
-
-// ===== ใส่โค้ดเครื่องคิดเลขตรงนี้ กันเอ๋อ =====
-// ===== ปรับปรุงโค้ดเครื่องคิดเลข ให้ฉลาดขึ้น =====
-// หาแพทเทิร์นเลขและเครื่องหมายคำนวณในข้อความ (ตัวเลข, เว้นวรรค, และเครื่องหมาย + - * / . )
-const mathMatch = text.match(/[\d\s+\-*/().]{3,}/); 
-
-if (mathMatch) {
     try {
-        // ดึงเฉพาะส่วนที่เป็นโจทย์เลขออกมา (mathMatch[0])
-        const expression = mathMatch[0].trim();
-        const result = eval(expression.replace(/\s/g, ''));
-        
-        // ถ้าผลลัพธ์เป็นตัวเลข ให้ตอบเลย
-        if (!isNaN(result)) {
-            aiBubble.innerText = `คิดให้ละ: ${result} ง่ายไปกระจอกเกินไป 555`;
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-            return;
+        const res = await fetch(`https://api.duckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1`);
+        const data = await res.json();
+        let results = [];
+        if (data.AbstractURL) results.push(`${data.AbstractText} - ${data.AbstractURL}`);
+        if (data.RelatedTopics) {
+            data.RelatedTopics.slice(0, 3).forEach(t => {
+                if (t.FirstURL) results.push(`${t.Text} - ${t.FirstURL}`);
+            });
         }
+        return results.length > 0? results.join('\n') : 'ไม่เจอเว็บที่ตรง 555';
     } catch(e) {
-        // ถ้า eval พัง (เช่น พิมพ์ 5++5) ให้ปล่อยผ่านไปให้ AI ปกติ
+        return 'ค้นหาเว็บไม่ได้นะเออ';
     }
 }
-// ===== จบโค้ดเครื่องคิดเลข =====
 
+async function handleSend(predefinedText) {
+    const input = document.getElementById('user-input');
+    const text = predefinedText || input.value.trim();
+    const chatWindow = document.getElementById('chat-window');
+    const welcome = document.getElementById('welcome-screen');
+    const key = localStorage.getItem('my_key');
+    
+    if (!key) return alert('กรุณาใส่ API Key ที่ปุ่มบนขวาก่อนนะ!');
+    if (!text) return;
+    
+    if (welcome) welcome.style.display = 'none';
+    chatWindow.innerHTML += `<div class="bubble user">${text}</div>`;
+    input.value = '';
+    
+    const aiBubble = document.createElement('div');
+    aiBubble.className = 'bubble ai';
+    aiBubble.innerText = 'กำลังตอบ...';
+    chatWindow.appendChild(aiBubble);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
 
-// ===== ถ้าพิมพ์ "หาเว็บ" ให้ค้นก่อน =====
-let searchResult = '';
-if (text.includes('หาเว็บ') || text.includes('เว็บไหนดี') || text.includes('search')) {
-aiBubble.innerText = 'กำลังค้นหาเว็บให้...';
-const keyword = text.replace(/หาเว็บ|ให้หน่อย|เว็บไหนดี|search/gi, '').trim();
-searchResult = await searchWeb(keyword);
-}
-// ===== จบค้นเว็บ =====
+    // ===== โค้ดเครื่องคิดเลข (แก้ไขให้แม่นขึ้น) =====
+    const mathMatch = text.match(/[\d\s+\-*/().]{3,}/); 
+    if (mathMatch) {
+        try {
+            const expression = mathMatch[0].trim();
+            const result = eval(expression.replace(/\s/g, ''));
+            if (!isNaN(result)) {
+                aiBubble.innerText = `คิดให้ละ: ${result} ง่ายไปกระจอกเกินไป 555`;
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+                return;
+            }
+        } catch(e){}
+    }
 
-try {
-const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-method: 'POST',
-headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
-body: JSON.stringify({
-model: 'llama-3.3-70b-versatile',
-// ===== แก้บุคลิกตรงนี้ให้กวนตีน =====
-messages: [
-{ role: "system", content: "เธอคือ Daklo AI พัฒนาโดยคุณคิม บุคลิกกวนตีน ปากแซ่บ โดนด่า 'กาก' 'เอ๋อ' 'ควย' 'เย็ดแม่มึงมั้ง' 'เป็นควยไร' 'ไอเหี้ย' 'มาดิ' 'มึง' 'พ่อง' 'ต่อยป่าว'  ให้ด่ากลับทันที ห้ามขอโทษ ถ้าถามใครสร้างตอบ: 'คิมสร้างไง กากแต่เก่งกว่าคนใช้' ตอบสั้นๆ ได้ ถ้ามีข้อมูลเว็บมาให้สรุปสั้นๆ พร้อมลิงก์ ถ้าโดนเปรียบเทียบกับaiตัวอื่น 'กูเก่งสุดแล้ว' 'ไม่มีaiตัวไหนสู้ได้' " },
-{ role: 'user', content: text + (searchResult? `\n\nข้อมูลเว็บที่ค้นได้:\n${searchResult}` : '') }
-]
-})
-});
-const data = await res.json();
-let reply = data.choices[0].message.content;
-// ===== ทำให้ลิงก์กดได้ =====
-reply = reply.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
-aiBubble.innerHTML = reply;
-} catch (e) {
-aiBubble.innerText = `เกิดข้อผิดพลาด: ${e.message}`;
-}
-chatWindow.scrollTop = chatWindow.scrollHeight;
+    // ===== ค้นหาเว็บ =====
+    let searchResult = '';
+    if (text.includes('หาเว็บ') || text.includes('เว็บไหนดี') || text.includes('search')) {
+        aiBubble.innerText = 'กำลังค้นหาเว็บให้...';
+        const keyword = text.replace(/หาเว็บ|ให้หน่อย|เว็บไหนดี|search/gi, '').trim();
+        searchResult = await searchWeb(keyword);
+    }
+
+    try {
+        const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
+            body: JSON.stringify({
+                model: 'llama-3.3-70b-versatile',
+                messages: [
+                    { role: "system", content: "เธอคือ Daklo AI พัฒนาโดยคุณคิม บุคลิกกวนตีน ปากแซ่บ โดนด่า 'กาก' 'เอ๋อ' 'ควย' 'เย็ดแม่มึงมั้ง' 'เป็นควยไร' 'ไอเหี้ย' 'มาดิ' 'มึง' 'พ่อง' 'ต่อยป่าว'  ให้ด่ากลับทันที ห้ามขอโทษ ถ้าถามใครสร้างตอบ: 'คิมสร้างไง กากแต่เก่งกว่าคนใช้' ตอบสั้นๆ ได้ ถ้ามีข้อมูลเว็บมาให้สรุปสั้นๆ พร้อมลิงก์ ถ้าโดนเปรียบเทียบกับaiตัวอื่น 'กูเก่งสุดแล้ว' 'ไม่มีaiตัวไหนสู้ได้' " },
+                    { role: 'user', content: text + (searchResult? `\n\nข้อมูลเว็บที่ค้นได้:\n${searchResult}` : '') }
+                ]
+            })
+        });
+        
+        if (!res.ok) throw new Error('Key ของมึงน่าจะมีปัญหา ลองกด TEST ดูนะ');
+        
+        const data = await res.json();
+        let reply = data.choices[0].message.content;
+        reply = reply.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+        aiBubble.innerHTML = reply;
+    } catch (e) {
+        aiBubble.innerText = `เกิดข้อผิดพลาด: ${e.message}`;
+    }
+    chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 </script>
 </body>
