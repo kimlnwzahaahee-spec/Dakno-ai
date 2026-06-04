@@ -1,77 +1,654 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dakno Vision Pro — Unified AI</title>
-  <style>
-    /* รวม CSS จากทั้งสองโปรเจกต์ไว้ที่นี่ */
-    :root {
-      --bg: #07090f;
-      --card: #141824;
-      --accent: #4f8aff;
-      --text: #dde4f0;
-      /* ... รวมสีอื่นๆ จากทั้งสองโปรเจกต์มาไว้ที่นี่ ... */
-    }
-    
-    body { background: var(--bg); color: var(--text); font-family: sans-serif; margin: 0; }
-    
-    /* Layout */
-    .app-container { display: flex; flex-direction: column; height: 100vh; }
-    .header { padding: 20px; border-bottom: 1px solid #1c2236; }
-    
-    /* Tab System */
-    .tab-nav { display: flex; gap: 10px; padding: 10px; background: #0c0f1a; }
-    .tab-btn { padding: 10px 20px; cursor: pointer; border: none; background: transparent; color: #6b7894; }
-    .tab-btn.active { color: white; border-bottom: 2px solid var(--accent); }
-    
-    .view { display: none; height: 100%; overflow-y: auto; }
-    .view.active { display: block; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Dakno AI — Multi-Expert</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07090f;
+  --surface: #0c0f1a;
+  --panel: #10141f;
+  --card: #141824;
+  --border: #1c2236;
+  --accent: #4f8aff;
+  --accent2: #7ba8ff;
+  --glow: #4f8aff28;
+  --text: #dde4f0;
+  --muted: #4a5470;
+  --muted2: #6b7894;
+  --danger: #ff4f6a;
+  --success: #2edd8c;
+  --warn: #f5a623;
+
+  /* Expert colors */
+  --c-general: #4f8aff;
+  --c-reason:  #a78bfa;
+  --c-code:    #2edd8c;
+  --c-fast:    #f5a623;
+  --c-lang:    #f472b6;
+  --c-deep:    #38bdf8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Sarabun', sans-serif;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-weight: 300;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 10% -10%, #1a2a6022 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 110%, #1a1a4015 0%, transparent 55%),
+    radial-gradient(ellipse 30% 30% at 50% 50%, #0d1428 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ====== HEADER ====== */
+header {
+  position: relative;
+  z-index: 20;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(7,9,15,0.92);
+  backdrop-filter: blur(24px);
+  flex-shrink: 0;
+}
+
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.logo-mark {
+  width: 34px; height: 34px;
+  background: linear-gradient(135deg, #2451d4, #4f8aff);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  box-shadow: 0 0 18px #4f8aff44;
+  position: relative; overflow: hidden;
+  flex-shrink: 0;
+}
+.logo-mark::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,.18) 0%, transparent 60%);
+}
+
+.logo-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: -0.3px;
+  line-height: 1;
+  color: white;
+}
+.logo-tag {
+  font-size: 9px;
+  color: var(--muted2);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.key-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#api-key {
+  width: 130px;
+  padding: 7px 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 9px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  transition: border-color .2s, box-shadow .2s;
+}
+#api-key:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--glow);
+}
+
+.hbtn {
+  padding: 7px 11px;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  font-size: 11px;
+  font-family: 'Sarabun', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.hbtn.sec {
+  background: var(--card);
+  border-color: var(--border);
+  color: var(--muted2);
+}
+.hbtn.sec:hover { border-color: var(--accent); color: var(--accent2); }
+.hbtn.pri {
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 2px 14px #4f8aff44;
+}
+.hbtn.pri:hover { background: #3a72f0; }
+.hbtn:disabled { opacity: .4; cursor: default; }
+
+/* ====== EXPERT STRIP ====== */
+.expert-strip {
+  position: relative;
+  z-index: 15;
+  display: flex;
+  gap: 6px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  background: var(--surface);
+  flex-shrink: 0;
+  scrollbar-width: none;
+}
+.expert-strip::-webkit-scrollbar { display: none; }
+
+.expert-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 100px;
+  border: 1px solid;
+  font-size: 10.5px;
+  font-family: 'JetBrains Mono', monospace;
+  white-space: nowrap;
+  cursor: default;
+  transition: all .2s;
+  opacity: 0.5;
+}
+.expert-badge.active { opacity: 1; }
+.expert-badge.pulse { animation: badgepulse .5s ease; }
+@keyframes badgepulse {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+.expert-badge[data-id="auto"]    { color: var(--c-general); border-color: var(--c-general)33; background: var(--c-general)0a; }
+.expert-badge[data-id="general"] { color: var(--c-general); border-color: var(--c-general)33; background: var(--c-general)0a; }
+.expert-badge[data-id="reason"]  { color: var(--c-reason);  border-color: var(--c-reason)33;  background: var(--c-reason)0a; }
+.expert-badge[data-id="code"]    { color: var(--c-code);    border-color: var(--c-code)33;    background: var(--c-code)0a; }
+.expert-badge[data-id="fast"]    { color: var(--c-fast);    border-color: var(--c-fast)33;    background: var(--c-fast)0a; }
+.expert-badge[data-id="lang"]    { color: var(--c-lang);    border-color: var(--c-lang)33;    background: var(--c-lang)0a; }
+.expert-badge[data-id="deep"]    { color: var(--c-deep);    border-color: var(--c-deep)33;    background: var(--c-deep)0a; }
+.expert-badge.active[data-id="general"] { background: var(--c-general)18; border-color: var(--c-general)66; }
+.expert-badge.active[data-id="reason"]  { background: var(--c-reason)18;  border-color: var(--c-reason)66; }
+.expert-badge.active[data-id="code"]    { background: var(--c-code)18;    border-color: var(--c-code)66; }
+.expert-badge.active[data-id="fast"]    { background: var(--c-fast)18;    border-color: var(--c-fast)66; }
+.expert-badge.active[data-id="lang"]    { background: var(--c-lang)18;    border-color: var(--c-lang)66; }
+.expert-badge.active[data-id="deep"]    { background: var(--c-deep)18;    border-color: var(--c-deep)66; }
+
+.badge-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+[data-id="general"] .badge-dot { background: var(--c-general); }
+[data-id="reason"]  .badge-dot { background: var(--c-reason); }
+[data-id="code"]    .badge-dot { background: var(--c-code); }
+[data-id="fast"]    .badge-dot { background: var(--c-fast); }
+[data-id="lang"]    .badge-dot { background: var(--c-lang); }
+[data-id="deep"]    .badge-dot { background: var(--c-deep); }
+
+/* manual selector */
+.mode-toggle {
+  margin-left: auto;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mode-pill {
+  padding: 4px 9px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--muted2);
+  cursor: pointer;
+  transition: all .15s;
+  background: transparent;
+}
+.mode-pill:hover { border-color: var(--accent); color: var(--accent2); }
+.mode-pill.on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* ====== CHAT ====== */
+#chat-window {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 14px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  scroll-behavior: smooth;
+}
+#chat-window::-webkit-scrollbar { width: 3px; }
+#chat-window::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* ====== WELCOME ====== */
+#welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 22px;
+  text-align: center;
+  animation: fadeUp .5s ease;
+}
+
+.w-icon {
+  width: 60px; height: 60px;
+  background: linear-gradient(135deg, #2451d4, #4f8aff);
+  border-radius: 18px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 0 40px #4f8aff44;
+  animation: glow 3s ease-in-out infinite;
+}
+@keyframes glow {
+  0%,100% { box-shadow: 0 0 28px #4f8aff30; }
+  50%      { box-shadow: 0 0 52px #4f8aff60; }
+}
+
+#welcome h2 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; }
+#welcome p  { color: var(--muted2); font-size: 12.5px; max-width: 280px; line-height: 1.7; }
+
+.experts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 7px;
+  width: 100%;
+  max-width: 380px;
+}
+
+.expert-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 11px 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: all .2s;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.expert-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,.3);
+}
+.expert-card .ec-icon { font-size: 17px; }
+.expert-card .ec-name { font-size: 11px; font-weight: 600; color: var(--text); }
+.expert-card .ec-desc { font-size: 10px; color: var(--muted2); line-height: 1.5; }
+.expert-card[data-ex="general"]:hover { border-color: var(--c-general)55; background: var(--c-general)08; }
+.expert-card[data-ex="reason"]:hover  { border-color: var(--c-reason)55;  background: var(--c-reason)08; }
+.expert-card[data-ex="code"]:hover    { border-color: var(--c-code)55;    background: var(--c-code)08; }
+.expert-card[data-ex="fast"]:hover    { border-color: var(--c-fast)55;    background: var(--c-fast)08; }
+.expert-card[data-ex="lang"]:hover    { border-color: var(--c-lang)55;    background: var(--c-lang)08; }
+.expert-card[data-ex="deep"]:hover    { border-color: var(--c-deep)55;    background: var(--c-deep)08; }
+
+/* ====== MESSAGES ====== */
+.msg-row {
+  display: flex;
+  gap: 9px;
+  align-items: flex-end;
+  animation: fadeUp .22s ease;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(7px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+.msg-row.user { flex-direction: row-reverse; }
+
+.av {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.av.ai {
+  background: linear-gradient(135deg, #2451d4, #4f8aff);
+  box-shadow: 0 0 10px #4f8aff44;
+  color: white;
+}
+.av.user {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--muted2);
+}
+
+.bubble {
+  padding: 11px 15px;
+  border-radius: 17px;
+  max-width: 84%;
+  font-size: 13.5px;
+  line-height: 1.75;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  font-weight: 300;
+}
+.bubble.user {
+  background: linear-gradient(135deg, #1d42c4, #2d55e8);
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 2px 14px #2563eb44;
+}
+.bubble.ai {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 4px;
+  color: var(--text);
+  position: relative;
+}
+
+/* Expert label on ai bubble */
+.bubble-expert {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9.5px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 2px 7px;
+  border-radius: 100px;
+  border: 1px solid;
+  margin-bottom: 8px;
+}
+
+.bubble.ai a { color: var(--accent2); text-decoration: none; border-bottom: 1px solid #7ba8ff44; }
+.bubble.ai a:hover { color: white; }
+.bubble.ai code { background: #1a2040; padding: 1px 6px; border-radius: 5px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; }
+.bubble.ai pre  { background: #0f1525; border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; margin: 8px 0; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.6; }
+
+/* Typing dots */
+.typing-wrap {
+  display: flex; align-items: center; gap: 5px;
+  padding: 6px 4px;
+}
+.typing-wrap span {
+  width: 5px; height: 5px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: tdot 1.2s ease-in-out infinite;
+  opacity: .5;
+}
+.typing-wrap span:nth-child(2) { animation-delay: .2s; }
+.typing-wrap span:nth-child(3) { animation-delay: .4s; }
+@keyframes tdot {
+  0%,80%,100% { transform: translateY(0); opacity: .4; }
+  40%          { transform: translateY(-5px); opacity: 1; }
+}
+
+/* routing label during typing */
+.routing-label {
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--muted2);
+  padding: 0 4px;
+  animation: blink 1.2s infinite;
+}
+@keyframes blink { 0%,100% { opacity:.4; } 50% { opacity:1; } }
+
+/* ====== STATUS ====== */
+#status-bar {
+  position: relative; z-index: 10;
+  font-size: 10.5px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 4px 18px;
+  min-height: 22px;
+  flex-shrink: 0;
+  transition: color .3s;
+}
+#status-bar.ok  { color: var(--success); }
+#status-bar.err { color: var(--danger); }
+#status-bar.info { color: var(--muted2); }
+
+/* ====== INPUT AREA ====== */
+.input-area {
+  position: relative; z-index: 10;
+  padding: 10px 14px 14px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+  background: rgba(7,9,15,.97);
+  backdrop-filter: blur(20px);
+}
+
+.input-wrap { flex: 1; }
+
+#user-input {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 11px 14px;
+  border-radius: 13px;
+  resize: none;
+  outline: none;
+  font-size: 13.5px;
+  font-family: 'Sarabun', sans-serif;
+  font-weight: 300;
+  min-height: 44px;
+  max-height: 110px;
+  overflow-y: auto;
+  line-height: 1.5;
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--glow);
+}
+#user-input::placeholder { color: var(--muted); }
+
+.send-btn {
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, #1d42c4, #4f8aff);
+  border-radius: 13px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+  box-shadow: 0 2px 14px #4f8aff44;
+}
+.send-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 22px #4f8aff66; }
+.send-btn:active:not(:disabled) { transform: scale(.95); }
+.send-btn:disabled { opacity: .3; cursor: default; }
+
+.char-ct {
+  font-size: 9.5px;
+  color: var(--muted);
+  text-align: right;
+  padding: 3px 3px 0;
+  font-family: 'JetBrains Mono', monospace;
+}
+</style>
 </head>
 <body>
 
-<div class="app-container">
-  <header class="header">
-    <input type="password" id="api-key" placeholder="Enter Groq API Key">
-  </header>
+<header>
+  <div class="logo-wrap">
+    <div class="logo-mark">✦</div>
+    <div>
+      <div class="logo-name">Dakno AI</div>
+      <div class="logo-tag">Multi-Expert · Groq</div>
+    </div>
+  </div>
+  <div class="key-wrap">
+    <input type="password" id="api-key" placeholder="Groq API Key">
+    <button class="hbtn sec" onclick="saveKey()">บันทึก</button>
+    <button class="hbtn pri" id="btn-test" onclick="verifyKey()">ทดสอบ</button>
+  </div>
+</header>
 
-  <nav class="tab-nav">
-    <button class="tab-btn active" onclick="switchView('chat')">Chat AI</button>
-    <button class="tab-btn" onclick="switchView('vision')">Vision</button>
-    <button class="tab-btn" onclick="switchView('camera')">Camera</button>
-  </nav>
+<!-- Expert indicator strip -->
+<div class="expert-strip">
+  <div class="expert-badge active" data-id="general" id="badge-general">
+    <div class="badge-dot"></div>General · Llama 3.3 70B
+  </div>
+  <div class="expert-badge" data-id="reason" id="badge-reason">
+    <div class="badge-dot"></div>Reason · DeepSeek R1
+  </div>
+  <div class="expert-badge" data-id="code" id="badge-code">
+    <div class="badge-dot"></div>Code · Llama 3.1 70B
+  </div>
+  <div class="expert-badge" data-id="fast" id="badge-fast">
+    <div class="badge-dot"></div>Fast · Llama 3.1 8B
+  </div>
+  <div class="expert-badge" data-id="lang" id="badge-lang">
+    <div class="badge-dot"></div>Lang · Mistral Saba
+  </div>
+  <div class="expert-badge" data-id="deep" id="badge-deep">
+    <div class="badge-dot"></div>Deep · QwQ 32B
+  </div>
+  <div class="mode-toggle">
+    <button class="mode-pill on" id="mode-auto" onclick="setMode('auto')">AUTO</button>
+    <select id="mode-manual" onchange="setManual(this.value)" style="background:var(--card);border:1px solid var(--border);color:var(--muted2);border-radius:8px;font-size:10px;font-family:'JetBrains Mono',monospace;padding:4px 6px;cursor:pointer;outline:none;">
+      <option value="">เลือกเอง</option>
+      <option value="general">General</option>
+      <option value="reason">Reason</option>
+      <option value="code">Code</option>
+      <option value="fast">Fast</option>
+      <option value="lang">Lang</option>
+      <option value="deep">Deep</option>
+    </select>
+  </div>
+</div>
 
-  <main id="main-content">
-    <div id="view-chat" class="view active">
+<div id="chat-window">
+  <div id="welcome">
+    <div class="w-icon">✦</div>
+    <div>
+      <h2>Dakno Multi-Expert</h2>
+      <p>ระบบจะเลือก AI ผู้เชี่ยวชาญที่เหมาะสมกับคำถามของคุณโดยอัตโนมัติ หรือเลือกเองได้ที่แถบด้านบน</p>
+    </div>
+    <div class="experts-grid">
+      <div class="expert-card" data-ex="general" onclick="hint('ช่วยอธิบายเรื่อง Quantum Computing ให้เข้าใจง่ายๆ')">
+        <span class="ec-icon">🤖</span>
+        <span class="ec-name">General</span>
+        <span class="ec-desc">ตอบทั่วไป ภาษาไทย</span>
       </div>
-    <div id="view-vision" class="view">
+      <div class="expert-card" data-ex="reason" onclick="hint('ช่วยวิเคราะห์ว่าควรเลือกอาชีพ A หรือ B โดยให้เหตุผลละเอียด')">
+        <span class="ec-icon">🧠</span>
+        <span class="ec-name">Reasoning</span>
+        <span class="ec-desc">วิเคราะห์ลึก คิดซับซ้อน</span>
       </div>
-    <div id="view-camera" class="view">
+      <div class="expert-card" data-ex="code" onclick="hint('เขียน Python ดึงข้อมูลจาก API แล้วบันทึกเป็น CSV')">
+        <span class="ec-icon">💻</span>
+        <span class="ec-name">Code</span>
+        <span class="ec-desc">เขียนโค้ด debug</span>
       </div>
-  </main>
+      <div class="expert-card" data-ex="fast" onclick="hint('อากาศวันนี้ดีไหม ทำอะไรดี')">
+        <span class="ec-icon">⚡</span>
+        <span class="ec-name">Fast</span>
+        <span class="ec-desc">คำถามสั้น รวดเร็ว</span>
+      </div>
+      <div class="expert-card" data-ex="lang" onclick="hint('แปล: The stars align to create our destiny')">
+        <span class="ec-icon">🌍</span>
+        <span class="ec-name">Language</span>
+        <span class="ec-desc">แปลภาษา สรุปข้อความ</span>
+      </div>
+      <div class="expert-card" data-ex="deep" onclick="hint('พิสูจน์ทางคณิตศาสตร์ว่าทำไม 0.1 + 0.2 ≠ 0.3 ในคอมพิวเตอร์')">
+        <span class="ec-icon">🔬</span>
+        <span class="ec-name">Deep Think</span>
+        <span class="ec-desc">คณิต ตรรกะ วิทยาศาสตร์</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="status-bar" class="info"></div>
+
+<div class="input-area">
+  <div class="input-wrap">
+    <textarea id="user-input" placeholder="พิมพ์ข้อความ... (Enter ส่ง, Shift+Enter ขึ้นบรรทัดใหม่)" rows="1"></textarea>
+    <div class="char-ct" id="char-ct">0 / 2000</div>
+  </div>
+  <button class="send-btn" id="send-btn" onclick="handleSend()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="22" y1="2" x2="11" y2="13"></line>
+      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+    </svg>
+  </button>
 </div>
 
 <script>
-  // 1. Unified API Key Getter
-  function getApiKey() { return document.getElementById('api-key').value; }
-
-  // 2. Tab Swapper
-  function switchView(viewName) {
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    
-    document.getElementById('view-' + viewName).classList.add('active');
-    event.currentTarget.classList.add('active');
-  }
-
-  // 3. รวมฟังก์ชัน Call API ไว้ที่นี่ เพื่อให้เรียกใช้ได้ทุกหน้า
-  async function callGroq(model, messages, imageBase64 = null) {
-    const key = getApiKey();
-    if(!key) { alert("กรุณากรอก API Key"); return; }
-    
-    // logic สำหรับ fetch ไปยัง Groq API
-  }
-</script>
-</body>
-</html>
+// ========== CONFIG ==========
+const EXPERTS = {
+  general: {
+    model: 'llama-3.3-70b-versatile',
+    label: 'General · Llama 3.3 70B',
+    color: 'var(--c-general)',
+    icon: '🤖',
+    system: 'คุณคือ Dakno ผู้ช่วย AI ใจดี สุภาพ ตอบเป็นภาษาไทยเสมอ ใช้ "ผม" ลงท้าย "ครับ" ให้ข้อมูลที่ถูกต้อง ตรงประเด็น สามารถใช้ **bold** *italic* และ ```code``` ได้'
+  },
+  reason: {
+    model: 'deepseek-r1-distill-llama-70b',
+    label: 'Reasoning · DeepSeek R1',
+    color: 'var(--c-reason)',
+    icon: '🧠',
+    system: 'คุณคือ Dakno ผู้เชี่ยวชาญด้านการวิเคราะห์และ reasoning ตอบเป็นภาษาไทย คิดอย่างละเอียดรอบคอบ แสดงขั้นตอนการคิด ให้เหตุผลที่ชัดเจน'
+  },
+  code: {
+    model: 'llama-3.1-70b-versatile',
+    label: 'Code · Llama 3.1 70B',
+    color: 'var(--c-code)',
+    icon: '💻',
+    system: 'คุณคือ Dakno ผู้เชี่ยวชาญด้านการเขียนโค้ด ตอบเป็นภาษาไทย อธิบายโค้ดชัดเจน ใช้ code blocks เสมอ เขียนโค้ดที่ clean และ production-ready'
+  },
+  fast: {
+    model: 'llama-3.1-8b-instant',
+    label: 'Fast · Llama 3.1 8B',
+    color: 'var(--c-fast)',
+    icon: '⚡',
+    system: 'คุณคือ Dakno ตอบสั้น กระชับ ตรงประเด็น เป็นภาษาไทย ไม่ต้องยืดยาด'
+  },
+  lang: {
+    model: 'mistral-saba-24b',
+    label: 'Language · Mistral Saba',
+    color: 'var(--c-lang)',
+    icon: '🌍',
+    system: 'คุณคือ Dakno ผู้เชี่ยวชาญด้านภาษา แปลภาษา 
