@@ -110,7 +110,7 @@ messages: [
 const data = await res.json();
 aiBubble.innerText = data.choices[0].message.content;
 } catch (e) {
-aiBubble.innerText = 'เกิดข้อผิดพลาด:${e.message}';
+aiBubble.innerText = 'เกิดข้อผิดพลาด: ${e.message}';
 }
 chatWindow.scrollTop = chatWindow.scrollHeight;
 }
