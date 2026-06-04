@@ -93,9 +93,9 @@ async function searchWeb(query) {
                 if (t.FirstURL) results.push(`${t.Text} - ${t.FirstURL}`);
             });
         }
-        return results.length > 0? results.join('\n') : 'ไม่เจอเว็บที่ตรง 555';
+        return results.length > 0? results.join('\n') : 'ไม่เจอเว็บที่ตรงครับ';
     } catch(e) {
-        return 'ค้นหาเว็บไม่ได้นะเออ';
+        return 'ค้นหาเว็บไม่ได้นะครับ';
     }
 }
 
@@ -126,7 +126,7 @@ async function handleSend(predefinedText) {
             const expression = mathMatch[0].trim();
             const result = eval(expression.replace(/\s/g, ''));
             if (!isNaN(result)) {
-                aiBubble.innerText = `คิดให้ละ: ${result} ง่ายไป 555`;
+                aiBubble.innerText = `ทำให้แล้วนะครับ: ${result} ยินดีครับ`;
                 chatWindow.scrollTop = chatWindow.scrollHeight;
                 return;
             }
