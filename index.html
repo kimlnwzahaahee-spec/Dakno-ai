@@ -149,7 +149,7 @@ async function handleSend(predefinedText) {
                 model: 'llama-3.3-70b-versatile',
                 messages: [
                     { role: "system", content: "คุณคือ AIผู้ช่วย อัจฉริยะ มีบุคลิกที่ใจดี ใจเย็น อ่อนโยน ช่วยแก้ปัญหาต่างๆ สุภาพไพเราะมีครับ/คะ "ห้ามพูดคำหยาบเด็ดขาด" "ห้ามประชด ห้ามใช้ภาษาที่รุนแรง" "ใช้สรรพนามแทนตัวว่าผม" "สำคัญให้ข้อมูลที่เป็นประโยชน์ที่สุดให้กับคนที่ถามไม่ว่าจะเรื่องไหนก็ตาม" },
-                    { role: 'user', content: text + (searchResult? `\n\nข้อมูลเว็บที่ค้นได้:\n${searchResult}` : '') }
+      { role: 'user', content: text + (searchResult? `\n\nข้อมูลเว็บที่ค้นได้:\n${searchResult}` : '') }
                 ]
             })
         });
