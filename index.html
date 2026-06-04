@@ -4,357 +4,882 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Dakno AI — 12 Experts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #07090f; --surface: #0c0f1a; --panel: #10141f;
-      --card: #141824; --border: #1c2236; --accent: #4f8aff;
-      --accent2: #7ba8ff; --glow: #4f8aff28; --text: #dde4f0;
-      --muted: #4a5470; --muted2: #6b7894; --danger: #ff4f6a;
-      --success: #2edd8c; --warn: #f5a623;
+      --bg: #07090f;
+      --surface: #0c0f1a;
+      --panel: #10141f;
+      --card: #141824;
+      --border: #1c2236;
+      --accent: #4f8aff;
+      --accent2: #7ba8ff;
+      --glow: #4f8aff28;
+      --text: #dde4f0;
+      --muted: #4a5470;
+      --muted2: #6b7894;
+      --danger: #ff4f6a;
+      --success: #2edd8c;
+      --warn: #f5a623;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      background: var(--bg); color: var(--text);
-      font-family: 'Sarabun', sans-serif; height: 100dvh;
-      display: flex; flex-direction: column; overflow: hidden;
-      font-weight: 300; position: relative;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Sarabun', sans-serif;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      font-weight: 300;
+      position: relative;
     }
+
     body::before {
-      content: ''; position: fixed; inset: 0;
-      background: radial-gradient(ellipse 70% 50% at 10% -10%, #1a2a6022 0%, transparent 60%),
-                  radial-gradient(ellipse 50% 40% at 90% 110%, #1a1a4015 0%, transparent 55%),
-                  radial-gradient(ellipse 30% 30% at 50% 50%, #0d1428 0%, transparent 70%);
-      pointer-events: none; z-index: 0;
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 10% -10%, #1a2a6022 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 90% 110%, #1a1a4015 0%, transparent 55%),
+        radial-gradient(ellipse 30% 30% at 50% 50%, #0d1428 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
     }
 
-    /* Header */
+    /* ====== HEADER (scrollable) ====== */
     header {
-      z-index: 20; padding: 12px 14px; border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between; gap: 8px;
-      background: rgba(7,9,15,0.92); backdrop-filter: blur(24px); flex-shrink: 0;
-    }
-    .logo-wrap { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-    .logo-mark {
-      width: 28px; height: 28px; background: linear-gradient(135deg, #2451d4, #4f8aff);
-      border-radius: 8px; display: flex; align-items: center; justify-content: center;
-      font-size: 13px; box-shadow: 0 0 14px #4f8aff44;
-    }
-    .logo-name { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px; color: white; }
-    .logo-tag { font-size: 7px; color: var(--muted2); letter-spacing: 1px; font-family: 'JetBrains Mono', monospace; }
-    .key-wrap { display: flex; align-items: center; gap: 4px; }
-    #api-key { width: 80px; padding: 5px 6px; background: var(--card); border: 1px solid var(--border); color: var(--text); border-radius: 8px; font-size: 10px; font-family: 'JetBrains Mono', monospace; }
-    #api-key:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px var(--glow); }
-    .hbtn { padding: 5px 8px; border-radius: 7px; border: 1px solid transparent; font-size: 10px; font-weight: 500; cursor: pointer; transition: all .2s; }
-    .hbtn.sec { background: var(--card); border-color: var(--border); color: var(--muted2); }
-    .hbtn.sec:hover { border-color: var(--accent); color: var(--accent2); }
-    .hbtn.pri { background: var(--accent); color: white; box-shadow: 0 2px 10px #4f8aff44; }
+      position: relative;
+      z-index: 20;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: rgba(7, 9, 15, 0.92);
+      backdrop-filter: blur(24px);
+      flex-shrink: 0;
 
-    /* Expert Strip */
+      /* Scroll horizontal on mobile */
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      flex-wrap: nowrap;
+    }
+
+    header::-webkit-scrollbar {
+      display: none;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, #2451d4, #4f8aff);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      box-shadow: 0 0 18px #4f8aff44;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .logo-mark::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, .18) 0%, transparent 60%);
+    }
+
+    .logo-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: -0.3px;
+      line-height: 1;
+      color: white;
+    }
+
+    .logo-tag {
+      font-size: 9px;
+      color: var(--muted2);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .key-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0; /* Prevents shrinking when header scrolls */
+    }
+
+    #api-key {
+      width: 130px;
+      padding: 7px 10px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 9px;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    #api-key:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--glow);
+    }
+
+    .hbtn {
+      padding: 7px 11px;
+      border-radius: 9px;
+      border: 1px solid transparent;
+      font-size: 11px;
+      font-family: 'Sarabun', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .2s;
+      white-space: nowrap;
+      touch-action: manipulation;
+    }
+
+    .hbtn.sec {
+      background: var(--card);
+      border-color: var(--border);
+      color: var(--muted2);
+    }
+
+    .hbtn.sec:hover {
+      border-color: var(--accent);
+      color: var(--accent2);
+    }
+
+    .hbtn.pri {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 2px 14px #4f8aff44;
+    }
+
+    .hbtn.pri:hover {
+      background: #3a72f0;
+    }
+
+    .hbtn:disabled {
+      opacity: .4;
+      cursor: default;
+    }
+
+    /* ====== EXPERT STRIP ====== */
     .expert-strip {
-      z-index: 15; display: flex; gap: 4px; padding: 6px 10px;
-      border-bottom: 1px solid var(--border); overflow-x: auto;
-      background: var(--surface); flex-shrink: 0; scrollbar-width: none;
+      position: relative;
+      z-index: 15;
+      display: flex;
+      gap: 6px;
+      padding: 8px 16px;
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      background: var(--surface);
+      flex-shrink: 0;
+      scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
     }
-    .expert-strip::-webkit-scrollbar { display: none; }
+
+    .expert-strip::-webkit-scrollbar {
+      display: none;
+    }
+
     .expert-badge {
-      display: flex; align-items: center; gap: 3px; padding: 3px 7px;
-      border-radius: 100px; border: 1px solid; font-size: 9px;
-      font-family: 'JetBrains Mono', monospace; white-space: nowrap;
-      cursor: default; transition: all .2s; opacity: 0.45; flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 10px;
+      border-radius: 100px;
+      border: 1px solid;
+      font-size: 10.5px;
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+      cursor: default;
+      transition: all .2s;
+      opacity: 0.5;
     }
-    .expert-badge.active { opacity: 1; transform: scale(1.02); }
-    .badge-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
-    .mode-toggle { margin-left: auto; display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
-    .mode-pill { padding: 2px 6px; border-radius: 100px; border: 1px solid var(--border); font-size: 8px; font-family: 'JetBrains Mono', monospace; color: var(--muted2); cursor: pointer; background: transparent; }
-    .mode-pill.on { background: var(--accent); border-color: var(--accent); color: white; }
-    #mode-manual { background: var(--card); border: 1px solid var(--border); color: var(--muted2); border-radius: 6px; font-size: 8px; font-family: 'JetBrains Mono', monospace; padding: 2px 4px; outline: none; }
 
-    /* Chat */
+    .expert-badge.active {
+      opacity: 1;
+    }
+
+    .expert-badge.pulse {
+      animation: badgepulse .5s ease;
+    }
+
+    @keyframes badgepulse {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.12); }
+      100% { transform: scale(1); }
+    }
+
+    .badge-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .mode-toggle {
+      margin-left: auto;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .mode-pill {
+      padding: 4px 9px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--muted2);
+      cursor: pointer;
+      transition: all .15s;
+      background: transparent;
+      touch-action: manipulation;
+    }
+
+    .mode-pill:hover {
+      border-color: var(--accent);
+      color: var(--accent2);
+    }
+
+    .mode-pill.on {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    #mode-manual {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted2);
+      border-radius: 8px;
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 4px 6px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    /* ====== CHAT WINDOW ====== */
     #chat-window {
-      z-index: 1; flex: 1; overflow-y: auto; padding: 10px 8px;
-      display: flex; flex-direction: column; gap: 10px;
-      scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px 14px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
     }
-    #chat-window::-webkit-scrollbar { width: 2px; }
-    #chat-window::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-    #welcome { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 18px; text-align: center; }
-    .w-icon { width: 50px; height: 50px; background: linear-gradient(135deg, #2451d4, #4f8aff); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: 0 0 30px #4f8aff44; }
-    #welcome h2 { font-family: 'Syne', sans-serif; font-size: 16px; }
-    #welcome p { color: var(--muted2); font-size: 11px; max-width: 260px; line-height: 1.6; }
-    .experts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; width: 100%; max-width: 340px; margin-top: 4px; }
-    .expert-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 8px 6px; cursor: pointer; text-align: left; transition: all .15s; display: flex; flex-direction: column; gap: 3px; }
-    .expert-card:active { transform: scale(0.96); }
-    .expert-card .ec-icon { font-size: 14px; }
-    .expert-card .ec-name { font-size: 10px; font-weight: 600; }
-    .expert-card .ec-desc { font-size: 8px; color: var(--muted2); line-height: 1.4; }
 
-    .msg-row { display: flex; gap: 7px; align-items: flex-end; animation: fadeUp .2s; }
-    .msg-row.user { flex-direction: row-reverse; }
-    .av { width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-family: 'JetBrains Mono', monospace; }
-    .av.ai { background: linear-gradient(135deg, #2451d4, #4f8aff); color: white; }
-    .av.user { background: var(--card); border: 1px solid var(--border); color: var(--muted2); }
-    .bubble { padding: 8px 12px; border-radius: 14px; max-width: 84%; font-size: 12px; line-height: 1.6; word-wrap: break-word; white-space: pre-wrap; }
-    .bubble.user { background: linear-gradient(135deg, #1d42c4, #2d55e8); border-bottom-right-radius: 4px; }
-    .bubble.ai { background: var(--card); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
-    .bubble-expert { display: inline-flex; align-items: center; gap: 3px; font-size: 8px; font-family: 'JetBrains Mono', monospace; padding: 2px 5px; border-radius: 100px; border: 1px solid; margin-bottom: 4px; }
-    .typing-wrap { display: flex; gap: 4px; padding: 4px; }
-    .typing-wrap span { width: 4px; height: 4px; background: var(--accent); border-radius: 50%; animation: tdot 1.2s infinite; opacity: .4; }
-    @keyframes tdot { 40% { transform: translateY(-4px); opacity: 1; } }
+    #chat-window::-webkit-scrollbar {
+      width: 3px;
+    }
 
-    #status-bar { z-index: 10; font-size: 9px; font-family: 'JetBrains Mono', monospace; padding: 2px 12px; min-height: 18px; flex-shrink: 0; }
-    .input-area { z-index: 10; padding: 6px 10px 10px; display: flex; gap: 6px; align-items: flex-end; border-top: 1px solid var(--border); background: rgba(7,9,15,.97); backdrop-filter: blur(20px); }
-    #user-input { flex: 1; background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 8px 10px; border-radius: 10px; resize: none; font-size: 12px; font-family: 'Sarabun', sans-serif; min-height: 36px; max-height: 100px; line-height: 1.5; }
-    #user-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--glow); }
-    .send-btn { width: 38px; height: 38px; background: linear-gradient(135deg, #1d42c4, #4f8aff); border-radius: 10px; border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-    .send-btn svg { width: 14px; height: 14px; }
-    .char-ct { font-size: 8px; color: var(--muted); text-align: right; padding: 2px; font-family: 'JetBrains Mono', monospace; }
+    #chat-window::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    /* ====== WELCOME ====== */
+    #welcome {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 22px;
+      text-align: center;
+      animation: fadeUp .5s ease;
+    }
+
+    .w-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #2451d4, #4f8aff);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 0 40px #4f8aff44;
+      animation: glow 3s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 28px #4f8aff30; }
+      50% { box-shadow: 0 0 52px #4f8aff60; }
+    }
+
+    #welcome h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    #welcome p {
+      color: var(--muted2);
+      font-size: 12.5px;
+      max-width: 280px;
+      line-height: 1.7;
+    }
+
+    .experts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 7px;
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .expert-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 11px 10px;
+      cursor: pointer;
+      text-align: left;
+      transition: all .2s;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      touch-action: manipulation;
+    }
+
+    .expert-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, .3);
+    }
+
+    .expert-card .ec-icon {
+      font-size: 17px;
+    }
+
+    .expert-card .ec-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .expert-card .ec-desc {
+      font-size: 10px;
+      color: var(--muted2);
+      line-height: 1.5;
+    }
+
+    /* ====== MESSAGES ====== */
+    .msg-row {
+      display: flex;
+      gap: 9px;
+      align-items: flex-end;
+      animation: fadeUp .22s ease;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(7px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .msg-row.user {
+      flex-direction: row-reverse;
+    }
+
+    .av {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .av.ai {
+      background: linear-gradient(135deg, #2451d4, #4f8aff);
+      box-shadow: 0 0 10px #4f8aff44;
+      color: white;
+    }
+
+    .av.user {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted2);
+    }
+
+    .bubble {
+      padding: 11px 15px;
+      border-radius: 17px;
+      max-width: 84%;
+      font-size: 13.5px;
+      line-height: 1.75;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      font-weight: 300;
+    }
+
+    .bubble.user {
+      background: linear-gradient(135deg, #1d42c4, #2d55e8);
+      border-bottom-right-radius: 4px;
+      box-shadow: 0 2px 14px #2563eb44;
+    }
+
+    .bubble.ai {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 4px;
+      color: var(--text);
+      position: relative;
+    }
+
+    .bubble-expert {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 9.5px;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 2px 7px;
+      border-radius: 100px;
+      border: 1px solid;
+      margin-bottom: 8px;
+    }
+
+    .bubble.ai a {
+      color: var(--accent2);
+      text-decoration: none;
+      border-bottom: 1px solid #7ba8ff44;
+    }
+
+    .bubble.ai code {
+      background: #1a2040;
+      padding: 1px 6px;
+      border-radius: 5px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+    }
+
+    .bubble.ai pre {
+      background: #0f1525;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin: 8px 0;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      line-height: 1.6;
+    }
+
+    /* Typing indicator */
+    .typing-wrap {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 4px;
+    }
+
+    .typing-wrap span {
+      width: 5px;
+      height: 5px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: tdot 1.2s ease-in-out infinite;
+      opacity: .5;
+    }
+
+    .typing-wrap span:nth-child(2) { animation-delay: .2s; }
+    .typing-wrap span:nth-child(3) { animation-delay: .4s; }
+
+    @keyframes tdot {
+      0%, 80%, 100% { transform: translateY(0); opacity: .4; }
+      40% { transform: translateY(-5px); opacity: 1; }
+    }
+
+    .routing-label {
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--muted2);
+      padding: 0 4px;
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: .4; }
+      50% { opacity: 1; }
+    }
+
+    /* Status bar */
+    #status-bar {
+      position: relative;
+      z-index: 10;
+      font-size: 10.5px;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 4px 18px;
+      min-height: 22px;
+      flex-shrink: 0;
+      transition: color .3s;
+    }
+
+    /* Input area */
+    .input-area {
+      position: relative;
+      z-index: 10;
+      padding: 10px 14px 14px;
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+      background: rgba(7, 9, 15, .97);
+      backdrop-filter: blur(20px);
+    }
+
+    .input-wrap {
+      flex: 1;
+    }
+
+    #user-input {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 11px 14px;
+      border-radius: 13px;
+      resize: none;
+      outline: none;
+      font-size: 13.5px;
+      font-family: 'Sarabun', sans-serif;
+      font-weight: 300;
+      min-height: 44px;
+      max-height: 110px;
+      overflow-y: auto;
+      line-height: 1.5;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    #user-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--glow);
+    }
+
+    #user-input::placeholder {
+      color: var(--muted);
+    }
+
+    .send-btn {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #1d42c4, #4f8aff);
+      border-radius: 13px;
+      border: none;
+      color: white;
+      cursor: pointer;
+      flex-shrink: 0;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+      box-shadow: 0 2px 14px #4f8aff44;
+      touch-action: manipulation;
+    }
+
+    .send-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 22px #4f8aff66;
+    }
+
+    .send-btn:active:not(:disabled) {
+      transform: scale(.95);
+    }
+
+    .send-btn:disabled {
+      opacity: .3;
+      cursor: default;
+    }
+
+    .char-ct {
+      font-size: 9.5px;
+      color: var(--muted);
+      text-align: right;
+      padding: 3px 3px 0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ====== MOBILE RESPONSIVE ====== */
+    @media (max-width: 600px) {
+      header {
+        padding: 8px 10px;
+        gap: 6px;
+      }
+
+      .logo-wrap {
+        gap: 6px;
+      }
+
+      .logo-mark {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+        border-radius: 8px;
+      }
+
+      .logo-name {
+        font-size: 14px;
+      }
+
+      .logo-tag {
+        font-size: 7px;
+      }
+
+      #api-key {
+        width: 80px;
+        font-size: 10px;
+        padding: 5px 6px;
+      }
+
+      .hbtn {
+        padding: 5px 7px;
+        font-size: 10px;
+      }
+
+      .expert-strip {
+        padding: 6px 8px;
+        gap: 4px;
+      }
+
+      .expert-badge {
+        font-size: 9px;
+        padding: 3px 6px;
+        gap: 3px;
+      }
+
+      .badge-dot {
+        width: 4px;
+        height: 4px;
+      }
+
+      .mode-pill {
+        padding: 2px 5px;
+        font-size: 8px;
+      }
+
+      #mode-manual {
+        font-size: 8px;
+        padding: 2px 4px;
+        border-radius: 6px;
+      }
+
+      #chat-window {
+        padding: 10px 8px;
+        gap: 10px;
+      }
+
+      .bubble {
+        font-size: 12px;
+        padding: 8px 10px;
+      }
+
+      .av {
+        width: 24px;
+        height: 24px;
+        font-size: 10px;
+      }
+
+      .input-area {
+        padding: 6px 8px 10px;
+        gap: 6px;
+      }
+
+      #user-input {
+        font-size: 12px;
+        padding: 8px 10px;
+        min-height: 36px;
+        border-radius: 10px;
+      }
+
+      .send-btn {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+      }
+
+      .send-btn svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .char-ct {
+        font-size: 8px;
+      }
+
+      #welcome h2 {
+        font-size: 16px;
+      }
+
+      #welcome p {
+        font-size: 11px;
+        max-width: 240px;
+      }
+
+      .experts-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 5px;
+        max-width: 280px;
+      }
+
+      .expert-card {
+        padding: 8px 6px;
+      }
+
+      .expert-card .ec-icon {
+        font-size: 14px;
+      }
+
+      .expert-card .ec-name {
+        font-size: 10px;
+      }
+
+      .expert-card .ec-desc {
+        font-size: 9px;
+      }
+
+      #status-bar {
+        font-size: 9px;
+        padding: 2px 10px;
+        min-height: 18px;
+      }
+    }
   </style>
 </head>
 <body>
-<header>
-  <div class="logo-wrap">
-    <div class="logo-mark">✦</div>
-    <div><div class="logo-name">Dakno AI</div><div class="logo-tag">12 Experts · Groq</div></div>
+  <header>
+    <div class="logo-wrap">
+      <div class="logo-mark">✦</div>
+      <div>
+        <div class="logo-name">Dakno AI</div>
+        <div class="logo-tag">12 Experts · Groq</div>
+      </div>
+    </div>
+    <div class="key-wrap">
+      <input type="password" id="api-key" placeholder="Groq API Key" autocomplete="off">
+      <button class="hbtn sec" onclick="saveKey()">บันทึก</button>
+      <button class="hbtn pri" id="btn-test" onclick="verifyKey()">ทดสอบ</button>
+    </div>
+  </header>
+
+  <!-- Expert Strip (generated by JS) -->
+  <div class="expert-strip" id="expert-strip"></div>
+
+  <div id="chat-window">
+    <div id="welcome">
+      <div class="w-icon">✦</div>
+      <div>
+        <h2>Dakno Multi‑Expert</h2>
+        <p>ระบบ AI 12 ผู้เชี่ยวชาญจาก Groq Cloud พร้อม Routing อัจฉริยะ และ Vision</p>
+      </div>
+      <div class="experts-grid" id="experts-grid"></div>
+    </div>
   </div>
-  <div class="key-wrap">
-    <input type="password" id="api-key" placeholder="Key" autocomplete="off">
-    <button class="hbtn sec" onclick="saveKey()">Save</button>
-    <button class="hbtn pri" onclick="verifyKey()">Test</button>
+
+  <div id="status-bar" class="info"></div>
+
+  <div class="input-area">
+    <div class="input-wrap">
+      <textarea id="user-input" placeholder="พิมพ์ข้อความ... (Enter ส่ง, Shift+Enter ขึ้นบรรทัดใหม่)" rows="1" inputmode="text"></textarea>
+      <div class="char-ct" id="char-ct">0 / 2000</div>
+    </div>
+    <button class="send-btn" id="send-btn" onclick="handleSend()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+      </svg>
+    </button>
   </div>
-</header>
 
-<div class="expert-strip" id="expert-strip"></div>
-
-<div id="chat-window">
-  <div id="welcome">
-    <div class="w-icon">✦</div>
-    <h2>Dakno Multi‑Expert</h2>
-    <p>12 AI ผู้เชี่ยวชาญจาก Groq Cloud พร้อม Routing อัจฉริยะ หรือเลือกเองได้</p>
-    <div class="experts-grid" id="experts-grid"></div>
-  </div>
-</div>
-
-<div id="status-bar" class="info"></div>
-
-<div class="input-area">
-  <textarea id="user-input" placeholder="ถามอะไรก็ได้... (Enter เพื่อส่ง)" rows="1"></textarea>
-  <button class="send-btn" onclick="handleSend()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
-  <div class="char-ct" id="char-ct">0/2000</div>
-</div>
-
-<script>
-  // ========== 12 EXPERTS ==========
-  const EXPERTS = [
-    { id:'general',  model:'llama-3.3-70b-versatile', label:'General', icon:'🤖', color:'#4f8aff', sys:'คุณคือผู้ช่วยใจดี ตอบเป็นภาษาไทย ใช้ "ครับ" ให้ข้อมูลถูกต้อง' },
-    { id:'reason',   model:'deepseek-r1-distill-llama-70b', label:'Reasoning', icon:'🧠', color:'#a78bfa', sys:'คุณคือนักวิเคราะห์ขั้นเทพ คิดเป็นขั้นตอน ตอบเป็นภาษาไทย' },
-    { id:'deepreason',model:'deepseek-r1-distill-qwen-32b', label:'Deep Reason', icon:'🔮', color:'#c084fc', sys:'คุณวิเคราะห์เชิงลึก ให้เหตุผลละเอียดยิบ ตอบภาษาไทย' },
-    { id:'code',     model:'qwen-2.5-coder-32b', label:'Code Pro', icon:'💻', color:'#2edd8c', sys:'คุณคือโปรแกรมเมอร์มืออาชีพ เขียนโค้ด clean มีคอมเมนต์ภาษาไทย' },
-    { id:'fast',     model:'gemma2-9b-it', label:'Fast & Light', icon:'⚡', color:'#f5a623', sys:'ตอบสั้น กระชับ ตรงประเด็น ภาษาไทย' },
-    { id:'fastest',  model:'llama-3.1-8b-instant', label:'Fastest', icon:'💨', color:'#f97316', sys:'ตอบทันที ไม่มีเกริ่น ภาษาไทย' },
-    { id:'lang',     model:'mistral-saba-24b', label:'Language Pro', icon:'🌐', color:'#f472b6', sys:'คุณเชี่ยวชาญการแปล สรุป ตรวจไวยากรณ์ ตอบภาษาไทย' },
-    { id:'deep',     model:'qwq-32b', label:'Deep Think', icon:'🔬', color:'#38bdf8', sys:'คุณคือนักวิทยาศาสตร์/คณิตศาสตร์ แสดงวิธีทำละเอียด ภาษาไทย' },
-    { id:'math',     model:'qwen-2.5-32b', label:'Math & Logic', icon:'📐', color:'#818cf8', sys:'คุณแก้โจทย์คณิตศาสตร์ ฟิสิกส์ ตรรกะ พิสูจน์ทีละขั้น ภาษาไทย' },
-    { id:'vision',   model:'llama-3.2-11b-vision-preview', label:'Vision', icon:'🖼️', color:'#fb923c', sys:'คุณอธิบายภาพที่ผู้ใช้ส่งมา (URL) อย่างละเอียด เป็นภาษาไทย' },
-    { id:'creative', model:'llama-3.3-70b-versatile', label:'Creative', icon:'✍️', color:'#e879f9', sys:'คุณเขียนเรื่องสั้น นิยาย บทกวี สร้างสรรค์ทุกแนว ภาษาไทย' },
-    { id:'thai',     model:'llama-3.3-70b-versatile', label:'Thai Master', icon:'🇹🇭', color:'#34d399', sys:'คุณคือผู้เชี่ยวชาญภาษาไทย ตอบเป็นไทยเท่านั้น ใช้สำนวนสละสลวย' }
-  ];
-
-  let currentExpert = 'general';
-  let currentMode = 'auto'; // 'auto' or 'manual'
-  let apiKey = localStorage.getItem('dakno_groq_key') || '';
-  const MAX_CHARS = 2000;
-
-  // Build UI dynamically
-  function buildExpertUI() {
-    const strip = document.getElementById('expert-strip');
-    const grid = document.getElementById('experts-grid');
-    strip.innerHTML = '';
-    grid.innerHTML = '';
-    EXPERTS.forEach((ex, idx) => {
-      // Badge
-      const badge = document.createElement('div');
-      badge.className = 'expert-badge';
-      badge.dataset.id = ex.id;
-      badge.style.color = ex.color;
-      badge.style.borderColor = ex.color + '44';
-      badge.innerHTML = `<div class="badge-dot" style="background:${ex.color}"></div>${ex.label}`;
-      badge.onclick = () => { setManual(ex.id); };
-      strip.appendChild(badge);
-
-      // Welcome card
-      const card = document.createElement('div');
-      card.className = 'expert-card';
-      card.style.borderLeft = `2px solid ${ex.color}`;
-      card.innerHTML = `<span class="ec-icon">${ex.icon}</span><span class="ec-name">${ex.label}</span><span class="ec-desc">${ex.model.split('-')[0]}</span>`;
-      card.onclick = () => { hint(`(${ex.label}) ช่วยอธิบาย...`); };
-      grid.appendChild(card);
-    });
-    // Mode toggle
-    const toggle = document.createElement('div');
-    toggle.className = 'mode-toggle';
-    toggle.innerHTML = `
-      <button class="mode-pill on" id="mode-auto" onclick="setMode('auto')">AUTO</button>
-      <select id="mode-manual" onchange="setManual(this.value)">
-        <option value="">เลือกเอง</option>
-        ${EXPERTS.map(e=>`<option value="${e.id}">${e.label}</option>`).join('')}
-      </select>`;
-    strip.appendChild(toggle);
-  }
-  buildExpertUI();
-
-  function setActiveBadge(id) {
-    document.querySelectorAll('.expert-badge').forEach(b => {
-      b.classList.toggle('active', b.dataset.id === id);
-    });
-  }
-  function setMode(m) {
-    currentMode = m;
-    document.getElementById('mode-auto').classList.toggle('on', m==='auto');
-    document.getElementById('mode-manual').value = '';
-    updateStatus();
-  }
-  function setManual(id) {
-    if (!id) return;
-    currentMode = 'manual';
-    currentExpert = id;
-    document.getElementById('mode-auto').classList.remove('on');
-    document.getElementById('mode-manual').value = id;
-    setActiveBadge(id);
-    updateStatus();
-  }
-  function updateStatus() {
-    const bar = document.getElementById('status-bar');
-    if (!apiKey) { bar.textContent = '⚡ ใส่ API Key'; bar.style.color = 'var(--muted)'; }
-    else {
-      const expert = EXPERTS.find(e=>e.id===currentExpert);
-      bar.textContent = `🟢 ${currentMode==='auto'?'AUTO':expert.label} · ${expert.model}`;
-      bar.style.color = 'var(--success)';
-    }
-  }
-
-  // Smart routing
-  function routeExpert(msg) {
-    const m = msg.toLowerCase();
-    if (/โค้ด|code|function|api|debug|python|javascript|html|css|sql|react|node|bug|เขียนโปรแกรม/.test(m)) return 'code';
-    if (/วิเคราะห์|analysis|เหตุผล|เพราะ|ทำไม|เปรียบเทียบ|ข้อดีข้อเสีย|ตัดสินใจ|logic|reason|เลือก/.test(m) && m.length>30) return 'reason';
-    if (/พิสูจน์|คณิต|math|ฟิสิกส์|เคมี|สมการ|ทฤษฎี|axiom|logic|0\.1\+0\.2|คำนวณ/.test(m)) return 'math';
-    if (/แปล|translate|ภาษา|grammar|สรุป|summary|ภาษาไทย|อังกฤษ|จีน|ญี่ปุ่น|เกาหลี|correct|ตรวจ/.test(m)) return 'lang';
-    if (/รูป|ภาพ|image|photo|picture|jpg|png|http/.test(m) && /https?:\/\/\S+\.(jpg|png|webp|gif)/.test(m)) return 'vision';
-    if (/เรื่องสั้น|นิยาย|บทกวี|แต่ง|creative|story|poem|เขียนเรื่อง/.test(m)) return 'creative';
-    if (/สั้น|เร็ว|ด่วน|instant|air|อากาศ|วันนี้|อะไร|เมื่อไหร่|ที่ไหน|how|what|when/.test(m) && m.length<40) return 'fast';
-    if (/ไทย|ภาษาไทย|คำไทย|สำนวน|สุภาพ|สละสลวย/.test(m) && m.length>20) return 'thai';
-    if (/คิดลึก|ซับซ้อน|ปรัชญา|ทฤษฎี|axiom/.test(m)) return 'deep';
-    return 'general';
-  }
-
-  function hint(text) {
-    document.getElementById('user-input').value = text;
-    handleSend();
-  }
-
-  // Chat logic
-  function appendMessage(role, content, expertId=null) {
-    const chat = document.getElementById('chat-window');
-    const welcome = document.getElementById('welcome');
-    if (welcome) welcome.remove();
-    const row = document.createElement('div');
-    row.className = 'msg-row '+role;
-    const av = document.createElement('div');
-    av.className = 'av '+role;
-    av.textContent = role==='user' ? 'คุณ' : (EXPERTS.find(e=>e.id===expertId)?.icon || '✦');
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble '+role;
-    if (role==='ai' && expertId) {
-      const ex = EXPERTS.find(e=>e.id===expertId);
-      if (ex) {
-        const label = document.createElement('div');
-        label.className = 'bubble-expert';
-        label.style.color = ex.color;
-        label.style.borderColor = ex.color+'66';
-        label.innerHTML = `<span style="background:${ex.color};width:6px;height:6px;border-radius:50%;display:inline-block;"></span> ${ex.label}`;
-        bubble.appendChild(label);
-      }
-    }
-    bubble.appendChild(document.createTextNode(content));
-    row.appendChild(av); row.appendChild(bubble);
-    chat.appendChild(row);
-    chat.scrollTop = chat.scrollHeight;
-  }
-
-  function appendTyping(expertId) {
-    const chat = document.getElementById('chat-window');
-    const row = document.createElement('div');
-    row.className = 'msg-row ai'; row.id = 'typing-row';
-    const av = document.createElement('div');
-    av.className = 'av ai';
-    av.textContent = EXPERTS.find(e=>e.id===expertId)?.icon || '✦';
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble ai';
-    bubble.innerHTML = `<div class="routing-label">${EXPERTS.find(e=>e.id===expertId)?.label} กำลังคิด...</div><div class="typing-wrap"><span></span><span></span><span></span></div>`;
-    row.appendChild(av); row.appendChild(bubble);
-    chat.appendChild(row);
-    chat.scrollTop = chat.scrollHeight;
-  }
-  function removeTyping() { const el = document.getElementById('typing-row'); if (el) el.remove(); }
-
-  async function handleSend() {
-    const input = document.getElementById('user-input');
-    const msg = input.value.trim();
-    if (!msg || msg.length>MAX_CHARS) return;
-    if (!apiKey) { alert('กรุณาตั้งค่า API Key'); return; }
-    input.value = '';
-    document.getElementById('char-ct').textContent = '0/'+MAX_CHARS;
-
-    appendMessage('user', msg);
-
-    let expertId = currentMode==='manual' ? currentExpert : routeExpert(msg);
-    currentExpert = expertId;
-    setActiveBadge(expertId);
-    updateStatus();
-
-    const expert = EXPERTS.find(e=>e.id===expertId);
-    appendTyping(expertId);
-
-    try {
-      let messages = [{ role:'system', content: expert.sys }, { role:'user', content: msg }];
-      
-      // Vision multimodal support
-      if (expertId==='vision') {
-        const urlMatch = msg.match(/https?:\/\/\S+\.(jpg|png|webp|gif)/i);
-        if (urlMatch) {
-          messages = [
-            { role:'system', content: expert.sys },
-            { role:'user', content: [
-                { type:'text', text: msg.replace(urlMatch[0], '').trim() || 'อธิบายภาพนี้' },
-                { type:'image_url', image_url: { url: urlMatch[0] } }
-              ]
-            }
-          ];
-        }
-      }
-
-      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method:'POST',
-        headers: { 'Authorization':`Bearer ${apiKey}`, 'Content-Type':'application/json' },
-        body: JSON.stringify({ model: expert.model, messages, temperature:0.7, max_tokens:2048 })
-      });
-      const data = await res.json();
-      removeTyping();
-      if (data.choices?.[0]) {
-        appendMessage('ai', data.choices[0].message.content, expertId);
-      } else throw new Error(data.error?.message || 'ไม่มีคำตอบ');
-    } catch (e) {
-      removeTyping();
-      appendMessage('ai', '❌ ผิดพลาด: '+e.message, expertId);
-      document.getElementById('status-bar').textContent = '⚠️ ล้มเหลว';
-      document.getElementById('status-bar').style.color = 'var(--danger)';
-    }
-  }
-
-  document.getElementById('user-input').addEventListener('input', function() {
-    document.getElementById('char-ct').textContent = this.value.length+'/'+MAX_CHARS;
-  });
-  document.getElementById('user-input').addEventListener('keydown', function(e) {
-    if (e.key==
+  <script>
+    // ========== 12 EXPERTS CONFIGURATION ==========
+    const EXPERTS = [
+      {
+        id: 'general',
+        model: 'llama-3.3-70b-versatile',
+        label: 'General',
+        icon: '🤖',
+        color: '#4f8aff',
+        sys: 'คุณคือ Dakno ผู้ช่วย AI ใจดี สุภาพ ตอบเป็นภาษาไทยเสมอ ใช้ "ผม" ลงท้าย "ครับ" ให้ข้อมูลที่ถูกต้อง ตรงประเด็น สามารถใช้ **bold** *italic* และ ```code``` ได้'
+      },
+      {
+        id: 'reason',
+        model: 'deepseek-r1-distill-llama-70b',
+        label: 'Reasoning',
+        icon: '🧠',
+        color: '#a78bfa',
+        sys: 'คุณคือ Dakno ผู้เชี่ยวชาญด้านการวิเคราะห์และ reasoning ตอบเป็นภาษาไทย คิดอย่างละเอียดรอบคอบ แสดงขั้นตอนการคิด ให้เหตุผลที่ชัดเจน'
+      },
+      {
+        id: 'deepreason',
+        model: 'deepseek-r1-distill-qwen-32b',
+        label: 'Deep Reason',
+        icon: '🔮',
+        color: '#c084fc',
+        sys: 'คุณคือนักวิเคราะห์ขั้นสูง คิดซับซ้อน หลายชั้น แสดงเหตุผลทีละขั้นตอน ตอบเป็นภาษาไทย'
+      },
+      {
+        id: 'code',
+        model: 'qwen-2.5-coder-32b',
+        label: 'Code Pro',
+        icon: '💻',
+        color: '#2edd8c',
+        sys: 'คุณคือนักพัฒนามืออาชีพ เขียนโค้ดที่สะอาด มีคอมเมนต์ภาษาไทย อธิบายการทำงาน และเลือกแนวทางที่ดีที่สุด'
+      },
+      {
+        id: 'fast',
+        model: 'gemma2-9b-it',
+        label: 'Fast & Light',
+        icon: '⚡',
+        color: '#f5a623',
+        sys: 'คุณคือ Dakno ผู้ตอบสั้น กระชับ ตรงประเด็น เป็นภาษาไทย ไม่ต้องเกริ่นเยอะ'
+      },
+      {
+        id: 'fastest',
+        model: 'llama-3.1-8b-instant',
+        label: 'Fastest',
+        icon: '💨',
+        color: '#f97316',
+        sys: 'ตอบทันที ไม่มีคำอธิบายเพิ่มเติม ภาษาไทย'
+      },
+      {
+        id: 'lang',
+        model: 'mistral-saba-24b',
+        label: '
