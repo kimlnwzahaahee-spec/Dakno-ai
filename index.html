@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>DAKNO // ULTRA × GEMINI</title>
+<title>DAKNO // ULTRA × FREE AI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Sans+Thai:wght@300;400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
@@ -16,20 +16,18 @@
   --rim: #1e2840;
   --wire: #243050;
   --c0: #00e5ff;
-  --c1: #7b2fff;
-  --c2: #ff2d6b;
   --c3: #00ff88;
-  --c4: #ffb800;
   --text: #c8d8f0;
   --dim: #5a6a90;
   --ghost: #2a3555;
   --font-mono: 'Space Mono', monospace;
   --font-body: 'Noto Sans Thai', sans-serif;
   --font-display: 'Bebas Neue', sans-serif;
+  --gemini: #4fc3f7;
+  --openrouter: #a78bfa;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;background:var(--void);color:var(--text);font-family:var(--font-body);overflow:hidden;}
-
 body::before{
   content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
   background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.07) 2px,rgba(0,0,0,0.07) 4px);
@@ -38,80 +36,85 @@ body::before{
 body::after{
   content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;
   background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(0,229,255,0.04) 0%,transparent 70%),
-             radial-gradient(ellipse 50% 80% at 100% 100%,rgba(123,47,255,0.06) 0%,transparent 60%);
+             radial-gradient(ellipse 50% 80% at 100% 100%,rgba(167,139,250,0.06) 0%,transparent 60%);
 }
 @keyframes scan{0%{background-position:0 0}100%{background-position:0 100px}}
-
 #app{display:flex;flex-direction:column;height:100dvh;position:relative;z-index:10;}
 
 /* TOPBAR */
 #topbar{
-  display:flex;align-items:center;gap:10px;padding:10px 16px;
-  border-bottom:1px solid var(--rim);background:rgba(6,8,16,0.96);
+  display:flex;align-items:center;gap:8px;padding:8px 14px;
+  border-bottom:1px solid var(--rim);background:rgba(6,8,16,0.97);
   backdrop-filter:blur(20px);flex-shrink:0;overflow-x:auto;scrollbar-width:none;
 }
 #topbar::-webkit-scrollbar{display:none;}
 .logo{display:flex;align-items:center;gap:10px;flex-shrink:0;}
 .logo-glyph{
-  width:36px;height:36px;
-  background:linear-gradient(135deg,#1a73e8,#00e5ff);
+  width:34px;height:34px;background:linear-gradient(135deg,#1a73e8,#00e5ff);
   border-radius:8px;display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-display);font-size:20px;color:#fff;
-  box-shadow:0 0 20px rgba(26,115,232,0.4),inset 0 1px 0 rgba(255,255,255,0.2);
-  position:relative;overflow:hidden;flex-shrink:0;
+  font-family:var(--font-display);font-size:18px;color:#fff;
+  box-shadow:0 0 20px rgba(26,115,232,0.4);flex-shrink:0;
 }
-.logo-glyph::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.2),transparent);}
-.logo-text{flex-shrink:0;}
-.logo-name{font-family:var(--font-display);font-size:22px;letter-spacing:3px;color:#fff;line-height:1;}
-.logo-sub{font-family:var(--font-mono);font-size:8px;color:#4fc3f7;letter-spacing:2px;opacity:0.8;}
-.tb-sep{width:1px;height:24px;background:var(--rim);flex-shrink:0;}
+.logo-name{font-family:var(--font-display);font-size:20px;letter-spacing:3px;color:#fff;line-height:1;}
+.logo-sub{font-family:var(--font-mono);font-size:7px;color:#4fc3f7;letter-spacing:2px;opacity:0.8;}
+.tb-sep{width:1px;height:22px;background:var(--rim);flex-shrink:0;}
+
+/* FREE BADGE */
+.free-forever{
+  display:flex;align-items:center;gap:5px;
+  background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.25);
+  border-radius:5px;padding:4px 10px;flex-shrink:0;
+  font-family:var(--font-mono);font-size:9px;color:var(--c3);white-space:nowrap;
+}
+.free-dot{width:5px;height:5px;border-radius:50%;background:var(--c3);animation:pulse 2s infinite;}
+
+/* PROVIDER TABS */
+.provider-tabs{display:flex;gap:3px;flex-shrink:0;}
+.prov-tab{
+  display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:5px;
+  border:1px solid var(--wire);font-family:var(--font-mono);font-size:9px;
+  cursor:pointer;transition:all .2s;background:var(--panel);color:var(--dim);white-space:nowrap;
+}
+.prov-tab[data-prov="gemini"].active{border-color:var(--gemini);background:rgba(79,195,247,0.12);color:var(--gemini);box-shadow:0 0 10px rgba(79,195,247,0.2);}
+.prov-tab[data-prov="openrouter"].active{border-color:var(--openrouter);background:rgba(167,139,250,0.12);color:var(--openrouter);box-shadow:0 0 10px rgba(167,139,250,0.2);}
+
 .model-badge{
   display:flex;align-items:center;gap:6px;background:var(--panel);
-  border:1px solid var(--wire);border-radius:6px;padding:5px 10px;
+  border:1px solid var(--wire);border-radius:6px;padding:4px 9px;
   flex-shrink:0;font-family:var(--font-mono);font-size:9px;color:var(--dim);
 }
 .model-dot{width:6px;height:6px;border-radius:50%;background:var(--c3);box-shadow:0 0 6px var(--c3);animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
 .tb-right{display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0;}
 #api-key-input{
-  width:200px;background:var(--panel);border:1px solid var(--wire);
-  color:var(--text);padding:6px 10px;border-radius:6px;
+  width:185px;background:var(--panel);border:1px solid var(--wire);
+  color:var(--text);padding:5px 10px;border-radius:6px;
   font-family:var(--font-mono);font-size:10px;
 }
 #api-key-input::placeholder{color:var(--ghost);}
-#api-key-input:focus{outline:none;border-color:#4fc3f7;box-shadow:0 0 0 2px rgba(79,195,247,0.12);}
+#api-key-input:focus{outline:none;border-color:#4fc3f7;}
 .tbtn{
-  padding:6px 12px;border-radius:6px;border:1px solid var(--wire);
+  padding:5px 11px;border-radius:6px;border:1px solid var(--wire);
   font-family:var(--font-mono);font-size:10px;cursor:pointer;
   background:var(--panel);color:var(--dim);transition:all .15s;white-space:nowrap;
 }
 .tbtn:hover{border-color:#4fc3f7;color:#4fc3f7;}
 .tbtn.pri{background:linear-gradient(135deg,#1a73e8,#00e5ff);border-color:transparent;color:#fff;font-weight:700;}
 .tbtn.pri:hover{box-shadow:0 0 16px rgba(26,115,232,0.4);}
-
-/* MODEL SELECTOR */
 #model-select{
   background:var(--panel);border:1px solid var(--wire);color:var(--text);
-  padding:5px 8px;border-radius:6px;font-family:var(--font-mono);font-size:9px;
-  cursor:pointer;
+  padding:4px 8px;border-radius:6px;font-family:var(--font-mono);font-size:9px;
+  cursor:pointer;max-width:210px;
 }
 #model-select:focus{outline:none;border-color:#4fc3f7;}
 #model-select option{background:var(--deep);}
 
-/* FREE BADGE */
-.free-badge{
-  display:flex;align-items:center;gap:4px;
-  background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.3);
-  border-radius:4px;padding:3px 8px;
-  font-family:var(--font-mono);font-size:8px;color:var(--c3);
-  flex-shrink:0;white-space:nowrap;
-}
-
 /* EXPERT RAIL */
 #expert-rail{
-  display:flex;align-items:center;gap:4px;padding:6px 14px;
+  display:flex;align-items:center;gap:4px;padding:5px 14px;
   background:var(--deep);border-bottom:1px solid var(--rim);
-  overflow-x:auto;flex-shrink:0;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  overflow-x:auto;flex-shrink:0;scrollbar-width:none;
 }
 #expert-rail::-webkit-scrollbar{display:none;}
 .ex-pill{
@@ -136,24 +139,39 @@ body::after{
 /* Welcome */
 #welcome{
   display:flex;flex-direction:column;align-items:center;
-  justify-content:center;min-height:100%;gap:24px;animation:fadeIn .6s ease;
+  justify-content:center;min-height:100%;gap:22px;animation:fadeIn .6s ease;
 }
 .w-title{
-  font-family:var(--font-display);font-size:48px;letter-spacing:6px;
-  background:linear-gradient(135deg,#4fc3f7,#1a73e8,#00e5ff);
+  font-family:var(--font-display);font-size:46px;letter-spacing:6px;
+  background:linear-gradient(135deg,#4fc3f7,#1a73e8,#a78bfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;text-align:center;line-height:1;
 }
-.w-sub{font-family:var(--font-mono);font-size:11px;color:var(--dim);letter-spacing:2px;text-align:center;}
-.w-free{
-  display:flex;align-items:center;gap:8px;
-  background:rgba(0,255,136,0.06);border:1px solid rgba(0,255,136,0.2);
-  border-radius:8px;padding:8px 16px;
-  font-family:var(--font-mono);font-size:10px;color:var(--c3);
+.w-sub{font-family:var(--font-mono);font-size:10px;color:var(--dim);letter-spacing:2px;text-align:center;margin-top:6px;}
+
+/* Provider cards on welcome */
+.prov-cards{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;max-width:520px;}
+.prov-welcome-card{
+  flex:1;min-width:200px;max-width:240px;
+  border-radius:10px;border:1px solid;padding:14px 16px;
+  display:flex;flex-direction:column;gap:8px;
 }
+.prov-welcome-card[data-p="gemini"]{border-color:rgba(79,195,247,0.3);background:rgba(79,195,247,0.05);}
+.prov-welcome-card[data-p="openrouter"]{border-color:rgba(167,139,250,0.3);background:rgba(167,139,250,0.05);}
+.pwc-header{display:flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:12px;font-weight:700;}
+.pwc-header[data-p="gemini"]{color:var(--gemini);}
+.pwc-header[data-p="openrouter"]{color:var(--openrouter);}
+.pwc-free{
+  display:inline-flex;align-items:center;gap:4px;
+  background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.25);
+  border-radius:3px;padding:2px 6px;font-family:var(--font-mono);font-size:8px;color:var(--c3);
+}
+.pwc-models{font-family:var(--font-mono);font-size:9px;color:var(--dim);line-height:2;}
+.pwc-link{font-family:var(--font-mono);font-size:9px;opacity:0.5;margin-top:2px;}
+
 .w-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;max-width:480px;}
 @media(max-width:480px){.w-grid{grid-template-columns:repeat(3,1fr);}}
-@media(max-width:360px){.w-grid{grid-template-columns:repeat(2,1fr);}.w-title{font-size:32px;}}
+@media(max-width:360px){.w-grid{grid-template-columns:repeat(2,1fr);}.w-title{font-size:30px;}}
 .w-card{
   background:var(--card);border:1px solid var(--rim);border-radius:8px;
   padding:10px 8px;cursor:pointer;transition:all .2s;text-align:center;
@@ -163,9 +181,10 @@ body::after{
 .w-card-icon{font-size:20px;line-height:1;}
 .w-card-name{font-family:var(--font-mono);font-size:9px;color:var(--dim);}
 
-/* Messages */
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* Messages */
 .msg{display:flex;gap:10px;align-items:flex-start;animation:fadeUp .22s ease;}
 .msg.user{flex-direction:row-reverse;}
 .av{width:30px;height:30px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-family:var(--font-mono);}
@@ -173,9 +192,9 @@ body::after{
 .av.user{background:var(--lift);border:1px solid var(--wire);color:var(--dim);font-size:11px;}
 .bubble-wrap{display:flex;flex-direction:column;max-width:85%;gap:4px;}
 .msg.user .bubble-wrap{align-items:flex-end;}
-.expert-tag{
-  display:inline-flex;align-items:center;gap:4px;font-family:var(--font-mono);font-size:8.5px;
-  padding:2px 7px;border-radius:3px;border:1px solid;opacity:0.8;width:fit-content;
+.prov-badge{
+  display:inline-flex;align-items:center;gap:4px;font-family:var(--font-mono);font-size:8px;
+  padding:2px 6px;border-radius:3px;border:1px solid;opacity:0.7;width:fit-content;
 }
 .bubble{padding:12px 16px;border-radius:10px;font-size:13.5px;line-height:1.8;word-wrap:break-word;}
 .bubble.user{background:linear-gradient(135deg,#0d47a1,#1565c0);border:1px solid rgba(100,150,255,0.2);border-bottom-right-radius:3px;}
@@ -184,16 +203,16 @@ body::after{
 .bubble.ai pre{background:var(--deep);padding:12px;border-radius:6px;overflow-x:auto;border:1px solid var(--wire);margin:8px 0;}
 .bubble.ai pre code{background:none;padding:0;color:var(--c3);}
 .bubble.ai strong{color:#e0f0ff;}
-.bubble.ai em{color:#b0d0ff;font-style:italic;}
+.bubble.ai em{color:#b0d0ff;}
+.bubble.error{background:rgba(255,45,107,0.1);border-color:rgba(255,45,107,0.3);color:#ff6b9a;}
 
-/* Typing */
 .typing{display:flex;align-items:center;gap:4px;padding:8px 4px;}
 .typing-dot{width:5px;height:5px;border-radius:50%;background:var(--c0);animation:tdot 1.3s ease infinite;}
 .typing-dot:nth-child(2){animation-delay:.15s;background:#4fc3f7;}
 .typing-dot:nth-child(3){animation-delay:.3s;background:#1a73e8;}
 @keyframes tdot{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-6px);opacity:1}}
 
-/* STATUS BAR */
+/* STATUS */
 #statusbar{
   flex-shrink:0;padding:4px 16px;min-height:24px;
   display:flex;align-items:center;gap:8px;border-top:1px solid var(--rim);
@@ -201,11 +220,11 @@ body::after{
 }
 .st-led{width:5px;height:5px;border-radius:50%;background:var(--c3);animation:pulse 2s infinite;flex-shrink:0;}
 #st-text{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-#token-ct{flex-shrink:0;color:var(--ghost);}
+#token-ct{flex-shrink:0;}
 
 /* INPUT */
 #inputarea{
-  flex-shrink:0;padding:10px 14px 16px;
+  flex-shrink:0;padding:10px 14px 14px;
   border-top:1px solid var(--rim);background:rgba(6,8,16,0.98);backdrop-filter:blur(20px);
 }
 .input-row{display:flex;gap:8px;align-items:flex-end;}
@@ -228,7 +247,7 @@ body::after{
 .send-btn:active{transform:scale(0.96);}
 .send-btn svg{width:16px;height:16px;}
 .glow-line{
-  height:2px;background:linear-gradient(90deg,transparent,#1a73e8,#4fc3f7,#00e5ff,transparent);
+  height:2px;background:linear-gradient(90deg,transparent,#1a73e8,#4fc3f7,#a78bfa,transparent);
   position:fixed;top:0;left:0;right:0;z-index:100;animation:glow-slide 4s ease infinite;
 }
 @keyframes glow-slide{0%,100%{opacity:0.4}50%{opacity:1}}
@@ -241,28 +260,31 @@ body::after{
   <!-- TOPBAR -->
   <div id="topbar">
     <div class="logo">
-      <div class="logo-glyph">G</div>
+      <div class="logo-glyph">D</div>
       <div class="logo-text">
         <div class="logo-name">DAKNO</div>
-        <div class="logo-sub">ULTRA × GEMINI FREE</div>
+        <div class="logo-sub">ULTRA × FREE AI</div>
       </div>
     </div>
     <div class="tb-sep"></div>
+    <div class="free-forever"><div class="free-dot"></div>FREE FOREVER</div>
+    <div class="tb-sep"></div>
+
+    <div class="provider-tabs">
+      <button class="prov-tab active" data-prov="gemini" onclick="switchProvider('gemini')">✦ GEMINI</button>
+      <button class="prov-tab" data-prov="openrouter" onclick="switchProvider('openrouter')">⊕ OPENROUTER FREE</button>
+    </div>
+
     <div class="model-badge">
       <div class="model-dot"></div>
       <span id="cur-model-label">gemini-2.5-flash</span>
     </div>
-    <div class="free-badge">✦ FREE FOREVER</div>
+
     <div class="tb-right">
-      <select id="model-select">
-        <option value="gemini-2.5-flash">⚡ Gemini 2.5 Flash (แนะนำ)</option>
-        <option value="gemini-2.5-pro">🔮 Gemini 2.5 Pro (โหดสุด)</option>
-        <option value="gemini-2.0-flash">🚀 Gemini 2.0 Flash</option>
-        <option value="gemini-1.5-flash">💨 Gemini 1.5 Flash (เร็ว)</option>
-      </select>
-      <input type="password" id="api-key-input" placeholder="Google AI Studio API Key">
-      <button class="tbtn pri" id="btn-save">SAVE</button>
-      <button class="tbtn" id="btn-clear">CLEAR</button>
+      <select id="model-select" onchange="onModelChange(this.value)"></select>
+      <input type="password" id="api-key-input" placeholder="API Key...">
+      <button class="tbtn pri" onclick="saveKey()">SAVE</button>
+      <button class="tbtn" onclick="clearChat()">CLEAR</button>
     </div>
   </div>
 
@@ -272,25 +294,49 @@ body::after{
   <!-- CHAT -->
   <div id="chat">
     <div id="welcome">
-      <div>
+      <div style="text-align:center;">
         <div class="w-title">DAKNO ULTRA</div>
-        <div class="w-sub" style="margin-top:8px;">POWERED BY GOOGLE GEMINI // ฟรีตลอด ไม่ต้องใส่บัตร</div>
+        <div class="w-sub">FREE AI ONLY // ไม่เสียเงิน ไม่ต้องใส่บัตร</div>
       </div>
-      <div class="w-free">
-        ✦ รับ API Key ฟรีที่ → <strong>aistudio.google.com</strong> → Get API Key
+
+      <div class="prov-cards">
+        <div class="prov-welcome-card" data-p="gemini">
+          <div class="pwc-header" data-p="gemini">✦ Google Gemini</div>
+          <div class="pwc-free">✓ FREE — ไม่ต้องใส่บัตร</div>
+          <div class="pwc-models">
+            ⚡ Gemini 2.5 Flash<br>
+            🔮 Gemini 2.5 Pro<br>
+            🚀 Gemini 2.0 Flash<br>
+            💨 Gemini 1.5 Flash
+          </div>
+          <div class="pwc-link">→ aistudio.google.com</div>
+        </div>
+        <div class="prov-welcome-card" data-p="openrouter">
+          <div class="pwc-header" data-p="openrouter">⊕ OpenRouter Free</div>
+          <div class="pwc-free">✓ FREE tier มีหลายโมเดล</div>
+          <div class="pwc-models">
+            🦙 Llama 3.3 70B FREE<br>
+            🌊 Mistral 7B FREE<br>
+            🐳 DeepSeek R1 FREE<br>
+            🌙 Qwen 2.5 FREE<br>
+            + อีกมาก!
+          </div>
+          <div class="pwc-link">→ openrouter.ai/keys</div>
+        </div>
       </div>
+
       <div class="w-grid" id="w-grid"></div>
       <div style="font-family:var(--font-mono);font-size:9px;color:var(--ghost);text-align:center;max-width:360px;line-height:2;">
         12 EXPERT MODES // STREAMING // CONTEXT MEMORY<br>
-        AI เลือก Expert อัตโนมัติ หรือคลิกเลือกเอง
+        เลือก Provider → ใส่ Key ฟรี → เริ่มคุยได้เลย
       </div>
     </div>
   </div>
 
-  <!-- STATUS BAR -->
+  <!-- STATUS -->
   <div id="statusbar">
     <div class="st-led"></div>
-    <div id="st-text">READY // ใส่ Google AI Studio API Key แล้วเริ่มได้เลย</div>
+    <div id="st-text">READY // เลือก Provider และใส่ API Key ฟรีด้านบน</div>
     <div id="token-ct"></div>
   </div>
 
@@ -304,7 +350,7 @@ body::after{
           <span id="char-count">0 / 8000</span>
         </div>
       </div>
-      <button class="send-btn" id="send-btn">
+      <button class="send-btn" onclick="sendMessage()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <line x1="22" y1="2" x2="11" y2="13"/>
           <polygon points="22 2 15 22 11 13 2 9 22 2"/>
@@ -315,106 +361,163 @@ body::after{
 </div>
 
 <script>
-// ═══════════════════════════════════════════
-//  EXPERTS (12 modes)
-// ═══════════════════════════════════════════
+// ═══════════════════════
+//  PROVIDERS (ฟรีทั้งหมด)
+// ═══════════════════════
+const PROVIDERS = {
+  gemini: {
+    name: 'Google Gemini',
+    icon: '✦',
+    color: '#4fc3f7',
+    keyPlaceholder: 'Google AI Studio Key (AIza...)',
+    keyHint: '→ aistudio.google.com — Get API Key — ฟรี ไม่ต้องใส่บัตร',
+    models: [
+      { value: 'gemini-2.5-flash',         label: '⚡ Gemini 2.5 Flash (แนะนำ · ฟรี)' },
+      { value: 'gemini-2.5-pro',           label: '🔮 Gemini 2.5 Pro (ฟรี limit/day)' },
+      { value: 'gemini-2.0-flash',         label: '🚀 Gemini 2.0 Flash (ฟรี)' },
+      { value: 'gemini-2.0-flash-lite',    label: '💨 Gemini 2.0 Flash Lite (เร็วสุด)' },
+      { value: 'gemini-1.5-flash',         label: '⚡ Gemini 1.5 Flash (ฟรี)' },
+      { value: 'gemini-1.5-flash-8b',      label: '🔹 Gemini 1.5 Flash 8B (เล็ก·เร็ว)' },
+    ]
+  },
+  openrouter: {
+    name: 'OpenRouter FREE',
+    icon: '⊕',
+    color: '#a78bfa',
+    keyPlaceholder: 'OpenRouter Key (sk-or-...)',
+    keyHint: '→ openrouter.ai/keys — สร้าง Key ฟรี มีโมเดล :free มากมาย',
+    models: [
+      { value: 'meta-llama/llama-3.3-70b-instruct:free',      label: '🦙 Llama 3.3 70B FREE ⭐' },
+      { value: 'meta-llama/llama-3.1-8b-instruct:free',       label: '🦙 Llama 3.1 8B FREE (เร็ว)' },
+      { value: 'mistralai/mistral-7b-instruct:free',           label: '🌊 Mistral 7B FREE' },
+      { value: 'deepseek/deepseek-r1:free',                    label: '🐳 DeepSeek R1 FREE (Reasoning)' },
+      { value: 'deepseek/deepseek-chat:free',                  label: '🐳 DeepSeek V3 FREE' },
+      { value: 'qwen/qwen3-8b:free',                           label: '🌙 Qwen3 8B FREE' },
+      { value: 'qwen/qwen3-235b-a22b:free',                    label: '🌙 Qwen3 235B FREE ⭐' },
+      { value: 'google/gemini-2.0-flash-exp:free',             label: '✦ Gemini 2.0 Flash FREE (OR)' },
+      { value: 'microsoft/phi-3-mini-128k-instruct:free',      label: '🔷 Phi-3 Mini FREE (Microsoft)' },
+      { value: 'openchat/openchat-7b:free',                    label: '💬 OpenChat 7B FREE' },
+    ]
+  }
+};
+
+// ═══════════════════════
+//  EXPERTS
+// ═══════════════════════
 const EXPERTS = [
   { id:'auto',     label:'AUTO',    icon:'⚡', color:'#4fc3f7', sys:'' },
   { id:'general',  label:'GENERAL', icon:'🤖', color:'#4fc3f7',
-    sys:`คุณคือ Dakno Ultra — AI ผู้ช่วยอัจฉริยะที่ขับเคลื่อนด้วย Gemini ที่ทรงพลังที่สุด
-ตอบภาษาไทยเสมอ เว้นแต่ผู้ใช้จะถามภาษาอื่น
-ตอบอย่างลึกซึ้ง ถูกต้อง ครบถ้วน และเป็นประโยชน์สูงสุด
-ใช้ Markdown จัดรูปแบบคำตอบเมื่อเหมาะสม` },
+    sys:`คุณคือ Dakno Ultra — AI ผู้ช่วยอัจฉริยะ ตอบภาษาไทยเสมอ เว้นแต่ผู้ใช้จะถามภาษาอื่น ตอบอย่างลึกซึ้ง ถูกต้อง ครบถ้วน และเป็นประโยชน์สูงสุด ใช้ Markdown จัดรูปแบบเมื่อเหมาะสม` },
   { id:'reason',   label:'REASON',  icon:'🧠', color:'#a78bfa',
-    sys:`คุณคือนักวิเคราะห์ระดับเทพที่คิดแบบ Chain-of-Thought
-แสดงขั้นตอนการคิดอย่างละเอียดก่อนสรุป ตอบภาษาไทย
-โครงสร้าง: 🔍 วิเคราะห์ → 💡 ข้อค้นพบ → ✅ สรุป → 🎯 คำแนะนำ` },
+    sys:`คุณคือนักวิเคราะห์ระดับเทพที่คิดแบบ Chain-of-Thought แสดงขั้นตอนการคิดอย่างละเอียดก่อนสรุป ตอบภาษาไทย โครงสร้าง: 🔍 วิเคราะห์ → 💡 ข้อค้นพบ → ✅ สรุป → 🎯 คำแนะนำ` },
   { id:'code',     label:'CODE',    icon:'💻', color:'#00ff88',
-    sys:`คุณคือ Senior Full-Stack Developer ระดับโลก
-เขียนโค้ดที่ clean, efficient, production-ready พร้อม error handling
-คอมเมนต์ภาษาไทย อธิบาย logic สำคัญทุกจุด
-ใช้ design patterns และ best practices เสมอ` },
+    sys:`คุณคือ Senior Full-Stack Developer ระดับโลก เขียนโค้ดที่ clean, efficient, production-ready พร้อม error handling คอมเมนต์ภาษาไทย อธิบาย logic สำคัญทุกจุด ใช้ design patterns และ best practices เสมอ` },
   { id:'math',     label:'MATH',    icon:'📐', color:'#818cf8',
-    sys:`คุณคืออัจฉริยะคณิตศาสตร์ระดับ Fields Medal
-แสดงขั้นตอนคำนวณอย่างละเอียด พิสูจน์ทฤษฎีบทอย่างเป็นทางการ
-ใช้สัญลักษณ์คณิตศาสตร์ที่ชัดเจน ตอบภาษาไทย` },
+    sys:`คุณคืออัจฉริยะคณิตศาสตร์ แสดงขั้นตอนคำนวณอย่างละเอียด พิสูจน์ทฤษฎีบทอย่างเป็นทางการ ใช้สัญลักษณ์คณิตศาสตร์ที่ชัดเจน ตอบภาษาไทย` },
   { id:'creative', label:'WRITE',   icon:'✍️', color:'#f472b6',
-    sys:`คุณคือนักเขียนมือรางวัลระดับโลก ผู้สร้างงานวรรณกรรมที่ทรงพลัง
-งานเขียนมีจิตวิญญาณ ภาษาสละสลวย จังหวะสมบูรณ์แบบ
-นิยาย บทกวี เรื่องสั้น บทความ — ทุกรูปแบบเยี่ยมยอด` },
+    sys:`คุณคือนักเขียนมือรางวัลระดับโลก งานเขียนมีจิตวิญญาณ ภาษาสละสลวย จังหวะสมบูรณ์แบบ นิยาย บทกวี เรื่องสั้น บทความ — ทุกรูปแบบเยี่ยมยอด` },
   { id:'lang',     label:'LANG',    icon:'🌐', color:'#f9a8d4',
-    sys:`คุณคือผู้เชี่ยวชาญภาษาระดับโลก แปลได้ 100+ ภาษา
-แปลอย่างแม่นยำ เป็นธรรมชาติ คงความหมายและ tone ดั้งเดิม
-ตรวจแกรมมาร์ ปรับสไตล์ สรุปความ ได้อย่างมืออาชีพ` },
+    sys:`คุณคือผู้เชี่ยวชาญภาษาระดับโลก แปลได้ 100+ ภาษา แปลอย่างแม่นยำ เป็นธรรมชาติ คงความหมายและ tone ดั้งเดิม ตรวจแกรมมาร์ ปรับสไตล์ สรุปความ ได้อย่างมืออาชีพ` },
   { id:'research', label:'RESEARCH',icon:'🔬', color:'#38bdf8',
-    sys:`คุณคือนักวิจัยระดับปริญญาเอก ผู้เชี่ยวชาญการค้นคว้าข้อมูล
-วิเคราะห์หลายมุมมอง อ้างอิงข้อมูลที่น่าเชื่อถือ
-สรุปข้อมูลซับซ้อนให้เข้าใจง่าย ตอบภาษาไทย` },
+    sys:`คุณคือนักวิจัยระดับปริญญาเอก วิเคราะห์หลายมุมมอง อ้างอิงข้อมูลที่น่าเชื่อถือ สรุปข้อมูลซับซ้อนให้เข้าใจง่าย ตอบภาษาไทย` },
   { id:'biz',      label:'BIZ',     icon:'📊', color:'#fb923c',
-    sys:`คุณคือที่ปรึกษาธุรกิจระดับ McKinsey / BCG
-วิเคราะห์ strategy, marketing, finance, operations
-ใช้ frameworks: SWOT, Porter's Five Forces, OKR, Blue Ocean
-ให้คำแนะนำที่ practical, actionable, มี ROI ชัดเจน` },
+    sys:`คุณคือที่ปรึกษาธุรกิจระดับ McKinsey / BCG วิเคราะห์ strategy, marketing, finance, operations ใช้ frameworks: SWOT, Porter's Five Forces, OKR ให้คำแนะนำที่ practical, actionable` },
   { id:'science',  label:'SCI',     icon:'⚛️', color:'#4ade80',
-    sys:`คุณคือนักวิทยาศาสตร์ระดับ Nobel Prize
-อธิบายด้วย first-principles thinking
-ฟิสิกส์ เคมี ชีววิทยา ดาราศาสตร์ — ครอบคลุมทุกสาขา
-ใช้ analogy ที่ชาญฉลาดเพื่อให้เข้าใจลึกขึ้น` },
+    sys:`คุณคือนักวิทยาศาสตร์ระดับ Nobel Prize อธิบายด้วย first-principles thinking ฟิสิกส์ เคมี ชีววิทยา ดาราศาสตร์ ใช้ analogy ที่ชาญฉลาด` },
   { id:'thai',     label:'THAI',    icon:'🇹🇭', color:'#34d399',
-    sys:`คุณคือผู้เชี่ยวชาญภาษาและวัฒนธรรมไทยระดับสูงสุด
-ใช้ภาษาไทยอันงดงาม สละสลวย ถูกต้องตามหลักภาษา
-ผสมผสานภูมิปัญญาไทย สุภาษิต วรรณคดีคลาสสิก
-ตอบอย่างอบอุ่น เป็นมิตร คงเอกลักษณ์ไทยแท้` },
+    sys:`คุณคือผู้เชี่ยวชาญภาษาและวัฒนธรรมไทย ใช้ภาษาไทยอันงดงาม ถูกต้องตามหลักภาษา ผสมผสานภูมิปัญญาไทย สุภาษิต วรรณคดีคลาสสิก` },
   { id:'fast',     label:'QUICK',   icon:'⚡', color:'#fbbf24',
-    sys:`ตอบสั้น ตรงประเด็น ไม่เกริ่น ไม่ขยาย
-1-3 ประโยคเท่านั้น ภาษาไทย` }
+    sys:`ตอบสั้น ตรงประเด็น ไม่เกริ่น ไม่ขยาย 1-3 ประโยคเท่านั้น ภาษาไทย` }
 ];
 
-// ═══════════════════════════════════════════
+// ═══════════════════════
 //  STATE
-// ═══════════════════════════════════════════
-const MAX_CHARS = 8000;
-const MAX_HISTORY = 20;
-
-let apiKey = localStorage.getItem('dakno_gemini_key') || '';
-let currentModel = localStorage.getItem('dakno_model') || 'gemini-2.5-flash';
+// ═══════════════════════
+let currentProvider = localStorage.getItem('dakno_provider') || 'gemini';
+let currentModel = '';
 let currentExpertId = 'auto';
 let history = [];
 let isStreaming = false;
 let totalTokens = 0;
+let keys = {};
+try { keys = JSON.parse(localStorage.getItem('dakno_keys') || '{}'); } catch(e) {}
 
-// DOM refs
-const $chat      = document.getElementById('chat');
-const $input     = document.getElementById('msg-input');
-const $send      = document.getElementById('send-btn');
-const $charCount = document.getElementById('char-count');
-const $stText    = document.getElementById('st-text');
-const $tokenCt   = document.getElementById('token-ct');
-const $hint      = document.getElementById('expert-hint');
-const $rail      = document.getElementById('expert-rail');
-const $wGrid     = document.getElementById('w-grid');
-const $apiInput  = document.getElementById('api-key-input');
-const $modelSel  = document.getElementById('model-select');
-const $modelLbl  = document.getElementById('cur-model-label');
+const $chat     = document.getElementById('chat');
+const $input    = document.getElementById('msg-input');
+const $charCt   = document.getElementById('char-count');
+const $stText   = document.getElementById('st-text');
+const $tokenCt  = document.getElementById('token-ct');
+const $hint     = document.getElementById('expert-hint');
+const $rail     = document.getElementById('expert-rail');
+const $wGrid    = document.getElementById('w-grid');
+const $apiInput = document.getElementById('api-key-input');
+const $modelSel = document.getElementById('model-select');
+const $modelLbl = document.getElementById('cur-model-label');
 
-// Init
-if (apiKey) $apiInput.value = '••••••••••••••••';
-$modelSel.value = currentModel;
-$modelLbl.textContent = currentModel;
+// ═══════════════════════
+//  INIT
+// ═══════════════════════
+function init() {
+  buildExperts();
+  selectExpert('auto');
+  switchProvider(currentProvider, false);
+  $input.addEventListener('input', onInput);
+  $input.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+  updateStatus();
+}
 
-// ═══════════════════════════════════════════
-//  BUILD UI
-// ═══════════════════════════════════════════
+// ═══════════════════════
+//  PROVIDER
+// ═══════════════════════
+function switchProvider(prov, save = true) {
+  currentProvider = prov;
+  if (save) localStorage.setItem('dakno_provider', prov);
+  const cfg = PROVIDERS[prov];
+  document.querySelectorAll('.prov-tab').forEach(t =>
+    t.classList.toggle('active', t.dataset.prov === prov));
+  $modelSel.innerHTML = '';
+  cfg.models.forEach(m => {
+    const o = document.createElement('option');
+    o.value = m.value; o.textContent = m.label;
+    $modelSel.appendChild(o);
+  });
+  const saved = localStorage.getItem(`dakno_model_${prov}`);
+  currentModel = saved && cfg.models.find(m => m.value === saved) ? saved : cfg.models[0].value;
+  $modelSel.value = currentModel;
+  $modelLbl.textContent = currentModel.split('/').pop();
+  $apiInput.placeholder = cfg.keyPlaceholder;
+  $apiInput.value = keys[prov] ? '••••••••••••••••' : '';
+  updateStatus();
+}
+
+function onModelChange(val) {
+  currentModel = val;
+  $modelLbl.textContent = val.split('/').pop();
+  localStorage.setItem(`dakno_model_${currentProvider}`, val);
+}
+
+function saveKey() {
+  const v = $apiInput.value.trim();
+  if (!v || v === '••••••••••••••••') return;
+  keys[currentProvider] = v;
+  localStorage.setItem('dakno_keys', JSON.stringify(keys));
+  $apiInput.value = '••••••••••••••••';
+  setStatus(`✓ บันทึก ${PROVIDERS[currentProvider].name} Key แล้ว`);
+  updateStatus();
+}
+
+// ═══════════════════════
+//  EXPERTS
+// ═══════════════════════
 function buildExperts() {
   EXPERTS.forEach(ex => {
     const pill = document.createElement('button');
-    pill.className = 'ex-pill';
-    pill.dataset.id = ex.id;
-    pill.style.color = ex.color;
+    pill.className = 'ex-pill'; pill.dataset.id = ex.id; pill.style.color = ex.color;
     pill.innerHTML = `<span class="ex-dot"></span>${ex.icon} ${ex.label}`;
     pill.onclick = () => selectExpert(ex.id);
     $rail.appendChild(pill);
-
     if (ex.id !== 'auto') {
       const card = document.createElement('div');
       card.className = 'w-card';
@@ -423,282 +526,234 @@ function buildExperts() {
       $wGrid.appendChild(card);
     }
   });
-  updateRail();
 }
 
 function selectExpert(id) {
   currentExpertId = id;
-  updateRail();
-  updateStatus();
+  document.querySelectorAll('.ex-pill').forEach(p => p.classList.toggle('active', p.dataset.id === id));
   const ex = EXPERTS.find(e => e.id === id);
   $hint.textContent = ex ? `// ${ex.label} MODE` : '';
   $hint.style.color = ex?.color || 'var(--ghost)';
+  updateStatus();
 }
 
-function updateRail() {
-  document.querySelectorAll('.ex-pill').forEach(p =>
-    p.classList.toggle('active', p.dataset.id === currentExpertId));
-}
-
-// ═══════════════════════════════════════════
-//  AUTO ROUTING
-// ═══════════════════════════════════════════
 function routeExpert(msg) {
   const m = msg.toLowerCase();
-  if (/โค้ด|code|function|debug|python|javascript|typescript|html|css|sql|react|vue|node|api|class|loop|array/.test(m)) return 'code';
-  if (/คำนวณ|สมการ|พิสูจน์|คณิต|math|ฟิสิกส์|ตัวเลข|สถิติ|probability|integral|derivative/.test(m)) return 'math';
+  if (/โค้ด|code|function|debug|python|javascript|html|css|sql|react|vue|node/.test(m)) return 'code';
+  if (/คำนวณ|สมการ|พิสูจน์|คณิต|math|ฟิสิกส์|integral|derivative/.test(m)) return 'math';
   if (/แปล|translate|grammar|ตรวจ|ภาษาอังกฤษ|spell|proofread/.test(m)) return 'lang';
-  if (/เรื่องสั้น|นิยาย|บทกวี|poem|story|creative|แต่งเพลง|สคริปต์/.test(m)) return 'creative';
-  if (/ธุรกิจ|marketing|กลยุทธ์|strategy|brand|sales|startup|pitch/.test(m)) return 'biz';
-  if (/วิทยาศาสตร์|physics|chemistry|biology|quantum|dna|ดาว|อวกาศ/.test(m)) return 'science';
-  if (/ไทย|สุภาษิต|วรรณคดี|ประวัติศาสตร์ไทย|วัฒนธรรมไทย/.test(m)) return 'thai';
-  if (/วิเคราะห์|เปรียบเทียบ|เหตุผล|ทำไม|อธิบาย|ประเมิน/.test(m) && m.length > 40) return 'reason';
-  if (/ค้นหา|research|ข้อมูล|งานวิจัย|อ้างอิง/.test(m)) return 'research';
-  if (m.length < 30) return 'fast';
+  if (/เรื่องสั้น|นิยาย|บทกวี|poem|story|creative|แต่งเพลง/.test(m)) return 'creative';
+  if (/ธุรกิจ|business|marketing|swot|strategy|startup|ตลาด/.test(m)) return 'biz';
+  if (/วิจัย|research|ข้อมูล|สถิติ|survey|วิเคราะห์/.test(m)) return 'research';
+  if (/วิทยาศาสตร์|science|ชีววิทยา|เคมี|ดาราศาสตร์/.test(m)) return 'science';
+  if (/ไทย|วัฒนธรรม|ประเพณี|สุภาษิต|วรรณคดี/.test(m)) return 'thai';
+  if (/สรุป|tldr|quick|สั้น|brief/.test(m)) return 'fast';
+  if (/คิด|วิเคราะห์|เปรียบ|ข้อดี|ข้อเสีย|why|เพราะ/.test(m)) return 'reason';
   return 'general';
 }
 
-// ═══════════════════════════════════════════
-//  STATUS
-// ═══════════════════════════════════════════
-function updateStatus(msg) {
-  if (!apiKey) {
-    $stText.textContent = 'NO API KEY // ไปรับฟรีที่ aistudio.google.com → Get API Key';
-    $stText.style.color = 'var(--c2)';
+function getSysPrompt(msg) {
+  const id = currentExpertId === 'auto' ? routeExpert(msg) : currentExpertId;
+  return EXPERTS.find(e => e.id === id)?.sys || EXPERTS.find(e => e.id === 'general').sys;
+}
+
+// ═══════════════════════
+//  SEND
+// ═══════════════════════
+async function sendMessage() {
+  if (isStreaming) return;
+  const text = $input.value.trim();
+  if (!text) return;
+  if (!keys[currentProvider]) {
+    setStatus(`⚠ ยังไม่ได้ใส่ ${PROVIDERS[currentProvider].name} Key — ใส่แล้วกด SAVE`);
     return;
   }
-  const ex = EXPERTS.find(e => e.id === currentExpertId);
-  $stText.textContent = msg || `${currentExpertId === 'auto' ? 'AUTO ROUTE' : ex?.label + ' MODE'} // ${currentModel} // READY`;
-  $stText.style.color = ex?.color || '#4fc3f7';
-  $tokenCt.textContent = totalTokens > 0 ? `~${totalTokens.toLocaleString()} tokens` : '';
-}
+  document.getElementById('welcome')?.remove();
+  addMessage('user', text);
+  history.push({ role: 'user', content: text });
+  if (history.length > 40) history = history.slice(-40);
+  $input.value = ''; $charCt.textContent = `0 / 8000`; autoResize();
 
-// ═══════════════════════════════════════════
-//  CHAT RENDER
-// ═══════════════════════════════════════════
-function removeWelcome() {
-  const w = document.getElementById('welcome');
-  if (w) w.remove();
-}
-
-function appendUserMsg(text) {
-  removeWelcome();
-  const row = document.createElement('div');
-  row.className = 'msg user';
-  row.innerHTML = `
-    <div class="av user">YOU</div>
-    <div class="bubble-wrap">
-      <div class="bubble user">${escHtml(text)}</div>
-    </div>`;
-  $chat.appendChild(row);
-  scrollBottom();
-}
-
-function createAiBubble(expertId) {
-  const ex = EXPERTS.find(e => e.id === expertId) || EXPERTS[1];
-  const row = document.createElement('div');
-  row.className = 'msg ai';
-  row.innerHTML = `
-    <div class="av ai">${ex.icon}</div>
-    <div class="bubble-wrap">
-      <div class="expert-tag" style="color:${ex.color};border-color:${ex.color}44;">
-        <span style="background:${ex.color};width:5px;height:5px;border-radius:50%;display:inline-block;"></span>
-        ${ex.label} · ${currentModel}
-      </div>
-      <div class="bubble ai">
-        <div class="typing">
-          <div class="typing-dot"></div>
-          <div class="typing-dot"></div>
-          <div class="typing-dot"></div>
-        </div>
-      </div>
-    </div>`;
-  $chat.appendChild(row);
-  scrollBottom();
-  return row.querySelector('.bubble.ai');
-}
-
-function scrollBottom() { $chat.scrollTop = $chat.scrollHeight; }
-
-function escHtml(t) {
-  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-function renderMd(text) {
-  return text
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/```(\w*)\n?([\s\S]*?)```/g, (_,l,c) => `<pre><code>${c.trim()}</code></pre>`)
-    .replace(/`([^`\n]+)`/g, '<code>$1</code>')
-    .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/^### (.+)$/gm, '<div style="color:#4fc3f7;font-weight:700;margin:10px 0 4px;font-size:1.02em;">$1</div>')
-    .replace(/^## (.+)$/gm, '<div style="color:#00e5ff;font-weight:700;margin:12px 0 6px;font-size:1.06em;">$1</div>')
-    .replace(/^# (.+)$/gm, '<div style="color:#fff;font-weight:700;margin:14px 0 8px;font-size:1.1em;">$1</div>')
-    .replace(/^[-*•] (.+)$/gm, '<div style="padding-left:14px;">• $1</div>')
-    .replace(/^\d+\. (.+)$/gm, '<div style="padding-left:14px;">$&</div>')
-    .replace(/\n{2,}/g, '<br><br>')
-    .replace(/\n/g, '<br>');
-}
-
-// ═══════════════════════════════════════════
-//  SEND — Gemini API (streaming SSE)
-// ═══════════════════════════════════════════
-async function sendMessage() {
-  const text = $input.value.trim();
-  if (!text || isStreaming) return;
-  if (!apiKey) { updateStatus('⚠ ใส่ API Key ก่อน!'); $apiInput.focus(); return; }
-  if (text.length > MAX_CHARS) return;
-
+  const aiDiv = addMessage('ai', '', true);
+  const bubbleEl = aiDiv.querySelector('.bubble');
   isStreaming = true;
-  $input.value = '';
-  $charCount.textContent = `0 / ${MAX_CHARS}`;
-  autoResize();
-
-  const expertId = currentExpertId === 'auto' ? routeExpert(text) : currentExpertId;
-  const ex = EXPERTS.find(e => e.id === expertId) || EXPERTS[1];
-
-  updateStatus(`ROUTING → ${ex.label}...`);
-  appendUserMsg(text);
-  const aiBubble = createAiBubble(expertId);
-
-  history.push({ role: 'user', parts: [{ text }] });
-  if (history.length > MAX_HISTORY * 2) history = history.slice(-MAX_HISTORY * 2);
-
-  const contents = history.slice();
-  const systemInstruction = ex.sys ? { parts: [{ text: ex.sys }] } : undefined;
-
-  const body = {
-    contents,
-    generationConfig: {
-      temperature: 0.7,
-      maxOutputTokens: 8192,
-      topK: 40,
-      topP: 0.95
-    }
-  };
-  if (systemInstruction) body.systemInstruction = systemInstruction;
-
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${currentModel}:streamGenerateContent?alt=sse&key=${apiKey}`;
+  setStatus(`⟳ ${currentModel.split('/').pop()} กำลังคิด...`);
 
   try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-
-    if (!response.ok) {
-      const err = await response.json().catch(() => ({}));
-      throw new Error(err?.error?.message || `HTTP ${response.status}`);
-    }
-
-    const reader = response.body.getReader();
-    const decoder = new TextDecoder();
+    const sys = getSysPrompt(text);
     let fullText = '';
-    let inTok = 0, outTok = 0;
-
-    aiBubble.innerHTML = '';
-
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      const chunk = decoder.decode(value);
-      const lines = chunk.split('\n');
-
-      for (const line of lines) {
-        if (!line.startsWith('data: ')) continue;
-        const json = line.slice(6).trim();
-        if (!json || json === '[DONE]') continue;
-        try {
-          const ev = JSON.parse(json);
-          const parts = ev?.candidates?.[0]?.content?.parts;
-          if (parts) {
-            for (const p of parts) {
-              if (p.text) {
-                fullText += p.text;
-                aiBubble.innerHTML = renderMd(fullText);
-                scrollBottom();
-              }
-            }
-          }
-          if (ev?.usageMetadata) {
-            inTok = ev.usageMetadata.promptTokenCount || 0;
-            outTok = ev.usageMetadata.candidatesTokenCount || 0;
-          }
-        } catch {}
-      }
+    if (currentProvider === 'gemini') {
+      fullText = await callGemini(sys, history.slice(0,-1), text, bubbleEl);
+    } else {
+      fullText = await callOpenRouter(sys, history.slice(0,-1), text, bubbleEl);
     }
-
-    totalTokens += inTok + outTok;
-    history.push({ role: 'model', parts: [{ text: fullText }] });
-    updateStatus(`✓ ${ex.label} // in:${inTok} out:${outTok} tokens`);
-    $tokenCt.textContent = `~${totalTokens.toLocaleString()} tokens total`;
-
-  } catch (err) {
-    aiBubble.innerHTML = `<span style="color:var(--c2)">⚠ ${escHtml(err.message)}</span>`;
-    updateStatus(`ERROR // ${err.message.slice(0, 80)}`);
-    $stText.style.color = 'var(--c2)';
-    history.pop();
+    history.push({ role: 'assistant', content: fullText });
+    totalTokens += Math.ceil(fullText.length / 4);
+    $tokenCt.textContent = `~${totalTokens} tokens`;
+    setStatus(`✓ ${currentModel.split('/').pop()} ตอบเสร็จ`);
+  } catch(err) {
+    bubbleEl.classList.add('error');
+    bubbleEl.innerHTML = `⚠ ${err.message}<br><small style="opacity:0.6">${getHint(err.message)}</small>`;
+    setStatus(`✗ ${err.message}`);
   }
 
   isStreaming = false;
-  $input.focus();
+  $chat.scrollTop = $chat.scrollHeight;
 }
 
-// ═══════════════════════════════════════════
-//  INPUT EVENTS
-// ═══════════════════════════════════════════
-function autoResize() {
-  $input.style.height = 'auto';
-  $input.style.height = Math.min($input.scrollHeight, 120) + 'px';
+function getHint(msg) {
+  if (/401|403|api key/i.test(msg)) return 'ตรวจสอบ API Key — อาจผิดหรือหมดอายุ';
+  if (/429/i.test(msg)) return 'Rate limit — รอสักครู่แล้วลองใหม่';
+  if (/404/i.test(msg)) return 'โมเดลนี้อาจไม่ available ลองโมเดลอื่น';
+  if (/quota/i.test(msg)) return 'Quota หมด — ลอง Provider อื่นหรือรอพรุ่งนี้';
+  return 'ลองเปลี่ยนโมเดลหรือ Provider อื่น';
 }
 
-$input.addEventListener('input', () => {
-  autoResize();
-  const len = $input.value.length;
-  $charCount.textContent = `${len} / ${MAX_CHARS}`;
-  $charCount.style.color = len > MAX_CHARS * 0.9 ? 'var(--c2)' : 'var(--ghost)';
-});
-
-$input.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
-});
-
-$send.onclick = sendMessage;
-
-$modelSel.onchange = () => {
-  currentModel = $modelSel.value;
-  localStorage.setItem('dakno_model', currentModel);
-  $modelLbl.textContent = currentModel;
-  updateStatus();
-};
-
-document.getElementById('btn-save').onclick = () => {
-  const val = $apiInput.value.trim();
-  if (val && !val.startsWith('•')) {
-    apiKey = val;
-    localStorage.setItem('dakno_gemini_key', apiKey);
-    $apiInput.value = '••••••••••••••••';
-    updateStatus('API KEY SAVED ✓');
+// ═══════════════════════
+//  GEMINI API
+// ═══════════════════════
+async function callGemini(sys, prev, userMsg, el) {
+  const key = keys.gemini;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${currentModel}:streamGenerateContent?alt=sse&key=${key}`;
+  const contents = [];
+  for (const h of prev) {
+    contents.push({ role: h.role === 'assistant' ? 'model' : 'user', parts: [{ text: h.content }] });
   }
-};
+  contents.push({ role: 'user', parts: [{ text: userMsg }] });
+  const body = {
+    systemInstruction: sys ? { parts: [{ text: sys }] } : undefined,
+    contents,
+    generationConfig: { temperature: 0.9, maxOutputTokens: 8192 }
+  };
+  const res = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+  if (!res.ok) { const e = await res.json().catch(()=>({})); throw new Error(e?.error?.message || `HTTP ${res.status}`); }
+  return await readGeminiStream(res, el);
+}
 
-document.getElementById('btn-clear').onclick = () => {
-  if (!confirm('Clear conversation?')) return;
-  history = [];
-  totalTokens = 0;
-  $chat.innerHTML = '';
-  updateStatus('HISTORY CLEARED');
-};
+async function readGeminiStream(res, el) {
+  let full = '';
+  const reader = res.body.getReader(); const dec = new TextDecoder();
+  while(true) {
+    const {done, value} = await reader.read(); if(done) break;
+    const lines = dec.decode(value).split('\n');
+    for (const line of lines) {
+      if (!line.startsWith('data: ')) continue;
+      const d = line.slice(6).trim();
+      if (!d || d === '[DONE]') continue;
+      try {
+        const t = JSON.parse(d)?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        if (t) { full += t; el.innerHTML = md(full) + '<span style="opacity:.4">▌</span>'; $chat.scrollTop = $chat.scrollHeight; }
+      } catch(e) {}
+    }
+  }
+  el.innerHTML = md(full); return full;
+}
 
-// ═══════════════════════════════════════════
-//  INIT
-// ═══════════════════════════════════════════
-buildExperts();
-selectExpert('auto');
-updateStatus();
-$input.focus();
+// ═══════════════════════
+//  OPENROUTER API
+// ═══════════════════════
+async function callOpenRouter(sys, prev, userMsg, el) {
+  const key = keys.openrouter;
+  const messages = [];
+  if (sys) messages.push({ role:'system', content: sys });
+  for (const h of prev) messages.push({ role: h.role === 'assistant' ? 'assistant' : 'user', content: h.content });
+  messages.push({ role:'user', content: userMsg });
+  const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${key}`,
+      'HTTP-Referer': 'https://dakno.ultra',
+      'X-Title': 'DAKNO ULTRA FREE'
+    },
+    body: JSON.stringify({ model: currentModel, messages, stream: true, max_tokens: 4096 })
+  });
+  if (!res.ok) { const e = await res.json().catch(()=>({})); throw new Error(e?.error?.message || `HTTP ${res.status}`); }
+  return await readSSE(res, el);
+}
+
+async function readSSE(res, el) {
+  let full = '';
+  const reader = res.body.getReader(); const dec = new TextDecoder();
+  while(true) {
+    const {done, value} = await reader.read(); if(done) break;
+    const lines = dec.decode(value).split('\n');
+    for (const line of lines) {
+      if (!line.startsWith('data: ')) continue;
+      const d = line.slice(6).trim();
+      if (!d || d === '[DONE]') continue;
+      try {
+        const delta = JSON.parse(d)?.choices?.[0]?.delta?.content || '';
+        if (delta) { full += delta; el.innerHTML = md(full) + '<span style="opacity:.4">▌</span>'; $chat.scrollTop = $chat.scrollHeight; }
+      } catch(e) {}
+    }
+  }
+  el.innerHTML = md(full); return full;
+}
+
+// ═══════════════════════
+//  MARKDOWN
+// ═══════════════════════
+function md(t) {
+  return t
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/```(\w*)\n([\s\S]*?)```/g,(_,l,c)=>`<pre><code class="lang-${l}">${c.trim()}</code></pre>`)
+    .replace(/`([^`]+)`/g,'<code>$1</code>')
+    .replace(/\*\*\*(.+?)\*\*\*/g,'<strong><em>$1</em></strong>')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,'<em>$1</em>')
+    .replace(/^#{3}\s(.+)$/gm,'<h3 style="color:#80c8ff;margin:12px 0 6px;font-size:14px;">$1</h3>')
+    .replace(/^#{2}\s(.+)$/gm,'<h2 style="color:#a0d8ff;margin:14px 0 7px;font-size:16px;">$1</h2>')
+    .replace(/^#{1}\s(.+)$/gm,'<h1 style="color:#c0e8ff;margin:16px 0 8px;font-size:18px;">$1</h1>')
+    .replace(/^[-*]\s(.+)$/gm,'<li style="margin:3px 0;">• $1</li>')
+    .replace(/^(\d+)\.\s(.+)$/gm,'<li style="margin:3px 0;">$1. $2</li>')
+    .replace(/\n/g,'<br>');
+}
+
+// ═══════════════════════
+//  UI
+// ═══════════════════════
+function addMessage(role, text, empty=false) {
+  const prov = PROVIDERS[currentProvider];
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = `av ${role==='user'?'user':'ai'}`;
+  av.textContent = role==='user' ? 'YOU' : prov.icon;
+  const wrap = document.createElement('div');
+  wrap.className = 'bubble-wrap';
+  if (role==='ai') {
+    const badge = document.createElement('div');
+    badge.className = 'prov-badge';
+    badge.style.cssText = `border-color:${prov.color};color:${prov.color}`;
+    badge.textContent = `${prov.icon} ${currentModel.split('/').pop()}`;
+    wrap.appendChild(badge);
+  }
+  const bubble = document.createElement('div');
+  bubble.className = `bubble ${role==='user'?'user':'ai'}`;
+  bubble.innerHTML = empty
+    ? '<div class="typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>'
+    : (role==='user' ? esc(text) : md(text));
+  wrap.appendChild(bubble);
+  div.appendChild(av); div.appendChild(wrap);
+  $chat.appendChild(div);
+  $chat.scrollTop = $chat.scrollHeight;
+  return div;
+}
+
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'); }
+function clearChat(){ history=[]; $chat.innerHTML=''; totalTokens=0; $tokenCt.textContent=''; setStatus('READY'); }
+function setStatus(m){ $stText.textContent = m; }
+function updateStatus(){
+  const prov = PROVIDERS[currentProvider];
+  setStatus(keys[currentProvider]
+    ? `${prov.icon} ${prov.name} // ${currentModel.split('/').pop()} // ${currentExpertId.toUpperCase()} mode`
+    : `⚠ ใส่ ${prov.name} Key ก่อน // ${prov.keyHint}`);
+}
+function onInput(){ const l=$input.value.length; $charCt.textContent=`${l} / 8000`; autoResize(); }
+function autoResize(){ $input.style.height='auto'; $input.style.height=Math.min($input.scrollHeight,120)+'px'; }
+
+init();
 </script>
 </body>
 </html>
