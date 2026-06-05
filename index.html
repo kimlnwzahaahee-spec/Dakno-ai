@@ -393,7 +393,7 @@
           const lines = chunk.split('\n').filter(l => l.startsWith('data: '));
           for (const line of lines) {
             const json = line.slice(6);
-                        if (json === '[DONE]') continue;
+                         if (json === '[DONE]') continue;
             try {
               const parsed = JSON.parse(json);
               const token = parsed.choices[0]?.delta?.content || '';
