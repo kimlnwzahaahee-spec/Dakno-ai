@@ -393,4 +393,62 @@
           const lines = chunk.split('\n').filter(l => l.startsWith('data: '));
           for (const line of lines) {
             const json = line.slice(6);
-            if (json===
+                        if (json === '[DONE]') continue;
+            try {
+              const parsed = JSON.parse(json);
+              const token = parsed.choices[0]?.delta?.content || '';
+              fullText += token;
+              contentSpan.textContent = fullText;
+              chat.scrollTop = chat.scrollHeight;
+            } catch(e) {}
+          }
+        }
+        conversationHistory.push({ role: 'assistant', content: fullText });
+      } catch (err) {
+        contentSpan.textContent = '❌ ผิดพลาด: ' + err.message;
+      }
+    }
+
+    // Event Listeners
+    document.getElementById('send-btn').addEventListener('click', handleSend);
+    document.getElementById('btn-save').addEventListener('click', () => {
+      apiKey = document.getElementById('api-key').value.trim();
+      localStorage.setItem('dakno_groq_key', apiKey);
+      updateStatus();
+    });
+    document.getElementById('btn-test').addEventListener('click', async () => {
+      const key = document.getElementById('api-key').value.trim();
+      if (!key) return;
+      const bar = document.getElementById('status-bar');
+      bar.textContent = '⏳ ทดสอบ...';
+      bar.style.color = 'var(--muted)';
+      try {
+        const r = await fetch('https://api.groq.com/openai/v1/models', {
+          headers: { Authorization: `Bearer ${key}` }
+        });
+        if (r.ok) {
+          apiKey = key;
+          localStorage.setItem('dakno_groq_key', key);
+          updateStatus();
+        } else throw new Error('Key ไม่ถูกต้อง');
+      } catch (e) {
+        bar.textContent = '❌ ' + e.message;
+        bar.style.color = 'var(--danger)';
+      }
+    });
+    document.getElementById('mode-auto').addEventListener('click', () => setMode('auto'));
+    document.getElementById('mode-manual').addEventListener('change', function() {
+      setManual(this.value);
+    });
+    document.getElementById('user-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        handleSend();
+      }
+    });
+    document.getElementById('api-key').value = apiKey;
+    setActiveBadge('general');
+    updateStatus();
+  </script>
+</body>
+</html>
