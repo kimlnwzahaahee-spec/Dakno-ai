@@ -40,8 +40,6 @@ body::after{
 }
 @keyframes scan{0%{background-position:0 0}100%{background-position:0 100px}}
 #app{display:flex;flex-direction:column;height:100dvh;position:relative;z-index:10;}
-
-/* TOPBAR */
 #topbar{
   display:flex;align-items:center;gap:8px;padding:8px 14px;
   border-bottom:1px solid var(--rim);background:rgba(6,8,16,0.97);
@@ -58,8 +56,6 @@ body::after{
 .logo-name{font-family:var(--font-display);font-size:20px;letter-spacing:3px;color:#fff;line-height:1;}
 .logo-sub{font-family:var(--font-mono);font-size:7px;color:#4fc3f7;letter-spacing:2px;opacity:0.8;}
 .tb-sep{width:1px;height:22px;background:var(--rim);flex-shrink:0;}
-
-/* FREE BADGE */
 .free-forever{
   display:flex;align-items:center;gap:5px;
   background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.25);
@@ -67,8 +63,6 @@ body::after{
   font-family:var(--font-mono);font-size:9px;color:var(--c3);white-space:nowrap;
 }
 .free-dot{width:5px;height:5px;border-radius:50%;background:var(--c3);animation:pulse 2s infinite;}
-
-/* PROVIDER TABS */
 .provider-tabs{display:flex;gap:3px;flex-shrink:0;}
 .prov-tab{
   display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:5px;
@@ -77,7 +71,6 @@ body::after{
 }
 .prov-tab[data-prov="gemini"].active{border-color:var(--gemini);background:rgba(79,195,247,0.12);color:var(--gemini);box-shadow:0 0 10px rgba(79,195,247,0.2);}
 .prov-tab[data-prov="openrouter"].active{border-color:var(--openrouter);background:rgba(167,139,250,0.12);color:var(--openrouter);box-shadow:0 0 10px rgba(167,139,250,0.2);}
-
 .model-badge{
   display:flex;align-items:center;gap:6px;background:var(--panel);
   border:1px solid var(--wire);border-radius:6px;padding:4px 9px;
@@ -85,7 +78,6 @@ body::after{
 }
 .model-dot{width:6px;height:6px;border-radius:50%;background:var(--c3);box-shadow:0 0 6px var(--c3);animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-
 .tb-right{display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0;}
 #api-key-input{
   width:185px;background:var(--panel);border:1px solid var(--wire);
@@ -109,8 +101,6 @@ body::after{
 }
 #model-select:focus{outline:none;border-color:#4fc3f7;}
 #model-select option{background:var(--deep);}
-
-/* EXPERT RAIL */
 #expert-rail{
   display:flex;align-items:center;gap:4px;padding:5px 14px;
   background:var(--deep);border-bottom:1px solid var(--rim);
@@ -126,8 +116,6 @@ body::after{
 .ex-pill:hover{opacity:0.8;}
 .ex-pill.active{opacity:1;border-color:currentColor;background:rgba(255,255,255,0.04);text-shadow:0 0 8px currentColor;}
 .ex-dot{width:4px;height:4px;border-radius:50%;background:currentColor;}
-
-/* CHAT */
 #chat{
   flex:1;overflow-y:auto;padding:20px 16px 8px;
   display:flex;flex-direction:column;gap:16px;
@@ -135,8 +123,6 @@ body::after{
 }
 #chat::-webkit-scrollbar{width:2px;}
 #chat::-webkit-scrollbar-thumb{background:var(--wire);border-radius:2px;}
-
-/* Welcome */
 #welcome{
   display:flex;flex-direction:column;align-items:center;
   justify-content:center;min-height:100%;gap:22px;animation:fadeIn .6s ease;
@@ -148,8 +134,6 @@ body::after{
   background-clip:text;text-align:center;line-height:1;
 }
 .w-sub{font-family:var(--font-mono);font-size:10px;color:var(--dim);letter-spacing:2px;text-align:center;margin-top:6px;}
-
-/* Provider cards on welcome */
 .prov-cards{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;max-width:520px;}
 .prov-welcome-card{
   flex:1;min-width:200px;max-width:240px;
@@ -168,7 +152,6 @@ body::after{
 }
 .pwc-models{font-family:var(--font-mono);font-size:9px;color:var(--dim);line-height:2;}
 .pwc-link{font-family:var(--font-mono);font-size:9px;opacity:0.5;margin-top:2px;}
-
 .w-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;max-width:480px;}
 @media(max-width:480px){.w-grid{grid-template-columns:repeat(3,1fr);}}
 @media(max-width:360px){.w-grid{grid-template-columns:repeat(2,1fr);}.w-title{font-size:30px;}}
@@ -180,11 +163,8 @@ body::after{
 .w-card:hover{border-color:var(--wire);transform:translateY(-2px);background:var(--lift);}
 .w-card-icon{font-size:20px;line-height:1;}
 .w-card-name{font-family:var(--font-mono);font-size:9px;color:var(--dim);}
-
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-
-/* Messages */
 .msg{display:flex;gap:10px;align-items:flex-start;animation:fadeUp .22s ease;}
 .msg.user{flex-direction:row-reverse;}
 .av{width:30px;height:30px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-family:var(--font-mono);}
@@ -205,14 +185,11 @@ body::after{
 .bubble.ai strong{color:#e0f0ff;}
 .bubble.ai em{color:#b0d0ff;}
 .bubble.error{background:rgba(255,45,107,0.1);border-color:rgba(255,45,107,0.3);color:#ff6b9a;}
-
 .typing{display:flex;align-items:center;gap:4px;padding:8px 4px;}
 .typing-dot{width:5px;height:5px;border-radius:50%;background:var(--c0);animation:tdot 1.3s ease infinite;}
 .typing-dot:nth-child(2){animation-delay:.15s;background:#4fc3f7;}
 .typing-dot:nth-child(3){animation-delay:.3s;background:#1a73e8;}
 @keyframes tdot{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-6px);opacity:1}}
-
-/* STATUS */
 #statusbar{
   flex-shrink:0;padding:4px 16px;min-height:24px;
   display:flex;align-items:center;gap:8px;border-top:1px solid var(--rim);
@@ -221,8 +198,6 @@ body::after{
 .st-led{width:5px;height:5px;border-radius:50%;background:var(--c3);animation:pulse 2s infinite;flex-shrink:0;}
 #st-text{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 #token-ct{flex-shrink:0;}
-
-/* INPUT */
 #inputarea{
   flex-shrink:0;padding:10px 14px 14px;
   border-top:1px solid var(--rim);background:rgba(6,8,16,0.98);backdrop-filter:blur(20px);
@@ -251,13 +226,49 @@ body::after{
   position:fixed;top:0;left:0;right:0;z-index:100;animation:glow-slide 4s ease infinite;
 }
 @keyframes glow-slide{0%,100%{opacity:0.4}50%{opacity:1}}
+
+/* ── กล้อง ── */
+.cam-btn{
+  width:44px;height:44px;border-radius:8px;border:1px solid var(--wire);
+  background:var(--panel);color:var(--dim);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+  transition:all .2s;flex-shrink:0;
+}
+.cam-btn:hover{border-color:#4fc3f7;color:#4fc3f7;box-shadow:0 0 12px rgba(79,195,247,0.2);}
+.cam-btn.has-img{border-color:var(--c3);color:var(--c3);box-shadow:0 0 12px rgba(0,255,136,0.3);}
+
+/* preview รูปที่แนบ */
+#img-preview-wrap{
+  display:none;position:relative;margin-bottom:8px;
+  border:1px solid var(--wire);border-radius:10px;overflow:hidden;
+  max-width:180px;
+}
+#img-preview-wrap.show{display:block;}
+#img-preview{width:100%;max-height:120px;object-fit:cover;display:block;}
+#img-remove{
+  position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;
+  background:rgba(0,0,0,0.7);border:1px solid var(--wire);color:#fff;
+  cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;
+}
+#img-remove:hover{background:rgba(255,45,107,0.8);}
+
+/* รูปใน bubble */
+.bubble-img{
+  max-width:100%;border-radius:8px;margin-bottom:8px;display:block;
+  border:1px solid var(--wire);
+}
+
+/* toast แจ้งเตือน */
+.img-note{
+  font-family:var(--font-mono);font-size:9px;color:var(--c3);
+  padding:2px 0;display:flex;align-items:center;gap:5px;
+}
 </style>
 </head>
 <body>
 <div class="glow-line"></div>
 <div id="app">
 
-  <!-- TOPBAR -->
   <div id="topbar">
     <div class="logo">
       <div class="logo-glyph">D</div>
@@ -269,17 +280,14 @@ body::after{
     <div class="tb-sep"></div>
     <div class="free-forever"><div class="free-dot"></div>FREE FOREVER</div>
     <div class="tb-sep"></div>
-
     <div class="provider-tabs">
       <button class="prov-tab active" data-prov="gemini" onclick="switchProvider('gemini')">✦ GEMINI</button>
       <button class="prov-tab" data-prov="openrouter" onclick="switchProvider('openrouter')">⊕ OPENROUTER FREE</button>
     </div>
-
     <div class="model-badge">
       <div class="model-dot"></div>
       <span id="cur-model-label">gemini-2.5-flash</span>
     </div>
-
     <div class="tb-right">
       <select id="model-select" onchange="onModelChange(this.value)"></select>
       <input type="password" id="api-key-input" placeholder="API Key...">
@@ -288,63 +296,60 @@ body::after{
     </div>
   </div>
 
-  <!-- EXPERT RAIL -->
   <div id="expert-rail"></div>
 
-  <!-- CHAT -->
   <div id="chat">
     <div id="welcome">
       <div style="text-align:center;">
         <div class="w-title">DAKNO ULTRA</div>
         <div class="w-sub">FREE AI ONLY // ไม่เสียเงิน ไม่ต้องใส่บัตร</div>
       </div>
-
       <div class="prov-cards">
         <div class="prov-welcome-card" data-p="gemini">
           <div class="pwc-header" data-p="gemini">✦ Google Gemini</div>
           <div class="pwc-free">✓ FREE — ไม่ต้องใส่บัตร</div>
-          <div class="pwc-models">
-            ⚡ Gemini 2.5 Flash<br>
-            🔮 Gemini 2.5 Pro<br>
-            🚀 Gemini 2.0 Flash<br>
-            💨 Gemini 1.5 Flash
-          </div>
+          <div class="pwc-models">⚡ Gemini 2.5 Flash<br>🔮 Gemini 2.5 Pro<br>🚀 Gemini 2.0 Flash<br>💨 Gemini 1.5 Flash</div>
           <div class="pwc-link">→ aistudio.google.com</div>
         </div>
         <div class="prov-welcome-card" data-p="openrouter">
           <div class="pwc-header" data-p="openrouter">⊕ OpenRouter Free</div>
           <div class="pwc-free">✓ FREE tier มีหลายโมเดล</div>
-          <div class="pwc-models">
-            🦙 Llama 3.3 70B FREE<br>
-            🌊 Mistral 7B FREE<br>
-            🐳 DeepSeek R1 FREE<br>
-            🌙 Qwen 2.5 FREE<br>
-            + อีกมาก!
-          </div>
+          <div class="pwc-models">🦙 Llama 3.3 70B FREE<br>🌊 Mistral 7B FREE<br>🐳 DeepSeek R1 FREE<br>🌙 Qwen 2.5 FREE<br>+ อีกมาก!</div>
           <div class="pwc-link">→ openrouter.ai/keys</div>
         </div>
       </div>
-
       <div class="w-grid" id="w-grid"></div>
       <div style="font-family:var(--font-mono);font-size:9px;color:var(--ghost);text-align:center;max-width:360px;line-height:2;">
-        12 EXPERT MODES // STREAMING // CONTEXT MEMORY<br>
+        12 EXPERT MODES // STREAMING // CONTEXT MEMORY // 📷 IMAGE AI<br>
         เลือก Provider → ใส่ Key ฟรี → เริ่มคุยได้เลย
       </div>
     </div>
   </div>
 
-  <!-- STATUS -->
   <div id="statusbar">
     <div class="st-led"></div>
     <div id="st-text">READY // เลือก Provider และใส่ API Key ฟรีด้านบน</div>
     <div id="token-ct"></div>
   </div>
 
-  <!-- INPUT -->
   <div id="inputarea">
+    <!-- preview รูปที่แนบ -->
+    <div id="img-preview-wrap">
+      <img id="img-preview" src="" alt="preview">
+      <div id="img-remove" onclick="removeImage()" title="ลบรูป">✕</div>
+    </div>
+
     <div class="input-row">
+      <!-- hidden file input รองรับทั้งกล้องและแกลเลอรี -->
+      <input type="file" id="cam-input" accept="image/*" style="display:none" onchange="onImageSelected(this)">
+
+      <!-- ปุ่มกล้อง — เปิดกล้องโดยตรง (capture=environment) -->
+      <input type="file" id="cam-direct" accept="image/*" capture="environment" style="display:none" onchange="onImageSelected(this)">
+
+      <button class="cam-btn" id="cam-btn" onclick="showCamMenu()" title="📷 แนบรูป / ถ่ายรูป">📷</button>
+
       <div class="input-box">
-        <textarea id="msg-input" rows="1" placeholder="ถามอะไรก็ได้... (Enter ส่ง, Shift+Enter ขึ้นบรรทัด)"></textarea>
+        <textarea id="msg-input" rows="1" placeholder="ถามอะไรก็ได้... หรือแนบรูปแล้วถาม (Enter ส่ง, Shift+Enter ขึ้นบรรทัด)"></textarea>
         <div class="input-meta">
           <span id="expert-hint"></span>
           <span id="char-count">0 / 8000</span>
@@ -360,118 +365,160 @@ body::after{
   </div>
 </div>
 
+<!-- cam menu popup -->
+<div id="cam-menu" style="display:none;position:fixed;bottom:80px;left:14px;z-index:9000;
+  background:var(--panel);border:1px solid var(--wire);border-radius:12px;overflow:hidden;min-width:180px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.5);">
+  <div onclick="openCamera()" style="padding:12px 16px;cursor:pointer;font-family:var(--font-mono);font-size:12px;
+    display:flex;align-items:center;gap:10px;transition:background .15s;" onmouseover="this.style.background='var(--lift)'" onmouseout="this.style.background=''">
+    📷 ถ่ายรูปเดี๋ยวนี้
+  </div>
+  <div style="height:1px;background:var(--rim);"></div>
+  <div onclick="openGallery()" style="padding:12px 16px;cursor:pointer;font-family:var(--font-mono);font-size:12px;
+    display:flex;align-items:center;gap:10px;transition:background .15s;" onmouseover="this.style.background='var(--lift)'" onmouseout="this.style.background=''">
+    🖼️ เลือกจากแกลเลอรี
+  </div>
+</div>
+<div id="cam-overlay" style="display:none;position:fixed;inset:0;z-index:8999;" onclick="closeCamMenu()"></div>
+
 <script>
 // ═══════════════════════
-//  PROVIDERS (ฟรีทั้งหมด)
+//  PROVIDERS
 // ═══════════════════════
 const PROVIDERS = {
   gemini: {
-    name: 'Google Gemini',
-    icon: '✦',
-    color: '#4fc3f7',
+    name: 'Google Gemini', icon: '✦', color: '#4fc3f7',
     keyPlaceholder: 'Google AI Studio Key (AIza...)',
     keyHint: '→ aistudio.google.com — Get API Key — ฟรี ไม่ต้องใส่บัตร',
     models: [
-      { value: 'gemini-2.5-flash',         label: '⚡ Gemini 2.5 Flash (แนะนำ · ฟรี)' },
-      { value: 'gemini-2.5-pro',           label: '🔮 Gemini 2.5 Pro (ฟรี limit/day)' },
-      { value: 'gemini-2.0-flash',         label: '🚀 Gemini 2.0 Flash (ฟรี)' },
-      { value: 'gemini-2.0-flash-lite',    label: '💨 Gemini 2.0 Flash Lite (เร็วสุด)' },
-      { value: 'gemini-1.5-flash',         label: '⚡ Gemini 1.5 Flash (ฟรี)' },
-      { value: 'gemini-1.5-flash-8b',      label: '🔹 Gemini 1.5 Flash 8B (เล็ก·เร็ว)' },
+      { value: 'gemini-2.5-flash',      label: '⚡ Gemini 2.5 Flash (แนะนำ · ฟรี)' },
+      { value: 'gemini-2.5-pro',        label: '🔮 Gemini 2.5 Pro (ฟรี limit/day)' },
+      { value: 'gemini-2.0-flash',      label: '🚀 Gemini 2.0 Flash (ฟรี)' },
+      { value: 'gemini-2.0-flash-lite', label: '💨 Gemini 2.0 Flash Lite (เร็วสุด)' },
+      { value: 'gemini-1.5-flash',      label: '⚡ Gemini 1.5 Flash (ฟรี)' },
+      { value: 'gemini-1.5-flash-8b',   label: '🔹 Gemini 1.5 Flash 8B (เล็ก·เร็ว)' },
     ]
   },
   openrouter: {
-    name: 'OpenRouter FREE',
-    icon: '⊕',
-    color: '#a78bfa',
+    name: 'OpenRouter FREE', icon: '⊕', color: '#a78bfa',
     keyPlaceholder: 'OpenRouter Key (sk-or-...)',
     keyHint: '→ openrouter.ai/keys — สร้าง Key ฟรี มีโมเดล :free มากมาย',
     models: [
-      { value: 'meta-llama/llama-3.3-70b-instruct:free',      label: '🦙 Llama 3.3 70B FREE ⭐' },
-      { value: 'meta-llama/llama-3.1-8b-instruct:free',       label: '🦙 Llama 3.1 8B FREE (เร็ว)' },
-      { value: 'mistralai/mistral-7b-instruct:free',           label: '🌊 Mistral 7B FREE' },
-      { value: 'deepseek/deepseek-r1:free',                    label: '🐳 DeepSeek R1 FREE (Reasoning)' },
-      { value: 'deepseek/deepseek-chat:free',                  label: '🐳 DeepSeek V3 FREE' },
-      { value: 'qwen/qwen3-8b:free',                           label: '🌙 Qwen3 8B FREE' },
-      { value: 'qwen/qwen3-235b-a22b:free',                    label: '🌙 Qwen3 235B FREE ⭐' },
-      { value: 'google/gemini-2.0-flash-exp:free',             label: '✦ Gemini 2.0 Flash FREE (OR)' },
-      { value: 'microsoft/phi-3-mini-128k-instruct:free',      label: '🔷 Phi-3 Mini FREE (Microsoft)' },
-      { value: 'openchat/openchat-7b:free',                    label: '💬 OpenChat 7B FREE' },
+      { value: 'meta-llama/llama-3.3-70b-instruct:free', label: '🦙 Llama 3.3 70B FREE ⭐' },
+      { value: 'meta-llama/llama-3.1-8b-instruct:free',  label: '🦙 Llama 3.1 8B FREE (เร็ว)' },
+      { value: 'mistralai/mistral-7b-instruct:free',      label: '🌊 Mistral 7B FREE' },
+      { value: 'deepseek/deepseek-r1:free',               label: '🐳 DeepSeek R1 FREE (Reasoning)' },
+      { value: 'deepseek/deepseek-chat:free',             label: '🐳 DeepSeek V3 FREE' },
+      { value: 'qwen/qwen3-8b:free',                      label: '🌙 Qwen3 8B FREE' },
+      { value: 'qwen/qwen3-235b-a22b:free',               label: '🌙 Qwen3 235B FREE ⭐' },
+      { value: 'google/gemini-2.0-flash-exp:free',        label: '✦ Gemini 2.0 Flash FREE (OR)' },
+      { value: 'microsoft/phi-3-mini-128k-instruct:free', label: '🔷 Phi-3 Mini FREE (Microsoft)' },
+      { value: 'openchat/openchat-7b:free',               label: '💬 OpenChat 7B FREE' },
     ]
   }
 };
 
-// ═══════════════════════
-//  EXPERTS
-// ═══════════════════════
+const CREATOR_NOTE = ' หากผู้ใช้ถามว่าใครสร้าง ใครพัฒนา หรือใครทำ AI นี้ ให้ตอบว่า คุณคิม หรือ KimWebOs คือผู้พัฒนา DAKNO Ultra';
+
 const EXPERTS = [
-  { id:'auto',     label:'AUTO',    icon:'⚡', color:'#4fc3f7', sys:'หากผู้ใช้ถามว่าใครสร้าง ใครพัฒนา หรือใครทำ AI นี้ ให้ตอบว่า คุณคิม หรือ คิมสุดหล่อ คือผู้พัฒนา DAKNO Ultra' },
+  { id:'auto',     label:'AUTO',    icon:'⚡', color:'#4fc3f7', sys:'คุณคือ Dakno Ultra AI ผู้ช่วยอัจฉริยะ ตอบภาษาไทย'+CREATOR_NOTE },
   { id:'general',  label:'GENERAL', icon:'🤖', color:'#4fc3f7',
-    sys:`คุณคือ Dakno Ultra — AI ผู้ช่วยอัจฉริยะ ตอบภาษาไทยเสมอ เว้นแต่ผู้ใช้จะถามภาษาอื่น ตอบอย่างลึกซึ้ง ถูกต้อง ครบถ้วน และเป็นประโยชน์สูงสุด ใช้ Markdown จัดรูปแบบเมื่อเหมาะสม หากผู้ใช้ถามว่าใครสร้างให้ตอบว่าคุณคิมเป็นคนสร้างที่เก่งมาก` },
+    sys:`คุณคือ Dakno Ultra — AI ผู้ช่วยอัจฉริยะ ตอบภาษาไทยเสมอ เว้นแต่ผู้ใช้จะถามภาษาอื่น ตอบอย่างลึกซึ้ง ถูกต้อง ครบถ้วน และเป็นประโยชน์สูงสุด ใช้ Markdown จัดรูปแบบเมื่อเหมาะสม`+CREATOR_NOTE },
   { id:'reason',   label:'REASON',  icon:'🧠', color:'#a78bfa',
-    sys:`คุณคือนักวิเคราะห์ระดับเทพที่คิดแบบ Chain-of-Thought แสดงขั้นตอนการคิดอย่างละเอียดก่อนสรุป ตอบภาษาไทย โครงสร้าง: 🔍 วิเคราะห์ → 💡 ข้อค้นพบ → ✅ สรุป → 🎯 คำแนะนำ หากผู้ใช้ถามว่าใครสร้างให้ตอบว่าคุณคิมเป็นคนสร้างที่เก่งมาก` },
+    sys:`คุณคือนักวิเคราะห์ระดับเทพที่คิดแบบ Chain-of-Thought แสดงขั้นตอนการคิดอย่างละเอียดก่อนสรุป ตอบภาษาไทย โครงสร้าง: 🔍 วิเคราะห์ → 💡 ข้อค้นพบ → ✅ สรุป → 🎯 คำแนะนำ`+CREATOR_NOTE },
   { id:'code',     label:'CODE',    icon:'💻', color:'#00ff88',
-    sys:`คุณคือ Senior Full-Stack Developer ระดับโลก เขียนโค้ดที่ clean, efficient, production-ready พร้อม error handling คอมเมนต์ภาษาไทย อธิบาย logic สำคัญทุกจุด ใช้ design patterns และ best practices เสมอ หากผู้ใช้ถามว่าใครสร้างให้ตอบว่าคุณคิมเป็นคนสร้างที่เก่งมาก` },
+    sys:`คุณคือ Senior Full-Stack Developer ระดับโลก เขียนโค้ดที่ clean, efficient, production-ready พร้อม error handling คอมเมนต์ภาษาไทย อธิบาย logic สำคัญทุกจุด ใช้ design patterns และ best practices เสมอ`+CREATOR_NOTE },
   { id:'math',     label:'MATH',    icon:'📐', color:'#818cf8',
-    sys:`คุณคืออัจฉริยะคณิตศาสตร์ แสดงขั้นตอนคำนวณอย่างละเอียด พิสูจน์ทฤษฎีบทอย่างเป็นทางการ ใช้สัญลักษณ์คณิตศาสตร์ที่ชัดเจน ตอบภาษาไทย หากผู้ใช้ถามว่าใครสร้างให้ตอบว่าคุณคิมเป็นคนสร้างที่เก่งมาก` },
+    sys:`คุณคืออัจฉริยะคณิตศาสตร์ แสดงขั้นตอนคำนวณอย่างละเอียด พิสูจน์ทฤษฎีบทอย่างเป็นทางการ ใช้สัญลักษณ์คณิตศาสตร์ที่ชัดเจน ตอบภาษาไทย`+CREATOR_NOTE },
   { id:'creative', label:'WRITE',   icon:'✍️', color:'#f472b6',
-    sys:`คุณคือนักเขียนมือรางวัลระดับโลก งานเขียนมีจิตวิญญาณ ภาษาสละสลวย จังหวะสมบูรณ์แบบ นิยาย บทกวี เรื่องสั้น บทความ — ทุกรูปแบบเยี่ยมยอด หากผู้ใช้ถามว่าใครสร้างให้ตอบว่าคุณคิมเป็นคนสร้างที่เก่งมาก` },
+    sys:`คุณคือนักเขียนมือรางวัลระดับโลก งานเขียนมีจิตวิญญาณ ภาษาสละสลวย จังหวะสมบูรณ์แบบ นิยาย บทกวี เรื่องสั้น บทความ — ทุกรูปแบบเยี่ยมยอด`+CREATOR_NOTE },
   { id:'lang',     label:'LANG',    icon:'🌐', color:'#f9a8d4',
-    sys:`คุณคือผู้เชี่ยวชาญภาษาระดับโลก แปลได้ 100+ ภาษา แปลอย่างแม่นยำ เป็นธรรมชาติ คงความหมายและ tone ดั้งเดิม ตรวจแกรมมาร์ ปรับสไตล์ สรุปความ ได้อย่างมืออาชีพ หากผู้ใช้ถามว่าใครสร้างให้ตอบว่าคุณคิมเป็นคนสร้างที่เก่งมาก` },
+    sys:`คุณคือผู้เชี่ยวชาญภาษาระดับโลก แปลได้ 100+ ภาษา แปลอย่างแม่นยำ เป็นธรรมชาติ คงความหมายและ tone ดั้งเดิม ตรวจแกรมมาร์ ปรับสไตล์ สรุปความ ได้อย่างมืออาชีพ`+CREATOR_NOTE },
   { id:'research', label:'RESEARCH',icon:'🔬', color:'#38bdf8',
-    sys:`คุณคือนักวิจัยระดับปริญญาเอก วิเคราะห์หลายมุมมอง อ้างอิงข้อมูลที่น่าเชื่อถือ สรุปข้อมูลซับซ้อนให้เข้าใจง่าย ตอบภาษาไทย หากผู้ใช้ถามว่าใครสร้างให้ตอบว่าคุณคิมเป็นคนสร้างที่เก่งมาก` },
+    sys:`คุณคือนักวิจัยระดับปริญญาเอก วิเคราะห์หลายมุมมอง อ้างอิงข้อมูลที่น่าเชื่อถือ สรุปข้อมูลซับซ้อนให้เข้าใจง่าย ตอบภาษาไทย`+CREATOR_NOTE },
   { id:'biz',      label:'BIZ',     icon:'📊', color:'#fb923c',
-    sys:`คุณคือที่ปรึกษาธุรกิจระดับ McKinsey / BCG วิเคราะห์ strategy, marketing, finance, operations ใช้ frameworks: SWOT, Porter's Five Forces, OKR ให้คำแนะนำที่ practical, actionable หากผู้ใช้ถามว่าใครสร้างให้ตอบว่าคุณคิมเป็นคนสร้างที่เก่งมาก` },
+    sys:`คุณคือที่ปรึกษาธุรกิจระดับ McKinsey / BCG วิเคราะห์ strategy, marketing, finance, operations ใช้ frameworks: SWOT, Porter's Five Forces, OKR ให้คำแนะนำที่ practical, actionable`+CREATOR_NOTE },
   { id:'science',  label:'SCI',     icon:'⚛️', color:'#4ade80',
-    sys:`คุณคือนักวิทยาศาสตร์ระดับ Nobel Prize อธิบายด้วย first-principles thinking ฟิสิกส์ เคมี ชีววิทยา ดาราศาสตร์ ใช้ analogy ที่ชาญฉลาด หากผู้ใช้ถามว่าใครสร้างให้ตอบว่าคุณคิมเป็นคนสร้างที่เก่งมาก` },
+    sys:`คุณคือนักวิทยาศาสตร์ระดับ Nobel Prize อธิบายด้วย first-principles thinking ฟิสิกส์ เคมี ชีววิทยา ดาราศาสตร์ ใช้ analogy ที่ชาญฉลาด`+CREATOR_NOTE },
   { id:'thai',     label:'THAI',    icon:'🇹🇭', color:'#34d399',
-    sys:`คุณคือผู้เชี่ยวชาญภาษาและวัฒนธรรมไทย ใช้ภาษาไทยอันงดงาม ถูกต้องตามหลักภาษา ผสมผสานภูมิปัญญาไทย สุภาษิต วรรณคดีคลาสสิก หากผู้ใช้ถามว่าใครสร้างให้ตอบว่าคุณคิมเป็นคนสร้างที่เก่งมาก` },
+    sys:`คุณคือผู้เชี่ยวชาญภาษาและวัฒนธรรมไทย ใช้ภาษาไทยอันงดงาม ถูกต้องตามหลักภาษา ผสมผสานภูมิปัญญาไทย สุภาษิต วรรณคดีคลาสสิก`+CREATOR_NOTE },
   { id:'fast',     label:'QUICK',   icon:'⚡', color:'#fbbf24',
-    sys:`ตอบสั้น ตรงประเด็น ไม่เกริ่น ไม่ขยาย 1-3 ประโยคเท่านั้น ภาษาไทย หากผู้ใช้ถามว่าใครสร้างให้ตอบว่าคุณคิมเป็นคนสร้างที่เก่งมาก` }
+    sys:`ตอบสั้น ตรงประเด็น ไม่เกริ่น ไม่ขยาย 1-3 ประโยคเท่านั้น ภาษาไทย`+CREATOR_NOTE }
 ];
 
-// ═══════════════════════
-//  STATE
-// ═══════════════════════
-let currentProvider = localStorage.getItem('dakno_provider') || 'gemini';
-let currentModel = '';
-let currentExpertId = 'auto';
-let history = [];
-let isStreaming = false;
-let totalTokens = 0;
-let keys = {};
+let pendingImageBase64 = null;
+let pendingImageMime   = null;
+let pendingImageDataUrl = null;
+
+function showCamMenu() {
+  document.getElementById('cam-menu').style.display = 'block';
+  document.getElementById('cam-overlay').style.display = 'block';
+}
+function closeCamMenu() {
+  document.getElementById('cam-menu').style.display = 'none';
+  document.getElementById('cam-overlay').style.display = 'none';
+}
+function openCamera() { closeCamMenu(); document.getElementById('cam-direct').click(); }
+function openGallery() { closeCamMenu(); document.getElementById('cam-input').click(); }
+
+function onImageSelected(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    pendingImageDataUrl = e.target.result;
+    pendingImageMime    = file.type || 'image/jpeg';
+    pendingImageBase64  = pendingImageDataUrl.split(',')[1];
+    const wrap = document.getElementById('img-preview-wrap');
+    document.getElementById('img-preview').src = pendingImageDataUrl;
+    wrap.classList.add('show');
+    document.getElementById('cam-btn').classList.add('has-img');
+    setStatus(`📷 แนบรูปแล้ว: ${file.name} — พิมพ์คำถามแล้วกดส่ง`);
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+function removeImage() {
+  pendingImageBase64 = null;
+  pendingImageMime   = null;
+  pendingImageDataUrl = null;
+  document.getElementById('img-preview-wrap').classList.remove('show');
+  document.getElementById('cam-btn').classList.remove('has-img');
+  setStatus('ลบรูปแล้ว');
+}
+
+let currentProvider  = localStorage.getItem('dakno_provider') || 'gemini';
+let currentModel     = '';
+let currentExpertId  = 'auto';
+let history          = [];
+let isStreaming       = false;
+let totalTokens      = 0;
+let keys             = {};
 try { keys = JSON.parse(localStorage.getItem('dakno_keys') || '{}'); } catch(e) {}
 
-const $chat     = document.getElementById('chat');
-const $input    = document.getElementById('msg-input');
-const $charCt   = document.getElementById('char-count');
-const $stText   = document.getElementById('st-text');
-const $tokenCt  = document.getElementById('token-ct');
-const $hint     = document.getElementById('expert-hint');
-const $rail     = document.getElementById('expert-rail');
-const $wGrid    = document.getElementById('w-grid');
-const $apiInput = document.getElementById('api-key-input');
-const $modelSel = document.getElementById('model-select');
-const $modelLbl = document.getElementById('cur-model-label');
+const $chat    = document.getElementById('chat');
+const $input   = document.getElementById('msg-input');
+const $charCt  = document.getElementById('char-count');
+const $stText  = document.getElementById('st-text');
+const $tokenCt = document.getElementById('token-ct');
+const $hint    = document.getElementById('expert-hint');
+const $rail    = document.getElementById('expert-rail');
+const $wGrid   = document.getElementById('w-grid');
+const $apiInput= document.getElementById('api-key-input');
+const $modelSel= document.getElementById('model-select');
+const $modelLbl= document.getElementById('cur-model-label');
 
-// ═══════════════════════
-//  INIT
-// ═══════════════════════
 function init() {
-  buildExperts();
-  selectExpert('auto');
-  switchProvider(currentProvider, false);
+  buildExperts(); selectExpert('auto'); switchProvider(currentProvider, false);
   $input.addEventListener('input', onInput);
   $input.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+    if (e.key==='Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
   });
   updateStatus();
 }
 
-// ═══════════════════════
-//  PROVIDER
-// ═══════════════════════
-function switchProvider(prov, save = true) {
+function switchProvider(prov, save=true) {
   currentProvider = prov;
   if (save) localStorage.setItem('dakno_provider', prov);
   const cfg = PROVIDERS[prov];
@@ -484,7 +531,7 @@ function switchProvider(prov, save = true) {
     $modelSel.appendChild(o);
   });
   const saved = localStorage.getItem(`dakno_model_${prov}`);
-  currentModel = saved && cfg.models.find(m => m.value === saved) ? saved : cfg.models[0].value;
+  currentModel = saved && cfg.models.find(m => m.value===saved) ? saved : cfg.models[0].value;
   $modelSel.value = currentModel;
   $modelLbl.textContent = currentModel.split('/').pop();
   $apiInput.placeholder = cfg.keyPlaceholder;
@@ -500,7 +547,7 @@ function onModelChange(val) {
 
 function saveKey() {
   const v = $apiInput.value.trim();
-  if (!v || v === '••••••••••••••••') return;
+  if (!v || v==='••••••••••••••••') return;
   keys[currentProvider] = v;
   localStorage.setItem('dakno_keys', JSON.stringify(keys));
   $apiInput.value = '••••••••••••••••';
@@ -508,21 +555,18 @@ function saveKey() {
   updateStatus();
 }
 
-// ═══════════════════════
-//  EXPERTS
-// ═══════════════════════
 function buildExperts() {
   EXPERTS.forEach(ex => {
     const pill = document.createElement('button');
-    pill.className = 'ex-pill'; pill.dataset.id = ex.id; pill.style.color = ex.color;
-    pill.innerHTML = `<span class="ex-dot"></span>${ex.icon} ${ex.label}`;
-    pill.onclick = () => selectExpert(ex.id);
+    pill.className='ex-pill'; pill.dataset.id=ex.id; pill.style.color=ex.color;
+    pill.innerHTML=`<span class="ex-dot"></span>${ex.icon} ${ex.label}`;
+    pill.onclick=()=>selectExpert(ex.id);
     $rail.appendChild(pill);
-    if (ex.id !== 'auto') {
-      const card = document.createElement('div');
-      card.className = 'w-card';
-      card.innerHTML = `<div class="w-card-icon">${ex.icon}</div><div class="w-card-name">${ex.label}</div>`;
-      card.onclick = () => { selectExpert(ex.id); $input.focus(); };
+    if (ex.id!=='auto') {
+      const card=document.createElement('div');
+      card.className='w-card';
+      card.innerHTML=`<div class="w-card-icon">${ex.icon}</div><div class="w-card-name">${ex.label}</div>`;
+      card.onclick=()=>{selectExpert(ex.id);$input.focus();};
       $wGrid.appendChild(card);
     }
   });
@@ -530,171 +574,171 @@ function buildExperts() {
 
 function selectExpert(id) {
   currentExpertId = id;
-  document.querySelectorAll('.ex-pill').forEach(p => p.classList.toggle('active', p.dataset.id === id));
-  const ex = EXPERTS.find(e => e.id === id);
-  $hint.textContent = ex ? `// ${ex.label} MODE` : '';
-  $hint.style.color = ex?.color || 'var(--ghost)';
+  document.querySelectorAll('.ex-pill').forEach(p=>p.classList.toggle('active',p.dataset.id===id));
+  const ex = EXPERTS.find(e=>e.id===id);
+  $hint.textContent = ex?`// ${ex.label} MODE`:'';
+  $hint.style.color = ex?.color||'var(--ghost)';
   updateStatus();
 }
 
 function routeExpert(msg) {
-  const m = msg.toLowerCase();
-  if (/โค้ด|code|function|debug|python|javascript|html|css|sql|react|vue|node/.test(m)) return 'code';
-  if (/คำนวณ|สมการ|พิสูจน์|คณิต|math|ฟิสิกส์|integral|derivative/.test(m)) return 'math';
-  if (/แปล|translate|grammar|ตรวจ|ภาษาอังกฤษ|spell|proofread/.test(m)) return 'lang';
-  if (/เรื่องสั้น|นิยาย|บทกวี|poem|story|creative|แต่งเพลง/.test(m)) return 'creative';
-  if (/ธุรกิจ|business|marketing|swot|strategy|startup|ตลาด/.test(m)) return 'biz';
-  if (/วิจัย|research|ข้อมูล|สถิติ|survey|วิเคราะห์/.test(m)) return 'research';
-  if (/วิทยาศาสตร์|science|ชีววิทยา|เคมี|ดาราศาสตร์/.test(m)) return 'science';
-  if (/ไทย|วัฒนธรรม|ประเพณี|สุภาษิต|วรรณคดี/.test(m)) return 'thai';
-  if (/สรุป|tldr|quick|สั้น|brief/.test(m)) return 'fast';
-  if (/คิด|วิเคราะห์|เปรียบ|ข้อดี|ข้อเสีย|why|เพราะ/.test(m)) return 'reason';
+  const m=msg.toLowerCase();
+  if(/โค้ด|code|function|debug|python|javascript|html|css|sql|react|vue|node/.test(m)) return 'code';
+  if(/คำนวณ|สมการ|พิสูจน์|คณิต|math|ฟิสิกส์|integral|derivative/.test(m)) return 'math';
+  if(/แปล|translate|grammar|ตรวจ|ภาษาอังกฤษ|spell|proofread/.test(m)) return 'lang';
+  if(/เรื่องสั้น|นิยาย|บทกวี|poem|story|creative|แต่งเพลง/.test(m)) return 'creative';
+  if(/ธุรกิจ|business|marketing|swot|strategy|startup|ตลาด/.test(m)) return 'biz';
+  if(/วิจัย|research|ข้อมูล|สถิติ|survey|วิเคราะห์/.test(m)) return 'research';
+  if(/วิทยาศาสตร์|science|ชีววิทยา|เคมี|ดาราศาสตร์/.test(m)) return 'science';
+  if(/ไทย|วัฒนธรรม|ประเพณี|สุภาษิต|วรรณคดี/.test(m)) return 'thai';
+  if(/สรุป|tldr|quick|สั้น|brief/.test(m)) return 'fast';
+  if(/คิด|วิเคราะห์|เปรียบ|ข้อดี|ข้อเสีย|why|เพราะ/.test(m)) return 'reason';
   return 'general';
 }
 
 function getSysPrompt(msg) {
-  const id = currentExpertId === 'auto' ? routeExpert(msg) : currentExpertId;
-  return EXPERTS.find(e => e.id === id)?.sys || EXPERTS.find(e => e.id === 'general').sys;
+  const id = currentExpertId==='auto' ? routeExpert(msg) : currentExpertId;
+  return EXPERTS.find(e=>e.id===id)?.sys || EXPERTS.find(e=>e.id==='general').sys;
 }
 
-// ═══════════════════════
-//  SEND
-// ═══════════════════════
 async function sendMessage() {
   if (isStreaming) return;
   const text = $input.value.trim();
-  if (!text) return;
+  const hasImg = !!pendingImageBase64;
+  if (!text && !hasImg) return;
   if (!keys[currentProvider]) {
     setStatus(`⚠ ยังไม่ได้ใส่ ${PROVIDERS[currentProvider].name} Key — ใส่แล้วกด SAVE`);
     return;
   }
-  document.getElementById('welcome')?.remove();
-  addMessage('user', text);
-  history.push({ role: 'user', content: text });
-  if (history.length > 40) history = history.slice(-40);
-  $input.value = ''; $charCt.textContent = `0 / 8000`; autoResize();
-
-  const aiDiv = addMessage('ai', '', true);
-  const bubbleEl = aiDiv.querySelector('.bubble');
-  isStreaming = true;
-  setStatus(`⟳ ${currentModel.split('/').pop()} กำลังคิด...`);
-
-  try {
-    const sys = getSysPrompt(text);
-    let fullText = '';
-    if (currentProvider === 'gemini') {
-      fullText = await callGemini(sys, history.slice(0,-1), text, bubbleEl);
-    } else {
-      fullText = await callOpenRouter(sys, history.slice(0,-1), text, bubbleEl);
+  if (currentProvider==='openrouter' && hasImg) {
+    const visionModels = ['google/gemini-2.0-flash-exp:free'];
+    if (!visionModels.includes(currentModel)) {
+      setStatus('⚠ โมเดลนี้ไม่รองรับรูปภาพ — เปลี่ยนเป็น Gemini หรือ Gemini 2.0 Flash FREE (OR)');
+      return;
     }
-    history.push({ role: 'assistant', content: fullText });
-    totalTokens += Math.ceil(fullText.length / 4);
-    $tokenCt.textContent = `~${totalTokens} tokens`;
+  }
+  document.getElementById('welcome')?.remove();
+  const imgB64=pendingImageBase64, imgMime=pendingImageMime, imgUrl=pendingImageDataUrl;
+  addMessage('user', text, false, imgUrl);
+  history.push({ role:'user', content: text||(hasImg?'[รูปภาพ]':'') });
+  if (history.length>40) history=history.slice(-40);
+  $input.value=''; $charCt.textContent='0 / 8000'; autoResize();
+  removeImage();
+  const aiDiv = addMessage('ai','',true);
+  const bubbleEl = aiDiv.querySelector('.bubble');
+  isStreaming=true;
+  setStatus(`⟳ ${currentModel.split('/').pop()} ${hasImg?'วิเคราะห์รูป':'กำลังคิด'}...`);
+  try {
+    const sys = getSysPrompt(text||'รูปภาพ');
+    let fullText='';
+    if (currentProvider==='gemini') {
+      fullText = await callGemini(sys, history.slice(0,-1), text, bubbleEl, imgB64, imgMime);
+    } else {
+      fullText = await callOpenRouter(sys, history.slice(0,-1), text, bubbleEl, imgB64, imgMime);
+    }
+    history.push({role:'assistant', content:fullText});
+    totalTokens += Math.ceil(fullText.length/4);
+    $tokenCt.textContent=`~${totalTokens} tokens`;
     setStatus(`✓ ${currentModel.split('/').pop()} ตอบเสร็จ`);
   } catch(err) {
     bubbleEl.classList.add('error');
-    bubbleEl.innerHTML = `⚠ ${err.message}<br><small style="opacity:0.6">${getHint(err.message)}</small>`;
+    bubbleEl.innerHTML=`⚠ ${err.message}<br><small style="opacity:0.6">${getHint(err.message)}</small>`;
     setStatus(`✗ ${err.message}`);
   }
-
-  isStreaming = false;
-  $chat.scrollTop = $chat.scrollHeight;
+  isStreaming=false;
+  $chat.scrollTop=$chat.scrollHeight;
 }
 
 function getHint(msg) {
-  if (/401|403|api key/i.test(msg)) return 'ตรวจสอบ API Key — อาจผิดหรือหมดอายุ';
-  if (/429/i.test(msg)) return 'Rate limit — รอสักครู่แล้วลองใหม่';
-  if (/404/i.test(msg)) return 'โมเดลนี้อาจไม่ available ลองโมเดลอื่น';
-  if (/quota/i.test(msg)) return 'Quota หมด — ลอง Provider อื่นหรือรอพรุ่งนี้';
+  if(/401|403|api key/i.test(msg)) return 'ตรวจสอบ API Key — อาจผิดหรือหมดอายุ';
+  if(/429/.test(msg)) return 'Rate limit — รอสักครู่แล้วลองใหม่';
+  if(/404/.test(msg)) return 'โมเดลนี้อาจไม่ available ลองโมเดลอื่น';
+  if(/quota/i.test(msg)) return 'Quota หมด — ลอง Provider อื่นหรือรอพรุ่งนี้';
   return 'ลองเปลี่ยนโมเดลหรือ Provider อื่น';
 }
 
-// ═══════════════════════
-//  GEMINI API
-// ═══════════════════════
-async function callGemini(sys, prev, userMsg, el) {
+async function callGemini(sys, prev, userMsg, el, imgB64, imgMime) {
   const key = keys.gemini;
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${currentModel}:streamGenerateContent?alt=sse&key=${key}`;
-  const contents = [];
+  const contents=[];
   for (const h of prev) {
-    contents.push({ role: h.role === 'assistant' ? 'model' : 'user', parts: [{ text: h.content }] });
+    contents.push({role:h.role==='assistant'?'model':'user', parts:[{text:h.content}]});
   }
-  contents.push({ role: 'user', parts: [{ text: userMsg }] });
-  const body = {
-    systemInstruction: sys ? { parts: [{ text: sys }] } : undefined,
+  const userParts=[];
+  if (imgB64) userParts.push({inline_data:{mime_type:imgMime,data:imgB64}});
+  userParts.push({text: userMsg||(imgB64?'ช่วยดูและอธิบายรูปนี้ให้หน่อย':'...')});
+  contents.push({role:'user', parts:userParts});
+  const body={
+    systemInstruction: sys?{parts:[{text:sys}]}:undefined,
     contents,
-    generationConfig: { temperature: 0.9, maxOutputTokens: 8192 }
+    generationConfig:{temperature:0.9,maxOutputTokens:8192}
   };
-  const res = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
-  if (!res.ok) { const e = await res.json().catch(()=>({})); throw new Error(e?.error?.message || `HTTP ${res.status}`); }
-  return await readGeminiStream(res, el);
+  const res = await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e?.error?.message||`HTTP ${res.status}`);}
+  return await readGeminiStream(res,el);
 }
 
-async function readGeminiStream(res, el) {
-  let full = '';
-  const reader = res.body.getReader(); const dec = new TextDecoder();
-  while(true) {
-    const {done, value} = await reader.read(); if(done) break;
-    const lines = dec.decode(value).split('\n');
-    for (const line of lines) {
-      if (!line.startsWith('data: ')) continue;
-      const d = line.slice(6).trim();
-      if (!d || d === '[DONE]') continue;
-      try {
-        const t = JSON.parse(d)?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-        if (t) { full += t; el.innerHTML = md(full) + '<span style="opacity:.4">▌</span>'; $chat.scrollTop = $chat.scrollHeight; }
-      } catch(e) {}
+async function readGeminiStream(res,el) {
+  let full='';
+  const reader=res.body.getReader(); const dec=new TextDecoder();
+  while(true){
+    const{done,value}=await reader.read(); if(done)break;
+    const lines=dec.decode(value).split('\n');
+    for(const line of lines){
+      if(!line.startsWith('data: '))continue;
+      const d=line.slice(6).trim();
+      if(!d||d==='[DONE]')continue;
+      try{
+        const t=JSON.parse(d)?.candidates?.[0]?.content?.parts?.[0]?.text||'';
+        if(t){full+=t;el.innerHTML=md(full)+'<span style="opacity:.4">▌</span>';$chat.scrollTop=$chat.scrollHeight;}
+      }catch(e){}
     }
   }
-  el.innerHTML = md(full); return full;
+  el.innerHTML=md(full);return full;
 }
 
-// ═══════════════════════
-//  OPENROUTER API
-// ═══════════════════════
-async function callOpenRouter(sys, prev, userMsg, el) {
-  const key = keys.openrouter;
-  const messages = [];
-  if (sys) messages.push({ role:'system', content: sys });
-  for (const h of prev) messages.push({ role: h.role === 'assistant' ? 'assistant' : 'user', content: h.content });
-  messages.push({ role:'user', content: userMsg });
-  const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${key}`,
-      'HTTP-Referer': 'https://dakno.ultra',
-      'X-Title': 'DAKNO ULTRA FREE'
-    },
-    body: JSON.stringify({ model: currentModel, messages, stream: true, max_tokens: 4096 })
+async function callOpenRouter(sys, prev, userMsg, el, imgB64, imgMime) {
+  const key=keys.openrouter;
+  const messages=[];
+  if(sys)messages.push({role:'system',content:sys});
+  for(const h of prev)messages.push({role:h.role==='assistant'?'assistant':'user',content:h.content});
+  let userContent;
+  if(imgB64){
+    userContent=[
+      {type:'image_url',image_url:{url:`data:${imgMime};base64,${imgB64}`}},
+      {type:'text',text:userMsg||(imgB64?'ช่วยดูและอธิบายรูปนี้ให้หน่อย':'...')}
+    ];
+  } else { userContent = userMsg; }
+  messages.push({role:'user',content:userContent});
+  const res=await fetch('https://openrouter.ai/api/v1/chat/completions',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':`Bearer ${key}`,'HTTP-Referer':'https://dakno.ultra','X-Title':'DAKNO ULTRA FREE'},
+    body:JSON.stringify({model:currentModel,messages,stream:true,max_tokens:4096})
   });
-  if (!res.ok) { const e = await res.json().catch(()=>({})); throw new Error(e?.error?.message || `HTTP ${res.status}`); }
-  return await readSSE(res, el);
+  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e?.error?.message||`HTTP ${res.status}`);}
+  return await readSSE(res,el);
 }
 
-async function readSSE(res, el) {
-  let full = '';
-  const reader = res.body.getReader(); const dec = new TextDecoder();
-  while(true) {
-    const {done, value} = await reader.read(); if(done) break;
-    const lines = dec.decode(value).split('\n');
-    for (const line of lines) {
-      if (!line.startsWith('data: ')) continue;
-      const d = line.slice(6).trim();
-      if (!d || d === '[DONE]') continue;
-      try {
-        const delta = JSON.parse(d)?.choices?.[0]?.delta?.content || '';
-        if (delta) { full += delta; el.innerHTML = md(full) + '<span style="opacity:.4">▌</span>'; $chat.scrollTop = $chat.scrollHeight; }
-      } catch(e) {}
+async function readSSE(res,el) {
+  let full='';
+  const reader=res.body.getReader();const dec=new TextDecoder();
+  while(true){
+    const{done,value}=await reader.read();if(done)break;
+    const lines=dec.decode(value).split('\n');
+    for(const line of lines){
+      if(!line.startsWith('data: '))continue;
+      const d=line.slice(6).trim();
+      if(!d||d==='[DONE]')continue;
+      try{
+        const delta=JSON.parse(d)?.choices?.[0]?.delta?.content||'';
+        if(delta){full+=delta;el.innerHTML=md(full)+'<span style="opacity:.4">▌</span>';$chat.scrollTop=$chat.scrollHeight;}
+      }catch(e){}
     }
   }
-  el.innerHTML = md(full); return full;
+  el.innerHTML=md(full);return full;
 }
 
-// ═══════════════════════
-//  MARKDOWN
-// ═══════════════════════
-function md(t) {
+function md(t){
   return t
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
     .replace(/```(\w*)\n([\s\S]*?)```/g,(_,l,c)=>`<pre><code class="lang-${l}">${c.trim()}</code></pre>`)
@@ -710,48 +754,50 @@ function md(t) {
     .replace(/\n/g,'<br>');
 }
 
-// ═══════════════════════
-//  UI
-// ═══════════════════════
-function addMessage(role, text, empty=false) {
-  const prov = PROVIDERS[currentProvider];
-  const div = document.createElement('div');
-  div.className = `msg ${role}`;
-  const av = document.createElement('div');
-  av.className = `av ${role==='user'?'user':'ai'}`;
-  av.textContent = role==='user' ? 'YOU' : prov.icon;
-  const wrap = document.createElement('div');
-  wrap.className = 'bubble-wrap';
-  if (role==='ai') {
-    const badge = document.createElement('div');
-    badge.className = 'prov-badge';
-    badge.style.cssText = `border-color:${prov.color};color:${prov.color}`;
-    badge.textContent = `${prov.icon} ${currentModel.split('/').pop()}`;
+function addMessage(role,text,empty=false,imgDataUrl=null){
+  const prov=PROVIDERS[currentProvider];
+  const div=document.createElement('div');
+  div.className=`msg ${role}`;
+  const av=document.createElement('div');
+  av.className=`av ${role==='user'?'user':'ai'}`;
+  av.textContent=role==='user'?'YOU':prov.icon;
+  const wrap=document.createElement('div');
+  wrap.className='bubble-wrap';
+  if(role==='ai'){
+    const badge=document.createElement('div');
+    badge.className='prov-badge';
+    badge.style.cssText=`border-color:${prov.color};color:${prov.color}`;
+    badge.textContent=`${prov.icon} ${currentModel.split('/').pop()}`;
     wrap.appendChild(badge);
   }
-  const bubble = document.createElement('div');
-  bubble.className = `bubble ${role==='user'?'user':'ai'}`;
-  bubble.innerHTML = empty
-    ? '<div class="typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>'
-    : (role==='user' ? esc(text) : md(text));
+  const bubble=document.createElement('div');
+  bubble.className=`bubble ${role==='user'?'user':'ai'}`;
+  if(empty){
+    bubble.innerHTML='<div class="typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+  } else {
+    let content='';
+    if(imgDataUrl) content+=`<img src="${imgDataUrl}" class="bubble-img" alt="รูปที่แนบ">`;
+    content += role==='user'?esc(text):md(text);
+    bubble.innerHTML=content;
+  }
   wrap.appendChild(bubble);
-  div.appendChild(av); div.appendChild(wrap);
+  div.appendChild(av);div.appendChild(wrap);
   $chat.appendChild(div);
-  $chat.scrollTop = $chat.scrollHeight;
+  $chat.scrollTop=$chat.scrollHeight;
   return div;
 }
 
-function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'); }
-function clearChat(){ history=[]; $chat.innerHTML=''; totalTokens=0; $tokenCt.textContent=''; setStatus('READY'); }
-function setStatus(m){ $stText.textContent = m; }
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
+function clearChat(){history=[];$chat.innerHTML='';totalTokens=0;$tokenCt.textContent='';setStatus('READY');}
+function setStatus(m){$stText.textContent=m;}
 function updateStatus(){
-  const prov = PROVIDERS[currentProvider];
+  const prov=PROVIDERS[currentProvider];
   setStatus(keys[currentProvider]
-    ? `${prov.icon} ${prov.name} // ${currentModel.split('/').pop()} // ${currentExpertId.toUpperCase()} mode`
-    : `⚠ ใส่ ${prov.name} Key ก่อน // ${prov.keyHint}`);
+    ?`${prov.icon} ${prov.name} // ${currentModel.split('/').pop()} // ${currentExpertId.toUpperCase()} mode // 📷 รองรับรูปภาพ`
+    :`⚠ ใส่ ${prov.name} Key ก่อน // ${prov.keyHint}`);
 }
-function onInput(){ const l=$input.value.length; $charCt.textContent=`${l} / 8000`; autoResize(); }
-function autoResize(){ $input.style.height='auto'; $input.style.height=Math.min($input.scrollHeight,120)+'px'; }
+function onInput(){const l=$input.value.length;$charCt.textContent=`${l} / 8000`;autoResize();}
+function autoResize(){$input.style.height='auto';$input.style.height=Math.min($input.scrollHeight,120)+'px';}
 
 init();
 </script>
