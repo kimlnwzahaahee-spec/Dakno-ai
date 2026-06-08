@@ -25,6 +25,8 @@
   --font-display: 'Bebas Neue', sans-serif;
   --gemini: #4fc3f7;
   --openrouter: #a78bfa;
+  --warn: #ffb74d;
+  --err: #ff5252;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;background:var(--void);color:var(--text);font-family:var(--font-body);overflow:hidden;}
@@ -40,6 +42,8 @@ body::after{
 }
 @keyframes scan{0%{background-position:0 0}100%{background-position:0 100px}}
 #app{display:flex;flex-direction:column;height:100dvh;position:relative;z-index:10;}
+
+/* ── TOPBAR ── */
 #topbar{
   display:flex;align-items:center;gap:8px;padding:8px 14px;
   border-bottom:1px solid var(--rim);background:rgba(6,8,16,0.97);
@@ -101,6 +105,8 @@ body::after{
 }
 #model-select:focus{outline:none;border-color:#4fc3f7;}
 #model-select option{background:var(--deep);}
+
+/* ── EXPERT RAIL ── */
 #expert-rail{
   display:flex;align-items:center;gap:4px;padding:5px 14px;
   background:var(--deep);border-bottom:1px solid var(--rim);
@@ -116,6 +122,8 @@ body::after{
 .ex-pill:hover{opacity:0.8;}
 .ex-pill.active{opacity:1;border-color:currentColor;background:rgba(255,255,255,0.04);text-shadow:0 0 8px currentColor;}
 .ex-dot{width:4px;height:4px;border-radius:50%;background:currentColor;}
+
+/* ── CHAT ── */
 #chat{
   flex:1;overflow-y:auto;padding:20px 16px 8px;
   display:flex;flex-direction:column;gap:16px;
@@ -123,6 +131,8 @@ body::after{
 }
 #chat::-webkit-scrollbar{width:2px;}
 #chat::-webkit-scrollbar-thumb{background:var(--wire);border-radius:2px;}
+
+/* ── WELCOME ── */
 #welcome{
   display:flex;flex-direction:column;align-items:center;
   justify-content:center;min-height:100%;gap:22px;animation:fadeIn .6s ease;
@@ -163,6 +173,8 @@ body::after{
 .w-card:hover{border-color:var(--wire);transform:translateY(-2px);background:var(--lift);}
 .w-card-icon{font-size:20px;line-height:1;}
 .w-card-name{font-family:var(--font-mono);font-size:9px;color:var(--dim);}
+
+/* ── MESSAGES ── */
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .msg{display:flex;gap:10px;align-items:flex-start;animation:fadeUp .22s ease;}
@@ -184,20 +196,69 @@ body::after{
 .bubble.ai pre code{background:none;padding:0;color:var(--c3);}
 .bubble.ai strong{color:#e0f0ff;}
 .bubble.ai em{color:#b0d0ff;}
-.bubble.error{background:rgba(255,45,107,0.1);border-color:rgba(255,45,107,0.3);color:#ff6b9a;}
+.bubble-img{max-width:100%;border-radius:8px;margin-bottom:8px;display:block;border:1px solid var(--wire);}
+
+/* ── ERROR BUBBLE (ใหม่: สวยขึ้น + มีปุ่ม) ── */
+.bubble.error{
+  background:rgba(255,82,82,0.08);
+  border:1px solid rgba(255,82,82,0.25);
+  color:#ff8a80;
+  padding:14px 16px;
+  border-radius:10px;
+  border-bottom-left-radius:3px;
+}
+.err-title{
+  font-family:var(--font-mono);font-size:11px;font-weight:700;
+  color:var(--err);margin-bottom:6px;display:flex;align-items:center;gap:6px;
+}
+.err-body{font-size:12.5px;line-height:1.7;color:#ffab91;margin-bottom:10px;}
+.err-hint{
+  font-family:var(--font-mono);font-size:10px;color:var(--warn);
+  background:rgba(255,183,77,0.08);border:1px solid rgba(255,183,77,0.2);
+  border-radius:5px;padding:6px 10px;margin-bottom:10px;line-height:1.7;
+}
+.err-actions{display:flex;flex-wrap:wrap;gap:6px;}
+.err-btn{
+  padding:5px 12px;border-radius:5px;border:1px solid;
+  font-family:var(--font-mono);font-size:10px;cursor:pointer;
+  transition:all .15s;background:transparent;
+}
+.err-btn.retry{border-color:rgba(79,195,247,0.4);color:var(--gemini);}
+.err-btn.retry:hover{background:rgba(79,195,247,0.12);border-color:var(--gemini);}
+.err-btn.fallback{border-color:rgba(0,255,136,0.4);color:var(--c3);}
+.err-btn.fallback:hover{background:rgba(0,255,136,0.1);}
+.err-btn.dismiss{border-color:var(--wire);color:var(--dim);}
+.err-btn.dismiss:hover{border-color:var(--ghost);color:var(--text);}
+
+/* ── AUTO-FALLBACK NOTICE ── */
+.fallback-notice{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:var(--font-mono);font-size:9px;
+  color:var(--warn);background:rgba(255,183,77,0.08);
+  border:1px solid rgba(255,183,77,0.2);border-radius:4px;
+  padding:3px 8px;margin-bottom:4px;width:fit-content;
+}
+
+/* ── TYPING ── */
 .typing{display:flex;align-items:center;gap:4px;padding:8px 4px;}
 .typing-dot{width:5px;height:5px;border-radius:50%;background:var(--c0);animation:tdot 1.3s ease infinite;}
 .typing-dot:nth-child(2){animation-delay:.15s;background:#4fc3f7;}
 .typing-dot:nth-child(3){animation-delay:.3s;background:#1a73e8;}
 @keyframes tdot{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-6px);opacity:1}}
+
+/* ── STATUSBAR ── */
 #statusbar{
   flex-shrink:0;padding:4px 16px;min-height:24px;
   display:flex;align-items:center;gap:8px;border-top:1px solid var(--rim);
   background:var(--deep);font-family:var(--font-mono);font-size:9px;color:var(--ghost);overflow:hidden;
 }
 .st-led{width:5px;height:5px;border-radius:50%;background:var(--c3);animation:pulse 2s infinite;flex-shrink:0;}
+.st-led.warn{background:var(--warn);box-shadow:0 0 6px var(--warn);}
+.st-led.err{background:var(--err);box-shadow:0 0 6px var(--err);}
 #st-text{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 #token-ct{flex-shrink:0;}
+
+/* ── INPUTAREA ── */
 #inputarea{
   flex-shrink:0;padding:10px 14px 14px;
   border-top:1px solid var(--rim);background:rgba(6,8,16,0.98);backdrop-filter:blur(20px);
@@ -221,13 +282,6 @@ body::after{
 .send-btn:hover{box-shadow:0 0 24px rgba(26,115,232,0.5);transform:scale(1.04);}
 .send-btn:active{transform:scale(0.96);}
 .send-btn svg{width:16px;height:16px;}
-.glow-line{
-  height:2px;background:linear-gradient(90deg,transparent,#1a73e8,#4fc3f7,#a78bfa,transparent);
-  position:fixed;top:0;left:0;right:0;z-index:100;animation:glow-slide 4s ease infinite;
-}
-@keyframes glow-slide{0%,100%{opacity:0.4}50%{opacity:1}}
-
-/* ── กล้อง ── */
 .cam-btn{
   width:44px;height:44px;border-radius:8px;border:1px solid var(--wire);
   background:var(--panel);color:var(--dim);cursor:pointer;
@@ -236,39 +290,31 @@ body::after{
 }
 .cam-btn:hover{border-color:#4fc3f7;color:#4fc3f7;box-shadow:0 0 12px rgba(79,195,247,0.2);}
 .cam-btn.has-img{border-color:var(--c3);color:var(--c3);box-shadow:0 0 12px rgba(0,255,136,0.3);}
-
-/* preview รูปที่แนบ */
-#img-preview-wrap{
-  display:none;position:relative;margin-bottom:8px;
-  border:1px solid var(--wire);border-radius:10px;overflow:hidden;
-  max-width:180px;
-}
+#img-preview-wrap{display:none;position:relative;margin-bottom:8px;border:1px solid var(--wire);border-radius:10px;overflow:hidden;max-width:180px;}
 #img-preview-wrap.show{display:block;}
 #img-preview{width:100%;max-height:120px;object-fit:cover;display:block;}
-#img-remove{
-  position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;
-  background:rgba(0,0,0,0.7);border:1px solid var(--wire);color:#fff;
-  cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;
-}
+#img-remove{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,0.7);border:1px solid var(--wire);color:#fff;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;}
 #img-remove:hover{background:rgba(255,45,107,0.8);}
 
-/* รูปใน bubble */
-.bubble-img{
-  max-width:100%;border-radius:8px;margin-bottom:8px;display:block;
-  border:1px solid var(--wire);
+.glow-line{
+  height:2px;background:linear-gradient(90deg,transparent,#1a73e8,#4fc3f7,#a78bfa,transparent);
+  position:fixed;top:0;left:0;right:0;z-index:100;animation:glow-slide 4s ease infinite;
 }
+@keyframes glow-slide{0%,100%{opacity:0.4}50%{opacity:1}}
 
-/* toast แจ้งเตือน */
-.img-note{
-  font-family:var(--font-mono);font-size:9px;color:var(--c3);
-  padding:2px 0;display:flex;align-items:center;gap:5px;
+/* ── TOAST ── */
+#toast{
+  position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--panel);border:1px solid var(--wire);border-radius:8px;
+  padding:8px 16px;font-family:var(--font-mono);font-size:11px;color:var(--c3);
+  z-index:9990;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;
 }
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
 <div class="glow-line"></div>
 <div id="app">
-
   <div id="topbar">
     <div class="logo">
       <div class="logo-glyph">D</div>
@@ -290,7 +336,7 @@ body::after{
     </div>
     <div class="tb-right">
       <select id="model-select" onchange="onModelChange(this.value)"></select>
-      <input type="password" id="api-key-input" placeholder="API Key...">
+      <input type="password" id="api-key-input" placeholder="API Key (AIza...)">
       <button class="tbtn pri" onclick="saveKey()">SAVE</button>
       <button class="tbtn" onclick="clearChat()">CLEAR</button>
     </div>
@@ -319,35 +365,29 @@ body::after{
         </div>
       </div>
       <div class="w-grid" id="w-grid"></div>
-      <div style="font-family:var(--font-mono);font-size:9px;color:var(--ghost);text-align:center;max-width:360px;line-height:2;">
+      <div style="font-family:var(--font-mono);font-size:9px;color:var(--ghost);text-align:center;max-width:380px;line-height:2;">
         12 EXPERT MODES // STREAMING // CONTEXT MEMORY // 📷 IMAGE AI<br>
+        🔄 AUTO FALLBACK — ถ้า quota หมด จะเปลี่ยนโมเดลให้อัตโนมัติ<br>
         เลือก Provider → ใส่ Key ฟรี → เริ่มคุยได้เลย
       </div>
     </div>
   </div>
 
   <div id="statusbar">
-    <div class="st-led"></div>
+    <div class="st-led" id="st-led"></div>
     <div id="st-text">READY // เลือก Provider และใส่ API Key ฟรีด้านบน</div>
     <div id="token-ct"></div>
   </div>
 
   <div id="inputarea">
-    <!-- preview รูปที่แนบ -->
     <div id="img-preview-wrap">
       <img id="img-preview" src="" alt="preview">
       <div id="img-remove" onclick="removeImage()" title="ลบรูป">✕</div>
     </div>
-
     <div class="input-row">
-      <!-- hidden file input รองรับทั้งกล้องและแกลเลอรี -->
       <input type="file" id="cam-input" accept="image/*" style="display:none" onchange="onImageSelected(this)">
-
-      <!-- ปุ่มกล้อง — เปิดกล้องโดยตรง (capture=environment) -->
       <input type="file" id="cam-direct" accept="image/*" capture="environment" style="display:none" onchange="onImageSelected(this)">
-
       <button class="cam-btn" id="cam-btn" onclick="showCamMenu()" title="📷 แนบรูป / ถ่ายรูป">📷</button>
-
       <div class="input-box">
         <textarea id="msg-input" rows="1" placeholder="ถามอะไรก็ได้... หรือแนบรูปแล้วถาม (Enter ส่ง, Shift+Enter ขึ้นบรรทัด)"></textarea>
         <div class="input-meta">
@@ -357,7 +397,7 @@ body::after{
       </div>
       <button class="send-btn" onclick="sendMessage()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <line x1="22" y1="2" x2="11" y2="13"/>
+             <line x1="22" y1="2" x2="11" y2="13"/>
           <polygon points="22 2 15 22 11 13 2 9 22 2"/>
         </svg>
       </button>
@@ -365,7 +405,7 @@ body::after{
   </div>
 </div>
 
-<!-- cam menu popup -->
+<!-- cam menu -->
 <div id="cam-menu" style="display:none;position:fixed;bottom:80px;left:14px;z-index:9000;
   background:var(--panel);border:1px solid var(--wire);border-radius:12px;overflow:hidden;min-width:180px;
   box-shadow:0 8px 32px rgba(0,0,0,0.5);">
@@ -380,16 +420,21 @@ body::after{
   </div>
 </div>
 <div id="cam-overlay" style="display:none;position:fixed;inset:0;z-index:8999;" onclick="closeCamMenu()"></div>
+<div id="toast"></div>
 
 <script>
-// ═══════════════════════
-//  PROVIDERS
-// ═══════════════════════
 const PROVIDERS = {
   gemini: {
     name: 'Google Gemini', icon: '✦', color: '#4fc3f7',
     keyPlaceholder: 'Google AI Studio Key (AIza...)',
-    keyHint: '→ aistudio.google.com — Get API Key — ฟรี ไม่ต้องใส่บัตร',
+    keyHint: '→ aistudio.google.com — Get API Key — ฟรี',
+    fallbackChain: [
+      'gemini-2.5-flash',
+      'gemini-2.0-flash',
+      'gemini-1.5-flash',
+      'gemini-2.0-flash-lite',
+      'gemini-1.5-flash-8b'
+    ],
     models: [
       { value: 'gemini-2.5-flash',      label: '⚡ Gemini 2.5 Flash (แนะนำ · ฟรี)' },
       { value: 'gemini-2.5-pro',        label: '🔮 Gemini 2.5 Pro (ฟรี limit/day)' },
@@ -397,409 +442,527 @@ const PROVIDERS = {
       { value: 'gemini-2.0-flash-lite', label: '💨 Gemini 2.0 Flash Lite (เร็วสุด)' },
       { value: 'gemini-1.5-flash',      label: '⚡ Gemini 1.5 Flash (ฟรี)' },
       { value: 'gemini-1.5-flash-8b',   label: '🔹 Gemini 1.5 Flash 8B (เล็ก·เร็ว)' },
+      { value: 'gemini-1.5-pro',        label: '🔮 Gemini 1.5 Pro (ฟรี limit/day)' },
     ]
   },
   openrouter: {
-    name: 'OpenRouter FREE', icon: '⊕', color: '#a78bfa',
+    name: 'OpenRouter Free', icon: '⊕', color: '#a78bfa',
     keyPlaceholder: 'OpenRouter Key (sk-or-...)',
-    keyHint: '→ openrouter.ai/keys — สร้าง Key ฟรี มีโมเดล :free มากมาย',
+    keyHint: '→ openrouter.ai/keys — ฟรี ไม่ต้องใส่บัตร',
+    fallbackChain: [
+      'meta-llama/llama-3.3-70b-instruct:free',
+      'mistralai/mistral-7b-instruct:free',
+      'deepseek/deepseek-r1:free',
+      'qwen/qwen-2.5-72b-instruct:free'
+    ],
     models: [
-      { value: 'meta-llama/llama-3.3-70b-instruct:free', label: '🦙 Llama 3.3 70B FREE ⭐' },
-      { value: 'meta-llama/llama-3.1-8b-instruct:free',  label: '🦙 Llama 3.1 8B FREE (เร็ว)' },
-      { value: 'mistralai/mistral-7b-instruct:free',      label: '🌊 Mistral 7B FREE' },
-      { value: 'deepseek/deepseek-r1:free',               label: '🐳 DeepSeek R1 FREE (Reasoning)' },
-      { value: 'deepseek/deepseek-chat:free',             label: '🐳 DeepSeek V3 FREE' },
-      { value: 'qwen/qwen3-8b:free',                      label: '🌙 Qwen3 8B FREE' },
-      { value: 'qwen/qwen3-235b-a22b:free',               label: '🌙 Qwen3 235B FREE ⭐' },
-      { value: 'google/gemini-2.0-flash-exp:free',        label: '✦ Gemini 2.0 Flash FREE (OR)' },
-      { value: 'microsoft/phi-3-mini-128k-instruct:free', label: '🔷 Phi-3 Mini FREE (Microsoft)' },
-      { value: 'openchat/openchat-7b:free',               label: '💬 OpenChat 7B FREE' },
+      { value: 'meta-llama/llama-3.3-70b-instruct:free', label: '🦙 Llama 3.3 70B (FREE)' },
+      { value: 'mistralai/mistral-7b-instruct:free',     label: '🌊 Mistral 7B (FREE)' },
+      { value: 'deepseek/deepseek-r1:free',              label: '🐳 DeepSeek R1 (FREE)' },
+      { value: 'qwen/qwen-2.5-72b-instruct:free',        label: '🌙 Qwen 2.5 72B (FREE)' },
+      { value: 'google/gemma-3-27b-it:free',             label: '💫 Gemma 3 27B (FREE)' },
+      { value: 'microsoft/phi-4:free',                   label: '🔷 Phi-4 (FREE)' },
     ]
   }
 };
 
-const CREATOR_NOTE = ' หากผู้ใช้ถามว่าใครสร้าง ใครพัฒนา หรือใครทำ AI นี้ ให้ตอบว่า คุณคิม หรือ KimWebOs คือผู้พัฒนา DAKNO Ultra';
-
 const EXPERTS = [
-  { id:'auto',     label:'AUTO',    icon:'⚡', color:'#4fc3f7', sys:'คุณคือ Dakno Ultra AI ผู้ช่วยอัจฉริยะ ตอบภาษาไทย'+CREATOR_NOTE },
-  { id:'general',  label:'GENERAL', icon:'🤖', color:'#4fc3f7',
-    sys:`คุณคือ Dakno Ultra — AI ผู้ช่วยอัจฉริยะ ตอบภาษาไทยเสมอ เว้นแต่ผู้ใช้จะถามภาษาอื่น ตอบอย่างลึกซึ้ง ถูกต้อง ครบถ้วน และเป็นประโยชน์สูงสุด ใช้ Markdown จัดรูปแบบเมื่อเหมาะสม`+CREATOR_NOTE },
-  { id:'reason',   label:'REASON',  icon:'🧠', color:'#a78bfa',
-    sys:`คุณคือนักวิเคราะห์ระดับเทพที่คิดแบบ Chain-of-Thought แสดงขั้นตอนการคิดอย่างละเอียดก่อนสรุป ตอบภาษาไทย โครงสร้าง: 🔍 วิเคราะห์ → 💡 ข้อค้นพบ → ✅ สรุป → 🎯 คำแนะนำ`+CREATOR_NOTE },
-  { id:'code',     label:'CODE',    icon:'💻', color:'#00ff88',
-    sys:`คุณคือ Senior Full-Stack Developer ระดับโลก เขียนโค้ดที่ clean, efficient, production-ready พร้อม error handling คอมเมนต์ภาษาไทย อธิบาย logic สำคัญทุกจุด ใช้ design patterns และ best practices เสมอ`+CREATOR_NOTE },
-  { id:'math',     label:'MATH',    icon:'📐', color:'#818cf8',
-    sys:`คุณคืออัจฉริยะคณิตศาสตร์ แสดงขั้นตอนคำนวณอย่างละเอียด พิสูจน์ทฤษฎีบทอย่างเป็นทางการ ใช้สัญลักษณ์คณิตศาสตร์ที่ชัดเจน ตอบภาษาไทย`+CREATOR_NOTE },
-  { id:'creative', label:'WRITE',   icon:'✍️', color:'#f472b6',
-    sys:`คุณคือนักเขียนมือรางวัลระดับโลก งานเขียนมีจิตวิญญาณ ภาษาสละสลวย จังหวะสมบูรณ์แบบ นิยาย บทกวี เรื่องสั้น บทความ — ทุกรูปแบบเยี่ยมยอด`+CREATOR_NOTE },
-  { id:'lang',     label:'LANG',    icon:'🌐', color:'#f9a8d4',
-    sys:`คุณคือผู้เชี่ยวชาญภาษาระดับโลก แปลได้ 100+ ภาษา แปลอย่างแม่นยำ เป็นธรรมชาติ คงความหมายและ tone ดั้งเดิม ตรวจแกรมมาร์ ปรับสไตล์ สรุปความ ได้อย่างมืออาชีพ`+CREATOR_NOTE },
-  { id:'research', label:'RESEARCH',icon:'🔬', color:'#38bdf8',
-    sys:`คุณคือนักวิจัยระดับปริญญาเอก วิเคราะห์หลายมุมมอง อ้างอิงข้อมูลที่น่าเชื่อถือ สรุปข้อมูลซับซ้อนให้เข้าใจง่าย ตอบภาษาไทย`+CREATOR_NOTE },
-  { id:'biz',      label:'BIZ',     icon:'📊', color:'#fb923c',
-    sys:`คุณคือที่ปรึกษาธุรกิจระดับ McKinsey / BCG วิเคราะห์ strategy, marketing, finance, operations ใช้ frameworks: SWOT, Porter's Five Forces, OKR ให้คำแนะนำที่ practical, actionable`+CREATOR_NOTE },
-  { id:'science',  label:'SCI',     icon:'⚛️', color:'#4ade80',
-    sys:`คุณคือนักวิทยาศาสตร์ระดับ Nobel Prize อธิบายด้วย first-principles thinking ฟิสิกส์ เคมี ชีววิทยา ดาราศาสตร์ ใช้ analogy ที่ชาญฉลาด`+CREATOR_NOTE },
-  { id:'thai',     label:'THAI',    icon:'🇹🇭', color:'#34d399',
-    sys:`คุณคือผู้เชี่ยวชาญภาษาและวัฒนธรรมไทย ใช้ภาษาไทยอันงดงาม ถูกต้องตามหลักภาษา ผสมผสานภูมิปัญญาไทย สุภาษิต วรรณคดีคลาสสิก`+CREATOR_NOTE },
-  { id:'fast',     label:'QUICK',   icon:'⚡', color:'#fbbf24',
-    sys:`ตอบสั้น ตรงประเด็น ไม่เกริ่น ไม่ขยาย 1-3 ประโยคเท่านั้น ภาษาไทย`+CREATOR_NOTE }
+  { id:'auto',    icon:'⚡', label:'AUTO',    color:'#00e5ff', hint:'โหมดอัตโนมัติ — ตอบทุกอย่าง' },
+  { id:'general', icon:'🗨',  label:'GENERAL', color:'#78909c', hint:'พูดคุยทั่วไป' },
+  { id:'reason',  icon:'🧠', label:'REASON',  color:'#ab47bc', hint:'วิเคราะห์เชิงลึก ให้เหตุผล' },
+  { id:'code',    icon:'💻', label:'CODE',    color:'#26a69a', hint:'เขียนโค้ด แก้ bug อธิบายโปรแกรม' },
+  { id:'write',   icon:'✍',  label:'WRITE',   color:'#ef5350', hint:'เขียนบทความ เรื่องสั้น คอนเทนต์' },
+  { id:'math',    icon:'∑',  label:'MATH',    color:'#ffa726', hint:'คำนวณ พีชคณิต แคลคูลัส' },
+  { id:'trans',   icon:'🌐', label:'TRANS',   color:'#42a5f5', hint:'แปลภาษา ทุกคู่ภาษา' },
+  { id:'sum',     icon:'📋', label:'SUMMARY', color:'#66bb6a', hint:'สรุปข้อความ บทความ เอกสาร' },
+  { id:'idea',    icon:'💡', label:'IDEA',    color:'#ffca28', hint:'ระดมความคิด ไอเดียสร้างสรรค์' },
+  { id:'data',    icon:'📊', label:'DATA',    color:'#26c6da', hint:'วิเคราะห์ข้อมูล ตาราง CSV' },
+  { id:'img',     icon:'🎨', label:'IMAGE',   color:'#ec407a', hint:'วิเคราะห์รูปภาพ (ต้องแนบรูป)' },
+  { id:'law',     icon:'⚖', label:'LEGAL',   color:'#8d6e63', hint:'กฎหมาย สัญญา คำแนะนำเบื้องต้น' },
 ];
 
-let pendingImageBase64 = null;
-let pendingImageMime   = null;
-let pendingImageDataUrl = null;
+const EXPERT_PROMPTS = {
+  auto:    '',
+  general: 'You are a friendly helpful assistant. Respond naturally in the same language as the user.',
+  reason:  'You are an expert analyst. Think step-by-step, give structured reasoning. Be thorough and precise.',
+  code:    'You are an expert programmer. Write clean, efficient, well-commented code. Explain your logic clearly.',
+  write:   'You are a creative writer. Craft engaging, vivid content with excellent structure and style.',
+  math:    'You are a mathematics expert. Solve problems step-by-step. Show all working. Use clear notation.',
+  trans:   'You are a professional translator. Translate accurately, preserving tone and nuance.',
+  sum:     'You are a summarization expert. Provide clear, concise, structured summaries with key points.',
+  idea:    'You are a creative ideation expert. Generate diverse, innovative ideas. Think outside the box.',
+  data:    'You are a data analyst. Interpret data carefully, spot patterns, provide actionable insights.',
+  img:     'You are a vision expert. Analyze images in detail — describe content, context, text, and meaning.',
+  law:     'You are a legal advisor. Provide general legal information clearly. Always note to consult a qualified lawyer for specific advice.',
+};
+
+let currentProvider = 'gemini';
+let currentModel = 'gemini-2.5-flash';
+let currentExpert = 'auto';
+let messages = [];
+let attachedImage = null;
+let isStreaming = false;
+let lastUserMsg = null;
+
+function classifyError(errText) {
+  const t = errText.toLowerCase();
+  if (t.includes('denied access') || t.includes('project has been denied'))
+    return { type: 'denied', icon: '🚫', title: 'Project Denied', canFallback: true,
+      msg: 'API Key ถูก block หรือ Project ถูก restrict',
+      hint: 'ลองใช้โมเดลอื่น หรือสร้าง API Key ใหม่ที่ aistudio.google.com' };
+  if (t.includes('quota') || t.includes('rate limit') || t.includes('resource_exhausted'))
+    return { type: 'quota', icon: '📊', title: 'Quota Exceeded', canFallback: true,
+      msg: 'ใช้ quota ฟรีหมดแล้วสำหรับโมเดลนี้',
+      hint: 'รอ 1 นาทีแล้ว retry หรือเปลี่ยนโมเดล — quota จะรีเซ็ตทุกนาที/ชั่วโมง/วัน' };
+  if (t.includes('invalid') && t.includes('key') || t.includes('api_key_invalid') || t.includes('401'))
+    return { type: 'auth', icon: '🔑', title: 'API Key ผิด', canFallback: false,
+      msg: 'API Key ไม่ถูกต้องหรือหมดอายุ',
+      hint: 'ไปที่ aistudio.google.com แล้วสร้าง Key ใหม่ กด SAVE อีกครั้ง' };
+  if (t.includes('503') || t.includes('overloaded') || t.includes('server_error') || t.includes('500'))
+    return { type: 'server', icon: '🔧', title: 'Server Error', canFallback: true,
+      msg: 'Server ของ Google/OpenRouter มีปัญหาชั่วคราว',
+      hint: 'ลอง retry ใน 30 วินาที หรือเปลี่ยนโมเดล' };
+  if (t.includes('network') || t.includes('failed to fetch') || t.includes('networkerror'))
+    return { type: 'network', icon: '📡', title: 'Network Error', canFallback: false,
+      msg: 'ไม่สามารถเชื่อมต่อ Internet ได้',
+      hint: 'ตรวจสอบสัญญาณ WiFi/มือถือแล้วลองใหม่' };
+  return { type: 'unknown', icon: '⚠️', title: 'Error', canFallback: true,
+    msg: errText.slice(0, 200),
+    hint: 'ลองเปลี่ยนโมเดลหรือ Provider อื่น' };
+}
+
+function getNextFallbackModel(failedModel) {
+  const chain = PROVIDERS[currentProvider]?.fallbackChain || [];
+  const idx = chain.indexOf(failedModel);
+  if (idx >= 0 && idx < chain.length - 1) return chain[idx + 1];
+  const first = chain.find(m => m !== failedModel);
+  return first || null;
+}
+
+function setStatus(text, mode = 'ok') {
+  document.getElementById('st-text').textContent = text;
+  const led = document.getElementById('st-led');
+  led.className = 'st-led' + (mode === 'warn' ? ' warn' : mode === 'err' ? ' err' : '');
+}
+
+function showToast(msg, duration = 2500) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), duration);
+}
+
+function scrollToBottom() {
+  const chat = document.getElementById('chat');
+  chat.scrollTo({ top: chat.scrollHeight, behavior: 'smooth' });
+}
+
+function hideWelcome() {
+  const w = document.getElementById('welcome');
+  if (w) w.remove();
+}
+
+function renderMarkdown(text) {
+  return text
+    .replace(/```(\w*)\n?([\s\S]*?)```/g, (_,lang,code) =>
+      `<pre><code class="lang-${lang}">${escHtml(code.trim())}</code></pre>`)
+    .replace(/`([^`]+)`/g, (_,c) => `<code>${escHtml(c)}</code>`)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^### (.+)$/gm, '<strong style="font-size:1.05em;color:#e0f0ff">$1</strong>')
+    .replace(/^## (.+)$/gm, '<strong style="font-size:1.1em;color:#e0f0ff">$1</strong>')
+    .replace(/^# (.+)$/gm, '<strong style="font-size:1.2em;color:#fff">$1</strong>')
+    .replace(/^[-*] (.+)$/gm, '• $1')
+    .replace(/\n/g, '<br>');
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function addUserBubble(text, imgDataUrl) {
+  hideWelcome();
+  const chat = document.getElementById('chat');
+  const div = document.createElement('div');
+  div.className = 'msg user';
+  div.innerHTML = `
+    <div class="av user">YOU</div>
+    <div class="bubble-wrap">
+      <div class="bubble user">
+        ${imgDataUrl ? `<img src="${imgDataUrl}" class="bubble-img" style="max-height:160px">` : ''}
+        ${escHtml(text)}
+      </div>
+    </div>`;
+  chat.appendChild(div);
+  scrollToBottom();
+}
+
+function addTypingIndicator() {
+  const chat = document.getElementById('chat');
+  const div = document.createElement('div');
+  div.className = 'msg';
+  div.id = 'typing-msg';
+  const p = PROVIDERS[currentProvider];
+  div.innerHTML = `
+    <div class="av ai">AI</div>
+    <div class="bubble-wrap">
+      <div class="prov-badge" style="border-color:${p.color};color:${p.color}">
+        ${p.icon} ${currentModel}
+      </div>
+      <div class="bubble ai"><div class="typing">
+        <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
+      </div></div>
+    </div>`;
+  chat.appendChild(div);
+  scrollToBottom();
+  return div;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typing-msg');
+  if (t) t.remove();
+}
+
+function addAIBubble(text, modelUsed, wasFallback) {
+  const chat = document.getElementById('chat');
+  const div = document.createElement('div');
+  div.className = 'msg';
+  const p = PROVIDERS[currentProvider];
+  div.innerHTML = `
+    <div class="av ai">AI</div>
+    <div class="bubble-wrap">
+      ${wasFallback ? `<div class="fallback-notice">🔄 Auto-fallback → ${modelUsed}</div>` : ''}
+      <div class="prov-badge" style="border-color:${p.color};color:${p.color}">
+        ${p.icon} ${modelUsed}
+      </div>
+      <div class="bubble ai">${renderMarkdown(text)}</div>
+    </div>`;
+  chat.appendChild(div);
+  scrollToBottom();
+}
+
+function addErrorBubble(errText, failedModel, userPrompt) {
+  const info = classifyError(errText);
+  const chat = document.getElementById('chat');
+  const div = document.createElement('div');
+  div.className = 'msg';
+  const errId = 'err_' + Date.now();
+  const nextModel = info.canFallback ? getNextFallbackModel(failedModel) : null;
+  const fallbackBtn = nextModel
+    ? `<button class="err-btn fallback" onclick="autoFallback('${nextModel}','${errId}')">🔄 ลองโมเดลอื่น (${nextModel.split('/').pop().split(':')[0]})</button>`
+    : '';
+  const retryBtn = `<button class="err-btn retry" onclick="retryLast('${errId}')">↺ Retry</button>`;
+  const dismissBtn = `<button class="err-btn dismiss" onclick="document.getElementById('${errId}').closest('.msg').remove()">✕ ปิด</button>`;
+  div.innerHTML = `
+    <div class="av ai" style="background:rgba(255,82,82,0.2);color:#ff5252">!</div>
+    <div class="bubble-wrap">
+      <div class="bubble error" id="${errId}">
+        <div class="err-title">${info.icon} ${info.title} — ${failedModel}</div>
+        <div class="err-body">${info.msg}</div>
+        <div class="err-hint">💡 ${info.hint}</div>
+        <div class="err-actions">
+          ${retryBtn}
+          ${fallbackBtn}
+          ${dismissBtn}
+        </div>
+      </div>
+    </div>`;
+  chat.appendChild(div);
+  scrollToBottom();
+  if ((info.type === 'quota' || info.type === 'server' || info.type === 'denied') && nextModel) {
+    setStatus(`⚠ ${info.title} — กำลัง fallback → ${nextModel}...`, 'warn');
+    setTimeout(() => { autoFallback(nextModel, errId); }, 1200);
+  }
+}
+
+function autoFallback(newModel, errId) {
+  currentModel = newModel;
+  document.getElementById('model-select').value = newModel;
+  document.getElementById('cur-model-label').textContent = newModel;
+  const errEl = document.getElementById(errId);
+  if (errEl) errEl.closest('.msg').remove();
+  if (lastUserMsg) {
+    showToast(`🔄 Fallback → ${newModel}`);
+    callAPI(lastUserMsg.text, lastUserMsg.imgData, newModel, true);
+  }
+}
+
+function retryLast(errId) {
+  const errEl = document.getElementById(errId);
+  if (errEl) errEl.closest('.msg').remove();
+  if (lastUserMsg) {
+    callAPI(lastUserMsg.text, lastUserMsg.imgData, currentModel, false);
+  }
+}
+
+async function callAPI(userText, imgData, modelOverride, wasFallback) {
+  if (isStreaming) return;
+  isStreaming = true;
+  const useModel = modelOverride || currentModel;
+  const key = localStorage.getItem(`key_${currentProvider}`) || '';
+  if (!key) {
+    setStatus('⚠ ยังไม่มี API Key — ใส่แล้วกด SAVE', 'warn');
+    isStreaming = false;
+    return;
+  }
+  setStatus(`⟳ กำลังส่ง → ${useModel}...`, 'ok');
+  const typing = addTypingIndicator();
+  try {
+    let responseText = '';
+    if (currentProvider === 'gemini') {
+      responseText = await callGemini(userText, imgData, useModel, key);
+    } else {
+      responseText = await callOpenRouter(userText, imgData, useModel, key);
+    }
+    removeTyping();
+    messages.push({ role: 'model', parts: [{ text: responseText }] });
+    addAIBubble(responseText, useModel, wasFallback);
+    setStatus(`✓ ${useModel} — ${responseText.length} chars`, 'ok');
+    document.getElementById('token-ct').textContent = `~${Math.round(responseText.split(' ').length * 1.3)} tok`;
+  } catch (err) {
+    removeTyping();
+    const errMsg = err.message || String(err);
+    setStatus(`✗ Error: ${errMsg.slice(0, 60)}`, 'err');
+    addErrorBubble(errMsg, useModel, { text: userText, imgData });
+  }
+  isStreaming = false;
+}
+
+async function callGemini(userText, imgData, model, key) {
+  const systemExpert = EXPERT_PROMPTS[currentExpert] || '';
+  const parts = [];
+  if (imgData) {
+    parts.push({ inlineData: { mimeType: imgData.mimeType, data: imgData.base64 } });
+  }
+  parts.push({ text: userText });
+  const contents = [];
+  if (systemExpert) {
+    contents.push({ role: 'user', parts: [{ text: `[System] ${systemExpert}` }] });
+    contents.push({ role: 'model', parts: [{ text: 'Understood.' }] });
+  }
+  for (const m of messages.slice(-10)) { contents.push(m); }
+  contents.push({ role: 'user', parts });
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
+  const resp = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents,
+      generationConfig: { temperature: 0.7, maxOutputTokens: 4096 }
+    })
+  });
+  const data = await resp.json();
+  if (!resp.ok || data.error) {
+    const errMsg = data.error?.message || `HTTP ${resp.status}`;
+    throw new Error(errMsg);
+  }
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!text) throw new Error('ไม่ได้รับคำตอบจาก Gemini (candidates empty)');
+  messages.push({ role: 'user', parts });
+  return text;
+}
+
+async function callOpenRouter(userText, imgData, model, key) {
+  const systemExpert = EXPERT_PROMPTS[currentExpert] || 'You are a helpful assistant.';
+  const msgs = [{ role: 'system', content: systemExpert }];
+  for (const m of messages.slice(-10)) {
+    if (m.role === 'user') {
+      msgs.push({ role: 'user', content: m.parts?.[0]?.text || '' });
+    } else {
+      msgs.push({ role: 'assistant', content: m.parts?.[0]?.text || '' });
+    }
+  }
+  if (imgData) {
+    msgs.push({ role: 'user', content: [
+      { type: 'image_url', image_url: { url: `data:${imgData.mimeType};base64,${imgData.base64}` } },
+      { type: 'text', text: userText }
+    ]});
+  } else {
+    msgs.push({ role: 'user', content: userText });
+  }
+  const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${key}`,
+      'HTTP-Referer': 'https://dakno.github.io',
+      'X-Title': 'DAKNO ULTRA'
+    },
+    body: JSON.stringify({ model, messages: msgs, max_tokens: 4096 })
+  });
+  const data = await resp.json();
+  if (!resp.ok || data.error) {
+    const errMsg = data.error?.message || `HTTP ${resp.status}`;
+    throw new Error(errMsg);
+  }
+  const text = data.choices?.[0]?.message?.content;
+  if (!text) throw new Error('ไม่ได้รับคำตอบจาก OpenRouter');
+  messages.push({ role: 'user', parts: [{ text: userText }] });
+  return text;
+}
+
+function sendMessage() {
+  const input = document.getElementById('msg-input');
+  const text = input.value.trim();
+  if (!text && !attachedImage) return;
+  if (isStreaming) return;
+  const displayText = text || '(รูปภาพ)';
+  const imgSnap = attachedImage ? { ...attachedImage } : null;
+  lastUserMsg = { text: displayText, imgData: imgSnap };
+  addUserBubble(displayText, imgSnap?.dataUrl);
+  input.value = '';
+  input.style.height = '';
+  document.getElementById('char-count').textContent = '0 / 8000';
+  removeImage();
+  callAPI(displayText, imgSnap, currentModel, false);
+}
+
+function switchProvider(prov) {
+  currentProvider = prov;
+  document.querySelectorAll('.prov-tab').forEach(b => {
+    b.classList.toggle('active', b.dataset.prov === prov);
+  });
+  const p = PROVIDERS[prov];
+  document.getElementById('api-key-input').placeholder = p.keyPlaceholder;
+  const saved = localStorage.getItem(`key_${prov}`) || '';
+  document.getElementById('api-key-input').value = saved ? '••••••••' : '';
+  populateModels();
+  currentModel = PROVIDERS[prov].models[0].value;
+  document.getElementById('cur-model-label').textContent = currentModel;
+  setStatus(`Switched → ${p.name} // ${p.keyHint}`, 'ok');
+}
+
+function populateModels() {
+  const sel = document.getElementById('model-select');
+  sel.innerHTML = '';
+  PROVIDERS[currentProvider].models.forEach(m => {
+    const o = document.createElement('option');
+    o.value = m.value; o.textContent = m.label;
+    sel.appendChild(o);
+  });
+  sel.value = currentModel;
+}
+
+function onModelChange(val) {
+  currentModel = val;
+  document.getElementById('cur-model-label').textContent = val;
+  showToast(`Model: ${val}`);
+}
+
+function saveKey() {
+  const val = document.getElementById('api-key-input').value.trim();
+  if (!val || val === '••••••••') { showToast('⚠ ใส่ Key ก่อน'); return; }
+  localStorage.setItem(`key_${currentProvider}`, val);
+  document.getElementById('api-key-input').value = '••••••••';
+  showToast('✓ บันทึก API Key แล้ว!');
+  setStatus(`✓ Key saved — ${PROVIDERS[currentProvider].name} ready!`, 'ok');
+}
+
+function clearChat() {
+  messages = [];
+  lastUserMsg = null;
+  const chat = document.getElementById('chat');
+  chat.innerHTML = '';
+  document.getElementById('token-ct').textContent = '';
+  setStatus('CLEAR — เริ่มบทสนทนาใหม่', 'ok');
+}
 
 function showCamMenu() {
   document.getElementById('cam-menu').style.display = 'block';
   document.getElementById('cam-overlay').style.display = 'block';
 }
 function closeCamMenu() {
-  document.getElementById('cam-menu').style.display = 'none';
+  .display = 'none';
   document.getElementById('cam-overlay').style.display = 'none';
 }
 function openCamera() { closeCamMenu(); document.getElementById('cam-direct').click(); }
 function openGallery() { closeCamMenu(); document.getElementById('cam-input').click(); }
-
+function removeImage() {
+  attachedImage = null;
+  document.getElementById('img-preview-wrap').classList.remove('show');
+  document.getElementById('cam-btn').classList.remove('has-img');
+}
 function onImageSelected(input) {
   const file = input.files[0];
   if (!file) return;
   const reader = new FileReader();
   reader.onload = e => {
-    pendingImageDataUrl = e.target.result;
-    pendingImageMime    = file.type || 'image/jpeg';
-    pendingImageBase64  = pendingImageDataUrl.split(',')[1];
-    const wrap = document.getElementById('img-preview-wrap');
-    document.getElementById('img-preview').src = pendingImageDataUrl;
-    wrap.classList.add('show');
+    const dataUrl = e.target.result;
+    const base64 = dataUrl.split(',')[1];
+    attachedImage = { base64, mimeType: file.type, dataUrl };
+    document.getElementById('img-preview').src = dataUrl;
+    document.getElementById('img-preview-wrap').classList.add('show');
     document.getElementById('cam-btn').classList.add('has-img');
-    setStatus(`📷 แนบรูปแล้ว: ${file.name} — พิมพ์คำถามแล้วกดส่ง`);
+    showToast('📷 แนบรูปสำเร็จ — พิมพ์แล้วส่งได้เลย');
   };
   reader.readAsDataURL(file);
   input.value = '';
 }
 
-function removeImage() {
-  pendingImageBase64 = null;
-  pendingImageMime   = null;
-  pendingImageDataUrl = null;
-  document.getElementById('img-preview-wrap').classList.remove('show');
-  document.getElementById('cam-btn').classList.remove('has-img');
-  setStatus('ลบรูปแล้ว');
-}
-
-let currentProvider  = localStorage.getItem('dakno_provider') || 'gemini';
-let currentModel     = '';
-let currentExpertId  = 'auto';
-let history          = [];
-let isStreaming       = false;
-let totalTokens      = 0;
-let keys             = {};
-try { keys = JSON.parse(localStorage.getItem('dakno_keys') || '{}'); } catch(e) {}
-
-const $chat    = document.getElementById('chat');
-const $input   = document.getElementById('msg-input');
-const $charCt  = document.getElementById('char-count');
-const $stText  = document.getElementById('st-text');
-const $tokenCt = document.getElementById('token-ct');
-const $hint    = document.getElementById('expert-hint');
-const $rail    = document.getElementById('expert-rail');
-const $wGrid   = document.getElementById('w-grid');
-const $apiInput= document.getElementById('api-key-input');
-const $modelSel= document.getElementById('model-select');
-const $modelLbl= document.getElementById('cur-model-label');
-
-function init() {
-  buildExperts(); selectExpert('auto'); switchProvider(currentProvider, false);
-  $input.addEventListener('input', onInput);
-  $input.addEventListener('keydown', e => {
-    if (e.key==='Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
-  });
-  updateStatus();
-}
-
-function switchProvider(prov, save=true) {
-  currentProvider = prov;
-  if (save) localStorage.setItem('dakno_provider', prov);
-  const cfg = PROVIDERS[prov];
-  document.querySelectorAll('.prov-tab').forEach(t =>
-    t.classList.toggle('active', t.dataset.prov === prov));
-  $modelSel.innerHTML = '';
-  cfg.models.forEach(m => {
-    const o = document.createElement('option');
-    o.value = m.value; o.textContent = m.label;
-    $modelSel.appendChild(o);
-  });
-  const saved = localStorage.getItem(`dakno_model_${prov}`);
-  currentModel = saved && cfg.models.find(m => m.value===saved) ? saved : cfg.models[0].value;
-  $modelSel.value = currentModel;
-  $modelLbl.textContent = currentModel.split('/').pop();
-  $apiInput.placeholder = cfg.keyPlaceholder;
-  $apiInput.value = keys[prov] ? '••••••••••••••••' : '';
-  updateStatus();
-}
-
-function onModelChange(val) {
-  currentModel = val;
-  $modelLbl.textContent = val.split('/').pop();
-  localStorage.setItem(`dakno_model_${currentProvider}`, val);
-}
-
-function saveKey() {
-  const v = $apiInput.value.trim();
-  if (!v || v==='••••••••••••••••') return;
-  keys[currentProvider] = v;
-  localStorage.setItem('dakno_keys', JSON.stringify(keys));
-  $apiInput.value = '••••••••••••••••';
-  setStatus(`✓ บันทึก ${PROVIDERS[currentProvider].name} Key แล้ว`);
-  updateStatus();
-}
-
-function buildExperts() {
+function buildExpertRail() {
+  const rail = document.getElementById('expert-rail');
   EXPERTS.forEach(ex => {
-    const pill = document.createElement('button');
-    pill.className='ex-pill'; pill.dataset.id=ex.id; pill.style.color=ex.color;
-    pill.innerHTML=`<span class="ex-dot"></span>${ex.icon} ${ex.label}`;
-    pill.onclick=()=>selectExpert(ex.id);
-    $rail.appendChild(pill);
-    if (ex.id!=='auto') {
-      const card=document.createElement('div');
-      card.className='w-card';
-      card.innerHTML=`<div class="w-card-icon">${ex.icon}</div><div class="w-card-name">${ex.label}</div>`;
-      card.onclick=()=>{selectExpert(ex.id);$input.focus();};
-      $wGrid.appendChild(card);
-    }
+    const btn = document.createElement('button');
+    btn.className = 'ex-pill' + (ex.id === 'auto' ? ' active' : '');
+    btn.style.color = ex.color;
+    btn.dataset.id = ex.id;
+    btn.innerHTML = `<span class="ex-dot"></span>${ex.icon} ${ex.label}`;
+    btn.title = ex.hint;
+    btn.onclick = () => {
+      document.querySelectorAll('.ex-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentExpert = ex.id;
+      document.getElementById('expert-hint').textContent = ex.hint;
+      setStatus(`Mode: ${ex.label} — ${ex.hint}`, 'ok');
+    };
+    rail.appendChild(btn);
   });
 }
 
-function selectExpert(id) {
-  currentExpertId = id;
-  document.querySelectorAll('.ex-pill').forEach(p=>p.classList.toggle('active',p.dataset.id===id));
-  const ex = EXPERTS.find(e=>e.id===id);
-  $hint.textContent = ex?`// ${ex.label} MODE`:'';
-  $hint.style.color = ex?.color||'var(--ghost)';
-  updateStatus();
-}
-
-function routeExpert(msg) {
-  const m=msg.toLowerCase();
-  if(/โค้ด|code|function|debug|python|javascript|html|css|sql|react|vue|node/.test(m)) return 'code';
-  if(/คำนวณ|สมการ|พิสูจน์|คณิต|math|ฟิสิกส์|integral|derivative/.test(m)) return 'math';
-  if(/แปล|translate|grammar|ตรวจ|ภาษาอังกฤษ|spell|proofread/.test(m)) return 'lang';
-  if(/เรื่องสั้น|นิยาย|บทกวี|poem|story|creative|แต่งเพลง/.test(m)) return 'creative';
-  if(/ธุรกิจ|business|marketing|swot|strategy|startup|ตลาด/.test(m)) return 'biz';
-  if(/วิจัย|research|ข้อมูล|สถิติ|survey|วิเคราะห์/.test(m)) return 'research';
-  if(/วิทยาศาสตร์|science|ชีววิทยา|เคมี|ดาราศาสตร์/.test(m)) return 'science';
-  if(/ไทย|วัฒนธรรม|ประเพณี|สุภาษิต|วรรณคดี/.test(m)) return 'thai';
-  if(/สรุป|tldr|quick|สั้น|brief/.test(m)) return 'fast';
-  if(/คิด|วิเคราะห์|เปรียบ|ข้อดี|ข้อเสีย|why|เพราะ/.test(m)) return 'reason';
-  return 'general';
-}
-
-function getSysPrompt(msg) {
-  const id = currentExpertId==='auto' ? routeExpert(msg) : currentExpertId;
-  return EXPERTS.find(e=>e.id===id)?.sys || EXPERTS.find(e=>e.id==='general').sys;
-}
-
-async function sendMessage() {
-  if (isStreaming) return;
-  const text = $input.value.trim();
-  const hasImg = !!pendingImageBase64;
-  if (!text && !hasImg) return;
-  if (!keys[currentProvider]) {
-    setStatus(`⚠ ยังไม่ได้ใส่ ${PROVIDERS[currentProvider].name} Key — ใส่แล้วกด SAVE`);
-    return;
-  }
-  if (currentProvider==='openrouter' && hasImg) {
-    const visionModels = ['google/gemini-2.0-flash-exp:free'];
-    if (!visionModels.includes(currentModel)) {
-      setStatus('⚠ โมเดลนี้ไม่รองรับรูปภาพ — เปลี่ยนเป็น Gemini หรือ Gemini 2.0 Flash FREE (OR)');
-      return;
-    }
-  }
-  document.getElementById('welcome')?.remove();
-  const imgB64=pendingImageBase64, imgMime=pendingImageMime, imgUrl=pendingImageDataUrl;
-  addMessage('user', text, false, imgUrl);
-  history.push({ role:'user', content: text||(hasImg?'[รูปภาพ]':'') });
-  if (history.length>40) history=history.slice(-40);
-  $input.value=''; $charCt.textContent='0 / 8000'; autoResize();
-  removeImage();
-  const aiDiv = addMessage('ai','',true);
-  const bubbleEl = aiDiv.querySelector('.bubble');
-  isStreaming=true;
-  setStatus(`⟳ ${currentModel.split('/').pop()} ${hasImg?'วิเคราะห์รูป':'กำลังคิด'}...`);
-  try {
-    const sys = getSysPrompt(text||'รูปภาพ');
-    let fullText='';
-    if (currentProvider==='gemini') {
-      fullText = await callGemini(sys, history.slice(0,-1), text, bubbleEl, imgB64, imgMime);
-    } else {
-      fullText = await callOpenRouter(sys, history.slice(0,-1), text, bubbleEl, imgB64, imgMime);
-    }
-    history.push({role:'assistant', content:fullText});
-    totalTokens += Math.ceil(fullText.length/4);
-    $tokenCt.textContent=`~${totalTokens} tokens`;
-    setStatus(`✓ ${currentModel.split('/').pop()} ตอบเสร็จ`);
-  } catch(err) {
-    bubbleEl.classList.add('error');
-    bubbleEl.innerHTML=`⚠ ${err.message}<br><small style="opacity:0.6">${getHint(err.message)}</small>`;
-    setStatus(`✗ ${err.message}`);
-  }
-  isStreaming=false;
-  $chat.scrollTop=$chat.scrollHeight;
-}
-
-function getHint(msg) {
-  if(/401|403|api key/i.test(msg)) return 'ตรวจสอบ API Key — อาจผิดหรือหมดอายุ';
-  if(/429/.test(msg)) return 'Rate limit — รอสักครู่แล้วลองใหม่';
-  if(/404/.test(msg)) return 'โมเดลนี้อาจไม่ available ลองโมเดลอื่น';
-  if(/quota/i.test(msg)) return 'Quota หมด — ลอง Provider อื่นหรือรอพรุ่งนี้';
-  return 'ลองเปลี่ยนโมเดลหรือ Provider อื่น';
-}
-
-async function callGemini(sys, prev, userMsg, el, imgB64, imgMime) {
-  const key = keys.gemini;
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${currentModel}:streamGenerateContent?alt=sse&key=${key}`;
-  const contents=[];
-  for (const h of prev) {
-    contents.push({role:h.role==='assistant'?'model':'user', parts:[{text:h.content}]});
-  }
-  const userParts=[];
-  if (imgB64) userParts.push({inline_data:{mime_type:imgMime,data:imgB64}});
-  userParts.push({text: userMsg||(imgB64?'ช่วยดูและอธิบายรูปนี้ให้หน่อย':'...')});
-  contents.push({role:'user', parts:userParts});
-  const body={
-    systemInstruction: sys?{parts:[{text:sys}]}:undefined,
-    contents,
-    generationConfig:{temperature:0.9,maxOutputTokens:8192}
-  };
-  const res = await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e?.error?.message||`HTTP ${res.status}`);}
-  return await readGeminiStream(res,el);
-}
-
-async function readGeminiStream(res,el) {
-  let full='';
-  const reader=res.body.getReader(); const dec=new TextDecoder();
-  while(true){
-    const{done,value}=await reader.read(); if(done)break;
-    const lines=dec.decode(value).split('\n');
-    for(const line of lines){
-      if(!line.startsWith('data: '))continue;
-      const d=line.slice(6).trim();
-      if(!d||d==='[DONE]')continue;
-      try{
-        const t=JSON.parse(d)?.candidates?.[0]?.content?.parts?.[0]?.text||'';
-        if(t){full+=t;el.innerHTML=md(full)+'<span style="opacity:.4">▌</span>';$chat.scrollTop=$chat.scrollHeight;}
-      }catch(e){}
-    }
-  }
-  el.innerHTML=md(full);return full;
-}
-
-async function callOpenRouter(sys, prev, userMsg, el, imgB64, imgMime) {
-  const key=keys.openrouter;
-  const messages=[];
-  if(sys)messages.push({role:'system',content:sys});
-  for(const h of prev)messages.push({role:h.role==='assistant'?'assistant':'user',content:h.content});
-  let userContent;
-  if(imgB64){
-    userContent=[
-      {type:'image_url',image_url:{url:`data:${imgMime};base64,${imgB64}`}},
-      {type:'text',text:userMsg||(imgB64?'ช่วยดูและอธิบายรูปนี้ให้หน่อย':'...')}
-    ];
-  } else { userContent = userMsg; }
-  messages.push({role:'user',content:userContent});
-  const res=await fetch('https://openrouter.ai/api/v1/chat/completions',{
-    method:'POST',
-    headers:{'Content-Type':'application/json','Authorization':`Bearer ${key}`,'HTTP-Referer':'https://dakno.ultra','X-Title':'DAKNO ULTRA FREE'},
-    body:JSON.stringify({model:currentModel,messages,stream:true,max_tokens:4096})
+function buildWelcomeGrid() {
+  const grid = document.getElementById('w-grid');
+  const prompts = [
+    { icon:'🖼', name:'วิเคราะห์รูป', text:'ช่วยวิเคราะห์รูปที่แนบให้หน่อย' },
+    { icon:'💻', name:'เขียนโค้ด', text:'ช่วยเขียนโค้ด Python ง่ายๆ ให้หน่อย' },
+    { icon:'🌐', name:'แปลภาษา', text:'แปลประโยคนี้เป็นภาษาอังกฤษ: สวัสดีครับ' },
+    { icon:'📋', name:'สรุปข้อความ', text:'ช่วยสรุปข้อความสั้นๆ ให้หน่อย' },
+    { icon:'💡', name:'ไอเดียธุรกิจ', text:'ให้ไอเดียธุรกิจออนไลน์ 5 อย่างที่ทำคนเดียวได้' },
+    { icon:'🧠', name:'อธิบาย AI', text:'อธิบาย AI ให้เข้าใจง่ายๆ ใน 3 ประโยค' },
+    { icon:'✍', name:'เขียนบทความ', text:'ช่วยเขียนบทความสั้นๆ เรื่อง "อนาคตของ AI"' },
+    { icon:'🎯', name:'แนะนำ', text:'ใครสร้าง DAKNO นี้ขึ้นมา?' },
+  ];
+  prompts.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'w-card';
+    card.innerHTML = `<div class="w-card-icon">${p.icon}</div><div class="w-card-name">${p.name}</div>`;
+    card.onclick = () => {
+      document.getElementById('msg-input').value = p.text;
+      document.getElementById('msg-input').focus();
+    };
+    grid.appendChild(card);
   });
-  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e?.error?.message||`HTTP ${res.status}`);}
-  return await readSSE(res,el);
 }
 
-async function readSSE(res,el) {
-  let full='';
-  const reader=res.body.getReader();const dec=new TextDecoder();
-  while(true){
-    const{done,value}=await reader.read();if(done)break;
-    const lines=dec.decode(value).split('\n');
-    for(const line of lines){
-      if(!line.startsWith('data: '))continue;
-      const d=line.slice(6).trim();
-      if(!d||d==='[DONE]')continue;
-      try{
-        const delta=JSON.parse(d)?.choices?.[0]?.delta?.content||'';
-        if(delta){full+=delta;el.innerHTML=md(full)+'<span style="opacity:.4">▌</span>';$chat.scrollTop=$chat.scrollHeight;}
-      }catch(e){}
-    }
+document.getElementById('msg-input').addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+  document.getElementById('char-count').textContent = `${this.value.length} / 8000`;
+  if (this.value.length > 8000) this.value = this.value.slice(0, 8000);
+});
+document.getElementById('msg-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+(function init() {
+  buildExpertRail();
+  buildWelcomeGrid();
+  populateModels();
+  const savedGeminiKey = localStorage.getItem('key_gemini');
+  if (savedGeminiKey) {
+    document.getElementById('api-key-input').value = '••••••••';
+    setStatus('✓ พบ API Key — พร้อมใช้งาน!', 'ok');
   }
-  el.innerHTML=md(full);return full;
-}
-
-function md(t){
-  return t
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/```(\w*)\n([\s\S]*?)```/g,(_,l,c)=>`<pre><code class="lang-${l}">${c.trim()}</code></pre>`)
-    .replace(/`([^`]+)`/g,'<code>$1</code>')
-    .replace(/\*\*\*(.+?)\*\*\*/g,'<strong><em>$1</em></strong>')
-    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g,'<em>$1</em>')
-    .replace(/^#{3}\s(.+)$/gm,'<h3 style="color:#80c8ff;margin:12px 0 6px;font-size:14px;">$1</h3>')
-    .replace(/^#{2}\s(.+)$/gm,'<h2 style="color:#a0d8ff;margin:14px 0 7px;font-size:16px;">$1</h2>')
-    .replace(/^#{1}\s(.+)$/gm,'<h1 style="color:#c0e8ff;margin:16px 0 8px;font-size:18px;">$1</h1>')
-    .replace(/^[-*]\s(.+)$/gm,'<li style="margin:3px 0;">• $1</li>')
-    .replace(/^(\d+)\.\s(.+)$/gm,'<li style="margin:3px 0;">$1. $2</li>')
-    .replace(/\n/g,'<br>');
-}
-
-function addMessage(role,text,empty=false,imgDataUrl=null){
-  const prov=PROVIDERS[currentProvider];
-  const div=document.createElement('div');
-  div.className=`msg ${role}`;
-  const av=document.createElement('div');
-  av.className=`av ${role==='user'?'user':'ai'}`;
-  av.textContent=role==='user'?'YOU':prov.icon;
-  const wrap=document.createElement('div');
-  wrap.className='bubble-wrap';
-  if(role==='ai'){
-    const badge=document.createElement('div');
-    badge.className='prov-badge';
-    badge.style.cssText=`border-color:${prov.color};color:${prov.color}`;
-    badge.textContent=`${prov.icon} ${currentModel.split('/').pop()}`;
-    wrap.appendChild(badge);
-  }
-  const bubble=document.createElement('div');
-  bubble.className=`bubble ${role==='user'?'user':'ai'}`;
-  if(empty){
-    bubble.innerHTML='<div class="typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
-  } else {
-    let content='';
-    if(imgDataUrl) content+=`<img src="${imgDataUrl}" class="bubble-img" alt="รูปที่แนบ">`;
-    content += role==='user'?esc(text):md(text);
-    bubble.innerHTML=content;
-  }
-  wrap.appendChild(bubble);
-  div.appendChild(av);div.appendChild(wrap);
-  $chat.appendChild(div);
-  $chat.scrollTop=$chat.scrollHeight;
-  return div;
-}
-
-function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
-function clearChat(){history=[];$chat.innerHTML='';totalTokens=0;$tokenCt.textContent='';setStatus('READY');}
-function setStatus(m){$stText.textContent=m;}
-function updateStatus(){
-  const prov=PROVIDERS[currentProvider];
-  setStatus(keys[currentProvider]
-    ?`${prov.icon} ${prov.name} // ${currentModel.split('/').pop()} // ${currentExpertId.toUpperCase()} mode // 📷 รองรับรูปภาพ`
-    :`⚠ ใส่ ${prov.name} Key ก่อน // ${prov.keyHint}`);
-}
-function onInput(){const l=$input.value.length;$charCt.textContent=`${l} / 8000`;autoResize();}
-function autoResize(){$input.style.height='auto';$input.style.height=Math.min($input.scrollHeight,120)+'px';}
-
-init();
+})();
 </script>
 </body>
 </html>
